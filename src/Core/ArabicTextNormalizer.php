@@ -75,6 +75,15 @@ class ArabicTextNormalizer implements TextNormalizerInterface {
         ['from' => 'ئ', 'to' => 'ي'],
         ['from' => 'ـ', 'to' => ''],
     ];
+
+    /**
+     * Diacritic characters to strip at the SQL level.
+     */
+    private const SQL_DIACRITICS = [
+        'ً', 'ٌ', 'ٍ', 'َ', 'ُ', 'ِ', 'ّ', 'ْ', 'ٰ',
+        'ۖ', 'ۗ', 'ۘ', 'ۙ', 'ۚ', 'ۛ', 'ۜ', '۝', '۞',
+        '۟', '۠', 'ۡ', 'ۢ', 'ۣ', 'ۤ'
+    ];
     
     /**
      * Constructor
@@ -220,6 +229,11 @@ class ArabicTextNormalizer implements TextNormalizerInterface {
             $to_escaped = str_replace(["'", "\\"], ["''", "\\\\"], $to);
             
             $sql = "REPLACE({$sql}, '{$from_escaped}', '{$to_escaped}')";
+        }
+
+        foreach (self::SQL_DIACRITICS as $mark) {
+            $mark_escaped = str_replace(["'", "\\"], ["''", "\\\\"], $mark);
+            $sql = "REPLACE({$sql}, '{$mark_escaped}', '')";
         }
         
         return $sql;
