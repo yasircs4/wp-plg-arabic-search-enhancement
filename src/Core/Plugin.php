@@ -29,6 +29,7 @@ class Plugin {
     /**
      * Plugin instance
      *
+        private const TABLE_SCHEMA_VERSION = '2';
      * @var Plugin|null
      */
     private static $instance = null;

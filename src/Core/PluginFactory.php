@@ -145,8 +145,13 @@ class PluginFactory {
         if (!isset(self::$instances['performance_optimizer'])) {
             $cache = $cache ?? self::create_cache();
             $config = $config ?? self::create_configuration();
+            $language_normalizer = self::create_multi_language_normalizer($cache);
             
-            self::$instances['performance_optimizer'] = new PerformanceOptimizer($cache, $config);
+            self::$instances['performance_optimizer'] = new PerformanceOptimizer(
+                $cache,
+                $config,
+                $language_normalizer
+            );
         }
         
         return self::$instances['performance_optimizer'];

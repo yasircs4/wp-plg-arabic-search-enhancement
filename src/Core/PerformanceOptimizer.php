@@ -17,12 +17,18 @@ class PerformanceOptimizer {
     
     private CacheInterface $cache;
     private ConfigurationInterface $config;
+    private ?MultiLanguageNormalizer $language_normalizer;
     private string $index_table;
     private string $stats_table;
     
-    public function __construct(CacheInterface $cache, ConfigurationInterface $config) {
+    public function __construct(
+        CacheInterface $cache,
+        ConfigurationInterface $config,
+        ?MultiLanguageNormalizer $language_normalizer = null
+    ) {
         $this->cache = $cache;
         $this->config = $config;
+        $this->language_normalizer = $language_normalizer;
         
         global $wpdb;
         $this->index_table = $wpdb->prefix . 'arabic_search_index';
@@ -61,6 +67,7 @@ class PerformanceOptimizer {
             result_count int(11) DEFAULT 0,
             avg_relevance_score decimal(5,2) DEFAULT 0.00,
             search_count int(11) DEFAULT 1,
+            detected_language varchar(10) DEFAULT NULL,
             last_searched datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             PRIMARY KEY (id),
             UNIQUE KEY query_hash (query_hash),
@@ -297,16 +304,28 @@ class PerformanceOptimizer {
         global $wpdb;
         
         $query_hash = md5($normalized_query);
+
+        $detected_language = null;
+        if ($this->language_normalizer) {
+            try {
+                $detected_language = $this->language_normalizer->detect_text_language($original_query);
+            } catch (\Throwable $exception) {
+                $detected_language = null;
+            }
+        } elseif (preg_match('/[\x{0600}-\x{06FF}]/u', $original_query)) {
+            $detected_language = 'ar';
+        }
         
         // Update or insert search statistics
         $wpdb->query($wpdb->prepare("
             INSERT INTO {$this->stats_table} 
-            (query_hash, original_query, normalized_query, result_count, search_count)
-            VALUES (%s, %s, %s, %d, 1)
+            (query_hash, original_query, normalized_query, detected_language, result_count, search_count)
+            VALUES (%s, %s, %s, %s, %d, 1)
             ON DUPLICATE KEY UPDATE
             result_count = %d,
-            search_count = search_count + 1
-        ", $query_hash, $original_query, $normalized_query, $result_count, $result_count));
+            search_count = search_count + 1,
+            detected_language = VALUES(detected_language)
+        ", $query_hash, $original_query, $normalized_query, $detected_language, $result_count, $result_count));
     }
     
     /**
