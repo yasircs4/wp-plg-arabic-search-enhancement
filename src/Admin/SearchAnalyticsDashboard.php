@@ -18,6 +18,7 @@ class SearchAnalyticsDashboard {
     private ConfigurationInterface $config;
     private PerformanceOptimizer $optimizer;
     private string $analytics_table;
+    private bool $hooks_initialized = false;
     
     public function __construct(ConfigurationInterface $config, PerformanceOptimizer $optimizer) {
         $this->config = $config;
@@ -25,10 +26,21 @@ class SearchAnalyticsDashboard {
         
         global $wpdb;
         $this->analytics_table = $wpdb->prefix . 'arabic_search_analytics';
+    }
+    
+    /**
+     * Register admin hooks. Safe to call multiple times.
+     */
+    public function init_hooks(): void {
+        if ($this->hooks_initialized) {
+            return;
+        }
         
         add_action('admin_menu', [$this, 'add_analytics_menu']);
         add_action('wp_ajax_arabic_search_analytics_data', [$this, 'get_analytics_data']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_analytics_scripts']);
+        
+        $this->hooks_initialized = true;
     }
     
     /**

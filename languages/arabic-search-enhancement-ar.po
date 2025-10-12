@@ -192,7 +192,7 @@ msgstr "تحسين البحث العربي يتطلب WordPress 5.0 أو أحد�
 msgid "Arabic Search Enhancement requires WordPress function %s which is not available."
 msgstr "تحسين البحث العربي يتطلب دالة WordPress %s التي غير متاحة."
 
-#: wp-plg-arabic-search-enhancement.php:104
+#: wp-plg-arabic-search-enhancement.php:104 wp-plg-arabic-search-enhancement.php:165
 msgid "Arabic Search Enhancement: Failed to initialize autoloader."
 msgstr "تحسين البحث العربي: فشل في تهيئة محمل الفئات."
 
@@ -208,15 +208,7 @@ msgstr "خطأ في تهيئة تحسين البحث العربي: %s"
 msgid "Arabic Search Enhancement cannot be activated due to unmet requirements."
 msgstr "لا يمكن تفعيل تحسين البحث العربي بسبب عدم توفر المتطلبات."
 
-#: wp-plg-arabic-search-enhancement.php:158
-msgid "Plugin Activation Error"
-msgstr "خطأ في تفعيل المكون الإضافي"
-
-#: wp-plg-arabic-search-enhancement.php:165
-msgid "Arabic Search Enhancement: Failed to initialize autoloader."
-msgstr "تحسين البحث العربي: فشل في تهيئة محمل الفئات."
-
-#: wp-plg-arabic-search-enhancement.php:166
+#: wp-plg-arabic-search-enhancement.php:158 wp-plg-arabic-search-enhancement.php:166 wp-plg-arabic-search-enhancement.php:175 wp-plg-arabic-search-enhancement.php:189
 msgid "Plugin Activation Error"
 msgstr "خطأ في تفعيل المكون الإضافي"
 
@@ -224,14 +216,6 @@ msgstr "خطأ في تفعيل المكون الإضافي"
 msgid "Arabic Search Enhancement: Essential plugin classes could not be loaded."
 msgstr "تحسين البحث العربي: لا يمكن تحميل فئات المكون الإضافي الأساسية."
 
-#: wp-plg-arabic-search-enhancement.php:175
-msgid "Plugin Activation Error"
-msgstr "خطأ في تفعيل المكون الإضافي"
-
 #: wp-plg-arabic-search-enhancement.php:186
 msgid "Arabic Search Enhancement activation failed: %s"
 msgstr "فشل تفعيل تحسين البحث العربي: %s"
-
-#: wp-plg-arabic-search-enhancement.php:189
-msgid "Plugin Activation Error"
-msgstr "خطأ في تفعيل المكون الإضافي"
