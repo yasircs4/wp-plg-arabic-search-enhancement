@@ -93,6 +93,16 @@ class ArabicTextNormalizer implements TextNormalizerInterface {
      * @throws \InvalidArgumentException If input is not a string
      */
     public function normalize_text(string $text): string {
+        return $this->normalize($text);
+    }
+    
+    /**
+     * Normalize Arabic text (main implementation)
+     *
+     * @param string $text Text to normalize
+     * @return string Normalized text
+     */
+    public function normalize(string $text): string {
         if ($text === '') {
             return '';
         }

@@ -144,7 +144,7 @@ class SearchQueryModifier implements SearchQueryModifierInterface {
         $search_fields = $this->get_search_fields();
         $is_exact = (bool) $wp_query->get('exact');
         
-        return $this->build_search_conditions($search_terms, $search_fields, $is_exact);
+    return $this->build_search_conditions($search, $search_terms, $search_fields, $is_exact);
     }
     
     /**
@@ -194,7 +194,7 @@ class SearchQueryModifier implements SearchQueryModifierInterface {
      * @param bool $is_exact Whether to use exact matching
      * @return string Search SQL conditions
      */
-    private function build_search_conditions(array $search_terms, array $search_fields, bool $is_exact): string {
+    private function build_search_conditions(string $original_search, array $search_terms, array $search_fields, bool $is_exact): string {
         $term_groups = [];
         $prepare_values = [];
         
@@ -225,12 +225,14 @@ class SearchQueryModifier implements SearchQueryModifierInterface {
         }
         
         if (empty($term_groups)) {
-            return '';
+            return $original_search;
         }
         
         $search_sql = ' AND ' . implode(' AND ', $term_groups);
         
-        return $this->wpdb->prepare($search_sql, $prepare_values);
+        $prepared = $this->wpdb->prepare($search_sql, $prepare_values);
+
+        return $prepared !== false ? $prepared : $original_search;
     }
     
     /**

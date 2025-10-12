@@ -57,35 +57,43 @@ function arabic_search_enhancement_load_textdomain(): void {
     $domain = 'arabic-search-enhancement';
     $locale = apply_filters('plugin_locale', get_locale(), $domain);
     
-    // Try to load specific locale file first
-    $mo_file = ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR . 'languages/' . $domain . '-' . $locale . '.mo';
-    if (file_exists($mo_file)) {
-        load_textdomain($domain, $mo_file);
-        return;
-    }
-    
-    // Try language without country code (e.g., 'ar' instead of 'ar_SA')
-    $language = substr($locale, 0, 2);
-    $mo_file = ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR . 'languages/' . $domain . '-' . $language . '.mo';
-    if (file_exists($mo_file)) {
-        load_textdomain($domain, $mo_file);
-        return;
-    }
-    
-    // Fallback to default plugin language directory
-    load_plugin_textdomain(
+    // Always try WordPress standard loading first
+    $loaded = load_plugin_textdomain(
         $domain,
         false,
         basename(ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR) . '/languages'
     );
     
-    // Special handling for Arabic languages
-    if (in_array($language, ['ar', 'he', 'fa', 'ur'])) {
-        // Set RTL direction for admin if not already set
-        add_action('admin_head', function() {
-            echo '<style>.wrap { direction: rtl; text-align: right; }</style>';
-        });
+    // If that didn't work, try manual loading with fallbacks
+    if (!$loaded) {
+        // Try to load specific locale file first
+        $mo_file = ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR . 'languages/' . $domain . '-' . $locale . '.mo';
+        if (file_exists($mo_file)) {
+            load_textdomain($domain, $mo_file);
+            $loaded = true;
+        } else {
+            // Try language without country code (e.g., 'ar' instead of 'ar_SA')
+            $language = substr($locale, 0, 2);
+            $mo_file = ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR . 'languages/' . $domain . '-' . $language . '.mo';
+            if (file_exists($mo_file)) {
+                load_textdomain($domain, $mo_file);
+                $loaded = true;
+            }
+        }
     }
+    
+    // Special handling for RTL languages - only add once
+    $language = substr($locale, 0, 2);
+    if (in_array($language, ['ar', 'he', 'fa', 'ur']) && !has_action('admin_head', 'arabic_search_enhancement_rtl_styles')) {
+        add_action('admin_head', 'arabic_search_enhancement_rtl_styles');
+    }
+}
+
+/**
+ * Add RTL styles for Arabic languages
+ */
+function arabic_search_enhancement_rtl_styles(): void {
+    echo '<style>.arabic-search-enhancement .wrap { direction: rtl; text-align: right; }</style>';
 }
 
 /**
@@ -110,20 +118,22 @@ function arabic_search_enhancement_check_requirements(): bool {
     // Check PHP version
     if (version_compare(PHP_VERSION, '7.4', '<')) {
         add_action('admin_notices', function() use ($text_domain) {
-            echo '<div class="notice notice-error"><p>';
-            echo esc_html__('Arabic Search Enhancement requires PHP 7.4 or higher. Your version: ', $text_domain);
-            echo esc_html(PHP_VERSION);
-            echo '</p></div>';
+            printf(
+                '<div class="notice notice-error"><p>%s %s</p></div>',
+                esc_html__('Arabic Search Enhancement requires PHP 7.4 or higher. Your version:', $text_domain),
+                esc_html(PHP_VERSION)
+            );
         });
         return false;
     }
     
     // Check WordPress version
-    if (version_compare($GLOBALS['wp_version'], '5.0', '<')) {
+    if (!isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], '5.0', '<')) {
         add_action('admin_notices', function() use ($text_domain) {
-            echo '<div class="notice notice-error"><p>';
-            echo esc_html__('Arabic Search Enhancement requires WordPress 5.0 or higher.', $text_domain);
-            echo '</p></div>';
+            printf(
+                '<div class="notice notice-error"><p>%s</p></div>',
+                esc_html__('Arabic Search Enhancement requires WordPress 5.0 or higher.', $text_domain)
+            );
         });
         return false;
     }
@@ -133,12 +143,13 @@ function arabic_search_enhancement_check_requirements(): bool {
     foreach ($required_functions as $function) {
         if (!function_exists($function)) {
             add_action('admin_notices', function() use ($text_domain, $function) {
-                echo '<div class="notice notice-error"><p>';
-                echo sprintf(
-                    esc_html__('Arabic Search Enhancement requires WordPress function %s which is not available.', $text_domain),
-                    esc_html($function)
+                printf(
+                    '<div class="notice notice-error"><p>%s</p></div>',
+                    sprintf(
+                        esc_html__('Arabic Search Enhancement requires WordPress function %s which is not available.', $text_domain),
+                        esc_html($function)
+                    )
                 );
-                echo '</p></div>';
             });
             return false;
         }
@@ -197,9 +208,10 @@ function arabic_search_enhancement_init(): void {
         // Initialize autoloader
         if (!arabic_search_enhancement_init_autoloader()) {
             add_action('admin_notices', function() use ($text_domain) {
-                echo '<div class="notice notice-error"><p>';
-                echo esc_html__('Arabic Search Enhancement: Failed to initialize autoloader.', $text_domain);
-                echo '</p></div>';
+                printf(
+                    '<div class="notice notice-error"><p>%s</p></div>',
+                    esc_html__('Arabic Search Enhancement: Failed to initialize autoloader.', $text_domain)
+                );
             });
             return;
         }
@@ -211,23 +223,25 @@ function arabic_search_enhancement_init(): void {
             $plugin->init();
         } else {
             add_action('admin_notices', function() use ($text_domain) {
-                echo '<div class="notice notice-error"><p>';
-                echo esc_html__('Arabic Search Enhancement: Failed to initialize plugin.', $text_domain);
-                echo '</p></div>';
+                printf(
+                    '<div class="notice notice-error"><p>%s</p></div>',
+                    esc_html__('Arabic Search Enhancement: Failed to initialize plugin.', $text_domain)
+                );
             });
         }
         
     } catch (\Throwable $e) {
         add_action('admin_notices', function() use ($text_domain, $e) {
-            echo '<div class="notice notice-error"><p>';
-            echo sprintf(
-                esc_html__('Arabic Search Enhancement initialization error: %s', $text_domain),
-                esc_html($e->getMessage())
+            printf(
+                '<div class="notice notice-error"><p>%s</p></div>',
+                sprintf(
+                    esc_html__('Arabic Search Enhancement initialization error: %s', $text_domain),
+                    esc_html($e->getMessage())
+                )
             );
-            echo '</p></div>';
         });
         
-        // Log the error
+        // Log the error for debugging
         error_log('Arabic Search Enhancement: ' . $e->getMessage());
     }
 }
@@ -305,26 +319,37 @@ add_action('plugins_loaded', 'arabic_search_enhancement_init');
 register_activation_hook(__FILE__, 'arabic_search_enhancement_activate');
 register_deactivation_hook(__FILE__, 'arabic_search_enhancement_deactivate');
 
-// Add uninstall hook
-register_uninstall_hook(__FILE__, function() {
+// Register uninstall hook - pointing to separate file for WordPress.org compliance
+register_uninstall_hook(__FILE__, 'arabic_search_enhancement_uninstall');
+
+/**
+ * Plugin uninstall cleanup
+ */
+function arabic_search_enhancement_uninstall(): void {
     // Clean up options on uninstall
     $options = [
         'ase_enable_enhancement',
-        'ase_search_post_types',
+        'ase_search_post_types', 
         'ase_search_excerpt',
         'ase_posts_per_page',
         'ase_cache_expiration',
         'ase_debug_mode',
         'ase_performance_monitoring',
+        'ase_analytics_enabled',
     ];
     
     foreach ($options as $option) {
         delete_option($option);
     }
     
+    // Clean up transients
+    global $wpdb;
+    $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_ase_%'");
+    $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_ase_%'");
+    
     // Clear caches
     wp_cache_flush();
-});
+}
 
 /**
  * Backward compatibility functions
@@ -333,18 +358,28 @@ register_uninstall_hook(__FILE__, function() {
 
 /**
  * Legacy function for getting plugin instance
- * @deprecated Use arabic_search_enhancement_get_plugin() instead
+ * @deprecated 1.1.0 Use arabic_search_enhancement_get_plugin() instead
+ * @return Plugin|null
  */
 function Arabic_Search_Enhancement() {
+    _deprecated_function(__FUNCTION__, '1.1.0', 'arabic_search_enhancement_get_plugin()');
     return arabic_search_enhancement_get_plugin();
 }
 
 /**
  * Legacy static method access
- * @deprecated Use arabic_search_enhancement_get_plugin() instead
+ * @deprecated 1.1.0 Use arabic_search_enhancement_get_plugin() instead
  */
-class Arabic_Search_Enhancement {
-    public static function get_instance() {
-        return arabic_search_enhancement_get_plugin();
+if (!class_exists('Arabic_Search_Enhancement')) {
+    class Arabic_Search_Enhancement {
+        /**
+         * Get plugin instance
+         * @deprecated 1.1.0 Use arabic_search_enhancement_get_plugin() instead
+         * @return Plugin|null
+         */
+        public static function get_instance() {
+            _deprecated_function(__METHOD__, '1.1.0', 'arabic_search_enhancement_get_plugin()');
+            return arabic_search_enhancement_get_plugin();
+        }
     }
 }

@@ -20,6 +20,8 @@ if (!defined('ABSPATH')) {
 use ArabicSearchEnhancement\Interfaces\ConfigurationInterface;
 use ArabicSearchEnhancement\Interfaces\SearchQueryModifierInterface;
 use ArabicSearchEnhancement\Admin\SettingsPage;
+use ArabicSearchEnhancement\Admin\SearchAnalyticsDashboard;
+use ArabicSearchEnhancement\API\RestApiController;
 
 class Plugin {
     
@@ -52,6 +54,20 @@ class Plugin {
     private $settings_page;
     
     /**
+     * Analytics dashboard instance
+     *
+     * @var SearchAnalyticsDashboard
+     */
+    private $analytics_dashboard;
+    
+    /**
+     * REST API controller instance
+     *
+     * @var RestApiController
+     */
+    private $rest_api_controller;
+    
+    /**
      * Whether plugin is initialized
      *
      * @var bool
@@ -71,15 +87,21 @@ class Plugin {
      * @param ConfigurationInterface $config Configuration instance
      * @param SearchQueryModifierInterface $search_modifier Search modifier instance
      * @param SettingsPage $settings_page Settings page instance
+     * @param SearchAnalyticsDashboard|null $analytics_dashboard Analytics dashboard instance
+     * @param RestApiController|null $rest_api_controller REST API controller instance
      */
     public function __construct(
         ConfigurationInterface $config,
         SearchQueryModifierInterface $search_modifier,
-        SettingsPage $settings_page
+        SettingsPage $settings_page,
+        ?SearchAnalyticsDashboard $analytics_dashboard = null,
+        ?RestApiController $rest_api_controller = null
     ) {
         $this->config = $config;
         $this->search_modifier = $search_modifier;
         $this->settings_page = $settings_page;
+        $this->analytics_dashboard = $analytics_dashboard;
+        $this->rest_api_controller = $rest_api_controller;
     }
     
     /**
@@ -144,6 +166,16 @@ class Plugin {
     private function init_admin(): void {
         if (is_admin()) {
             $this->settings_page->init_hooks();
+            
+            // Initialize analytics dashboard if available
+            if ($this->analytics_dashboard) {
+                $this->analytics_dashboard->init_hooks();
+            }
+        }
+        
+        // Initialize REST API controller if available
+        if ($this->rest_api_controller) {
+            // REST API is initialized automatically via rest_api_init hook in the controller
         }
     }
     
@@ -277,6 +309,71 @@ class Plugin {
      */
     public function get_config(): ConfigurationInterface {
         return $this->config;
+    }
+    
+    /**
+     * Get configuration instance (alias for compatibility)
+     *
+     * @return ConfigurationInterface
+     */
+    public function get_configuration(): ConfigurationInterface {
+        return $this->config;
+    }
+    
+    /**
+     * Get search query modifier instance
+     *
+     * @return SearchQueryModifierInterface
+     */
+    public function get_search_modifier(): SearchQueryModifierInterface {
+        return $this->search_modifier;
+    }
+    
+    /**
+     * Get settings page instance
+     *
+     * @return SettingsPage
+     */
+    public function get_settings_page(): SettingsPage {
+        return $this->settings_page;
+    }
+    
+    /**
+     * Get analytics dashboard instance
+     *
+     * @return SearchAnalyticsDashboard|null
+     */
+    public function get_analytics_dashboard(): ?SearchAnalyticsDashboard {
+        return $this->analytics_dashboard;
+    }
+    
+    /**
+     * Get REST API controller instance
+     *
+     * @return RestApiController|null
+     */
+    public function get_rest_api_controller(): ?RestApiController {
+        return $this->rest_api_controller;
+    }
+    
+    /**
+     * Get normalizer instance from search modifier
+     *
+     * @return mixed
+     */
+    public function get_normalizer() {
+        // Check if we can get the normalizer from the search modifier
+        if (method_exists($this->search_modifier, 'get_normalizer')) {
+            return $this->search_modifier->get_normalizer();
+        }
+        
+        // Fallback: create a simple normalizer for testing
+        static $normalizer = null;
+        if ($normalizer === null) {
+            $cache = PluginFactory::create_cache();
+            $normalizer = new ArabicTextNormalizer($cache);
+        }
+        return $normalizer;
     }
     
     /**

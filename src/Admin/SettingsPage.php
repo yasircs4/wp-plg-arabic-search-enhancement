@@ -54,10 +54,9 @@ class SettingsPage {
      * @return void
      */
     public function init_hooks(): void {
-        add_action('admin_menu', [$this, 'add_menu']);
-        add_action('admin_init', [$this, 'init_settings']);
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
+    add_action('admin_menu', [$this, 'add_settings_page']);
+    add_action('admin_init', [$this, 'register_settings']);
+    add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
         
         // Get the correct plugin file path
         $plugin_file = defined('ARABIC_SEARCH_ENHANCEMENT_PLUGIN_FILE') 
@@ -110,6 +109,11 @@ class SettingsPage {
                 'default' => get_option('posts_per_page')
             ],
             'debug_mode' => [
+                'type' => 'boolean',
+                'sanitize_callback' => [$this, 'sanitize_checkbox'],
+                'default' => false
+            ],
+            'analytics_enabled' => [
                 'type' => 'boolean',
                 'sanitize_callback' => [$this, 'sanitize_checkbox'],
                 'default' => false
@@ -220,6 +224,7 @@ class SettingsPage {
                     <?php $this->render_post_types_setting(); ?>
                     <?php $this->render_posts_per_page_setting(); ?>
                     <?php $this->render_debug_setting(); ?>
+                    <?php $this->render_analytics_setting(); ?>
                 </table>
                 
                 <?php $this->render_normalization_info(); ?>
@@ -400,6 +405,52 @@ class SettingsPage {
                 <p class="description">
                     <?php esc_html_e('Log errors and performance information for troubleshooting', Configuration::TEXT_DOMAIN); ?>
                 </p>
+            </td>
+        </tr>
+        <?php
+    }
+    
+    /**
+     * Render analytics setting
+     *
+     * @return void
+     */
+    private function render_analytics_setting(): void {
+        ?>
+        <tr>
+            <th scope="row">
+                <?php esc_html_e('Search Analytics', 'arabic-search-enhancement'); ?>
+            </th>
+            <td>
+                <label>
+                    <input type="checkbox" 
+                           name="<?php echo esc_attr(Configuration::OPTION_PREFIX . 'analytics_enabled'); ?>" 
+                           value="1" 
+                           <?php checked($this->config->get('analytics_enabled', false), true); ?>>
+                    <?php esc_html_e('Enable search analytics collection', 'arabic-search-enhancement'); ?>
+                </label>
+                <p class="description">
+                    <?php esc_html_e('Collect anonymous search statistics to improve functionality. No personal data is collected.', 'arabic-search-enhancement'); ?>
+                    <a href="#" onclick="document.getElementById('privacy-details').style.display = document.getElementById('privacy-details').style.display === 'none' ? 'block' : 'none'; return false;">
+                        <?php esc_html_e('Privacy Details', 'arabic-search-enhancement'); ?>
+                    </a>
+                </p>
+                <div id="privacy-details" style="display: none; background: #f9f9f9; padding: 10px; border-left: 4px solid #0073aa; margin-top: 10px;">
+                    <strong><?php esc_html_e('What data is collected:', 'arabic-search-enhancement'); ?></strong>
+                    <ul style="margin: 5px 0 5px 20px;">
+                        <li><?php esc_html_e('Search queries (anonymized)', 'arabic-search-enhancement'); ?></li>
+                        <li><?php esc_html_e('Search result counts', 'arabic-search-enhancement'); ?></li>
+                        <li><?php esc_html_e('Language detection results', 'arabic-search-enhancement'); ?></li>
+                        <li><?php esc_html_e('Search timestamps', 'arabic-search-enhancement'); ?></li>
+                    </ul>
+                    <strong><?php esc_html_e('What is NOT collected:', 'arabic-search-enhancement'); ?></strong>
+                    <ul style="margin: 5px 0 5px 20px;">
+                        <li><?php esc_html_e('User names, emails, or IP addresses', 'arabic-search-enhancement'); ?></li>
+                        <li><?php esc_html_e('Personal identifiable information', 'arabic-search-enhancement'); ?></li>
+                        <li><?php esc_html_e('User browsing behavior outside search', 'arabic-search-enhancement'); ?></li>
+                    </ul>
+                    <p><?php esc_html_e('All data is stored locally in your WordPress database and never transmitted to external servers.', 'arabic-search-enhancement'); ?></p>
+                </div>
             </td>
         </tr>
         <?php

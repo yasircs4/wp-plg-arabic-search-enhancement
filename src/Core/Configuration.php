@@ -61,6 +61,7 @@ class Configuration implements ConfigurationInterface {
         'cache_expiration' => 3600,
         'debug_mode' => false,
         'performance_monitoring' => false,
+        'analytics_enabled' => false, // Privacy-first: Default to disabled
     ];
     
     /**
@@ -173,14 +174,15 @@ class Configuration implements ConfigurationInterface {
             return;
         }
         
+        // Mark as loaded first to prevent circular calls
+        $this->loaded = true;
+        
         // Pre-load commonly used options
         $common_keys = ['enable_enhancement', 'search_post_types', 'search_excerpt'];
         
         foreach ($common_keys as $key) {
             $this->get($key);
         }
-        
-        $this->loaded = true;
     }
     
     /**

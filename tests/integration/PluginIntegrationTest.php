@@ -16,8 +16,9 @@ class PluginIntegrationTest extends TestCase {
     private $plugin;
     
     protected function setUp(): void {
-        $factory = new PluginFactory();
-        $this->plugin = $factory->create_plugin();
+        ase_mock_reset_options();
+        PluginFactory::clear_instances();
+        $this->plugin = PluginFactory::create_plugin();
     }
     
     public function testPluginInitialization(): void {
@@ -60,14 +61,14 @@ class PluginIntegrationTest extends TestCase {
         $modifier = $this->plugin->get_search_modifier();
         
         // Create mock query object
-        $query = new \stdClass();
-        $query->query_vars = ['s' => 'مَكْتُوب كِتَاب'];
-        $query->is_search = true;
+        $wp_query = new \WP_Query(['s' => 'مَكْتُوب كِتَاب']);
+        $wp_query->set_is_search(true);
+        $wp_query->set_main_query(true);
+    $result = $modifier->modify_search_sql(' original_sql ', $wp_query);
         
-        $modifier->modify_search_query($query);
-        
-        // Verify normalization occurred
-        $this->assertNotEquals('مَكْتُوب كِتَاب', $query->query_vars['s']);
+        // Verify normalization occurred - result should contain normalized text
+        $this->assertNotEmpty($result);
+        $this->assertStringContainsString('مكتوب', $result); // Should contain normalized form
     }
     
     public function testCacheIntegration(): void {

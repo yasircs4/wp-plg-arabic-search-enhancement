@@ -142,4 +142,17 @@ For support, bug reports, or feature requests, please contact the developer or v
 
 == Privacy ==
 
-This plugin does not collect, store, or transmit any personal data. All processing is done locally on your WordPress installation.
+This plugin collects and stores anonymous search analytics data to improve search functionality. The following information is collected:
+
+* Search queries (anonymized and used for statistics only)
+* Search result counts and language detection
+* Search timestamps (for trend analysis)
+
+**No personal information is collected**, including:
+* User names, emails, or IP addresses
+* Personal identifiable information (PII)
+* User browsing behavior outside of search functionality
+
+All data collection can be disabled through the plugin settings. Data is stored locally in your WordPress database and is not transmitted to external servers.
+
+For complete privacy transparency, you may review the source code at the plugin repository.

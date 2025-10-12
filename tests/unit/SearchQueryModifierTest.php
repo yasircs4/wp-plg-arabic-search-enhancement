@@ -15,96 +15,69 @@ use ArabicSearchEnhancement\Core\Configuration;
 use ArabicSearchEnhancement\Core\Cache;
 
 class SearchQueryModifierTest extends TestCase {
-    
-    private SearchQueryModifier $modifier;
-    private ArabicTextNormalizer $normalizer;
     private Configuration $config;
     private Cache $cache;
-    
+    private ArabicTextNormalizer $normalizer;
+    private SearchQueryModifier $modifier;
+    private \wpdb $wpdb;
+
     protected function setUp(): void {
-        $mockCacheInterface = $this->createMock('ArabicSearchEnhancement\Interfaces\CacheInterface');
-        $this->cache = new Cache($mockCacheInterface);
-        $this->config = new Configuration($this->cache);
-        $mockConfig = $this->createMock('ArabicSearchEnhancement\Interfaces\ConfigurationInterface');
-        $this->normalizer = new ArabicTextNormalizer($mockConfig);
-        $this->modifier = new SearchQueryModifier($this->normalizer, $this->config, $this->cache);
-    }
-    
-    public function testModifySearchQuery(): void {
-        $query = new \stdClass();
-        $query->query_vars = [
-            's' => 'مكتوب',
-            'post_type' => 'post'
-        ];
-        
-        // Mock is_search() function
-        $query->is_search = true;
-        
-        $this->modifier->modify_search_query($query);
-        
-        // Verify the query was modified
-        $this->assertNotEquals('مكتوب', $query->query_vars['s']);
-    }
-    
-    public function testGenerateSearchSql(): void {
+        ase_mock_reset_options();
         global $wpdb;
-        $wpdb = new \stdClass();
-        $wpdb->posts = 'wp_posts';
-        
-        $search_terms = ['مكتوب', 'كتاب'];
-        $sql = $this->modifier->generate_search_sql($search_terms);
-        
+        $this->wpdb = $wpdb;
+
+        $this->config = new Configuration();
+        $this->cache = new Cache($this->config);
+        $this->normalizer = new ArabicTextNormalizer($this->cache);
+        $this->modifier = new SearchQueryModifier($this->normalizer, $this->config, $this->wpdb);
+    }
+
+    public function testModifySearchSqlNormalizesArabicTerms(): void {
+        $wp_query = new \WP_Query(['s' => 'مَكْتُوب كتاب']);
+        $wp_query->set_is_search(true);
+        $wp_query->set_main_query(true);
+
+    $sql = $this->modifier->modify_search_sql(' original_sql ', $wp_query);
+
         $this->assertIsString($sql);
-        $this->assertStringContains('REPLACE', $sql);
-        $this->assertStringContains('wp_posts', $sql);
+        $this->assertStringContainsString('LIKE', $sql);
+        $this->assertStringContainsString('مكتوب', $sql);
     }
-    
-    public function testHandlesEmptySearchTerms(): void {
-        $search_terms = [];
-        $sql = $this->modifier->generate_search_sql($search_terms);
-        
-        $this->assertEquals('', $sql);
+
+    public function testModifySearchSqlRespectsDisableFlag(): void {
+        $this->config->set('enable_enhancement', false);
+        $wp_query = new \WP_Query(['s' => 'مَكْتُوب']);
+        $wp_query->set_is_search(true);
+        $wp_query->set_main_query(true);
+
+        $original = ' ORIGINAL SQL ';
+        $sql = $this->modifier->modify_search_sql($original, $wp_query);
+
+        $this->assertSame($original, $sql);
     }
-    
-    public function testHandlesNonArabicText(): void {
-        $search_terms = ['hello', 'world'];
-        $sql = $this->modifier->generate_search_sql($search_terms);
-        
-        $this->assertIsString($sql);
-        $this->assertStringContains('hello', $sql);
-        $this->assertStringContains('world', $sql);
+
+    public function testModifyQueryParamsAppliesConfiguration(): void {
+        $this->config->set('search_post_types', ['post', 'page']);
+        $this->config->set('posts_per_page', 12);
+
+        $wp_query = new \WP_Query(['s' => 'test']);
+        $wp_query->set_is_search(true);
+        $wp_query->set_main_query(true);
+
+        $this->modifier->modify_query_params($wp_query);
+
+        $this->assertEquals(['post', 'page'], $wp_query->get('post_type'));
+        $this->assertEquals(12, $wp_query->get('posts_per_page'));
     }
-    
-    public function testCachesSearchSql(): void {
-        $search_terms = ['مكتوب'];
-        
-        // First call should generate and cache
-        $sql1 = $this->modifier->generate_search_sql($search_terms);
-        
-        // Second call should return cached result
-        $sql2 = $this->modifier->generate_search_sql($search_terms);
-        
-        $this->assertEquals($sql1, $sql2);
-    }
-    
-    public function testNormalizesSearchTerms(): void {
-        $terms = ['مَكْتُوب', 'كِتَاب'];
-        $normalized = $this->modifier->normalize_search_terms($terms);
-        
-        $this->assertEquals(['مكتوب', 'كتاب'], $normalized);
-    }
-    
-    public function testSplitsSearchString(): void {
-        $search_string = 'مكتوب كتاب جميل';
-        $terms = $this->modifier->parse_search_terms($search_string);
-        
-        $this->assertEquals(['مكتوب', 'كتاب', 'جميل'], $terms);
-    }
-    
-    public function testHandlesSpecialCharacters(): void {
-        $search_string = 'مكتوب، كتاب! جميل؟';
-        $terms = $this->modifier->parse_search_terms($search_string);
-        
-        $this->assertEquals(['مكتوب', 'كتاب', 'جميل'], $terms);
+
+    public function testModifySearchSqlFallsBackWhenNoTerms(): void {
+        $wp_query = new \WP_Query(['s' => '   ']);
+        $wp_query->set_is_search(true);
+        $wp_query->set_main_query(true);
+
+    $original = ' original_sql ';
+    $sql = $this->modifier->modify_search_sql($original, $wp_query);
+
+    $this->assertSame($original, $sql);
     }
 }
