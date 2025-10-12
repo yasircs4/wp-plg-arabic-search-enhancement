@@ -70,8 +70,8 @@ class SearchQueryModifier implements SearchQueryModifierInterface {
      * @return string Modified search SQL
      */
     public function modify_search_sql(string $search, WP_Query $wp_query): string {
-        // Skip if not enabled or if in admin
-        if (!$this->should_modify_search($search)) {
+        // Skip if not enabled or if in admin-only context
+        if (!$this->should_modify_search($search, $wp_query)) {
             return $search;
         }
         
@@ -109,10 +109,16 @@ class SearchQueryModifier implements SearchQueryModifierInterface {
      * @param string $search Original search SQL
      * @return bool True if should modify
      */
-    private function should_modify_search(string $search): bool {
-        return !is_admin() 
-            && !empty($search) 
-            && $this->config->get('enable_enhancement', true);
+    private function should_modify_search(string $search, WP_Query $query): bool {
+        if (empty($search) || !$this->config->get('enable_enhancement', true)) {
+            return false;
+        }
+
+        if (!is_admin()) {
+            return true;
+        }
+
+        return $this->is_frontend_ajax_search($query);
     }
     
     /**
@@ -125,6 +131,72 @@ class SearchQueryModifier implements SearchQueryModifierInterface {
         return !is_admin() 
             && $query->is_search() 
             && $query->is_main_query();
+    }
+
+    /**
+     * Determine if the current search runs through a frontend AJAX request (e.g., Elementor widgets).
+     *
+     * @param WP_Query $query WordPress query object
+     * @return bool True when we should treat the request as frontend
+     */
+    private function is_frontend_ajax_search(WP_Query $query): bool {
+        if (!function_exists('wp_doing_ajax') || !wp_doing_ajax()) {
+            return false;
+        }
+
+        if (!$query->is_search()) {
+            return false;
+        }
+
+        $action = isset($_REQUEST['action']) ? (string) $_REQUEST['action'] : '';
+
+        if ($action === '') {
+            return false;
+        }
+
+        if (function_exists('wp_unslash')) {
+            $action = (string) wp_unslash($action);
+        }
+
+        $action = trim($action);
+        $action_key = $action !== '' && function_exists('sanitize_key')
+            ? sanitize_key($action)
+            : $action;
+
+        $allowed_actions = apply_filters(
+            'arabic_search_enhancement_frontend_ajax_actions',
+            [
+                'elementor_ajax',
+                'elementor_pro_search',
+                'elementor_pro_search_form',
+                'elementor_search',
+            ]
+        );
+
+        if (!is_array($allowed_actions)) {
+            $allowed_actions = [];
+        }
+
+        foreach ($allowed_actions as $allowed_action) {
+            $allowed_action = trim((string) $allowed_action);
+            if ($allowed_action === '') {
+                continue;
+            }
+
+            $allowed_action_key = function_exists('sanitize_key')
+                ? sanitize_key($allowed_action)
+                : $allowed_action;
+
+            if ($allowed_action_key !== '' && strpos($action_key, $allowed_action_key) !== false) {
+                return true;
+            }
+
+            if (strpos($action, $allowed_action) !== false) {
+                return true;
+            }
+        }
+
+        return false;
     }
     
     /**
