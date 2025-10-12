@@ -1,0 +1,285 @@
+<?php
+/**
+ * Search Query Modifier
+ *
+ * @package ArabicSearchEnhancement
+ * @since 1.1.0
+ * @author Yasser Nageep Maisra <info@maisra.net>
+ * @copyright 2025 Yasser Nageep Maisra
+ * @license GPL-2.0-or-later
+ * @link https://maisra.net
+ */
+
+namespace ArabicSearchEnhancement\Core;
+
+// Exit if accessed directly
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+use ArabicSearchEnhancement\Interfaces\SearchQueryModifierInterface;
+use ArabicSearchEnhancement\Interfaces\TextNormalizerInterface;
+use ArabicSearchEnhancement\Interfaces\ConfigurationInterface;
+use WP_Query;
+
+class SearchQueryModifier implements SearchQueryModifierInterface {
+    
+    /**
+     * Text normalizer instance
+     *
+     * @var TextNormalizerInterface
+     */
+    private $normalizer;
+    
+    /**
+     * Configuration instance
+     *
+     * @var ConfigurationInterface
+     */
+    private $config;
+    
+    /**
+     * WordPress database instance
+     *
+     * @var \wpdb
+     */
+    private $wpdb;
+    
+    /**
+     * Constructor
+     *
+     * @param TextNormalizerInterface $normalizer Text normalizer
+     * @param ConfigurationInterface $config Configuration
+     * @param \wpdb $wpdb WordPress database
+     */
+    public function __construct(
+        TextNormalizerInterface $normalizer,
+        ConfigurationInterface $config,
+        \wpdb $wpdb
+    ) {
+        $this->normalizer = $normalizer;
+        $this->config = $config;
+        $this->wpdb = $wpdb;
+    }
+    
+    /**
+     * Modify WordPress search query to enhance Arabic text search
+     *
+     * @param string $search Original search SQL
+     * @param WP_Query $wp_query WordPress query object
+     * @return string Modified search SQL
+     */
+    public function modify_search_sql(string $search, WP_Query $wp_query): string {
+        // Skip if not enabled or if in admin
+        if (!$this->should_modify_search($search)) {
+            return $search;
+        }
+        
+        try {
+            return $this->build_enhanced_search_sql($search, $wp_query);
+        } catch (\Exception $e) {
+            // Log error if debug mode is enabled
+            if ($this->config->get('debug_mode', false)) {
+                error_log('Arabic Search Enhancement Error: ' . $e->getMessage());
+            }
+            
+            // Return original search on error
+            return $search;
+        }
+    }
+    
+    /**
+     * Modify main query parameters for search
+     *
+     * @param WP_Query $query WordPress query object
+     * @return void
+     */
+    public function modify_query_params(WP_Query $query): void {
+        if (!$this->is_main_search_query($query)) {
+            return;
+        }
+        
+        $this->set_search_post_types($query);
+        $this->set_posts_per_page($query);
+    }
+    
+    /**
+     * Check if search should be modified
+     *
+     * @param string $search Original search SQL
+     * @return bool True if should modify
+     */
+    private function should_modify_search(string $search): bool {
+        return !is_admin() 
+            && !empty($search) 
+            && $this->config->get('enable_enhancement', true);
+    }
+    
+    /**
+     * Check if this is the main search query
+     *
+     * @param WP_Query $query WordPress query object
+     * @return bool True if main search query
+     */
+    private function is_main_search_query(WP_Query $query): bool {
+        return !is_admin() 
+            && $query->is_search() 
+            && $query->is_main_query();
+    }
+    
+    /**
+     * Build enhanced search SQL
+     *
+     * @param string $search Original search SQL
+     * @param WP_Query $wp_query WordPress query object
+     * @return string Enhanced search SQL
+     */
+    private function build_enhanced_search_sql(string $search, WP_Query $wp_query): string {
+        $search_terms = $this->get_search_terms($wp_query);
+        
+        if (empty($search_terms)) {
+            return $search;
+        }
+        
+        $search_fields = $this->get_search_fields();
+        $is_exact = (bool) $wp_query->get('exact');
+        
+        return $this->build_search_conditions($search_terms, $search_fields, $is_exact);
+    }
+    
+    /**
+     * Get search terms from query
+     *
+     * @param WP_Query $wp_query WordPress query object
+     * @return array Search terms
+     */
+    private function get_search_terms(WP_Query $wp_query): array {
+        $search_terms = $wp_query->get('search_terms');
+        
+        if (empty($search_terms)) {
+            $search_term = $wp_query->get('s');
+            if (!empty($search_term) && is_string($search_term)) {
+                $search_terms = [$search_term];
+            }
+        }
+        
+        return is_array($search_terms) ? $search_terms : [];
+    }
+    
+    /**
+     * Get fields to search in
+     *
+     * @return array Search field templates
+     */
+    private function get_search_fields(): array {
+        $posts_table = $this->wpdb->posts;
+        
+        $fields = [
+            $this->normalizer->get_normalization_sql("{$posts_table}.post_title"),
+            $this->normalizer->get_normalization_sql("{$posts_table}.post_content"),
+        ];
+        
+        if ($this->config->get('search_excerpt', true)) {
+            $fields[] = $this->normalizer->get_normalization_sql("{$posts_table}.post_excerpt");
+        }
+        
+        return $fields;
+    }
+    
+    /**
+     * Build search conditions for all terms and fields
+     *
+     * @param array $search_terms Search terms
+     * @param array $search_fields Search fields
+     * @param bool $is_exact Whether to use exact matching
+     * @return string Search SQL conditions
+     */
+    private function build_search_conditions(array $search_terms, array $search_fields, bool $is_exact): string {
+        $term_groups = [];
+        $prepare_values = [];
+        
+        $like_prefix = $is_exact ? '' : '%';
+        $like_suffix = $like_prefix;
+        
+        foreach ($search_terms as $term) {
+            if (!is_string($term) || $term === '') {
+                continue;
+            }
+            
+            $normalized_term = $this->normalizer->normalize_text($term);
+            if ($normalized_term === '') {
+                continue;
+            }
+            
+            $like_value = $like_prefix . $this->wpdb->esc_like($normalized_term) . $like_suffix;
+            $term_conditions = [];
+            
+            foreach ($search_fields as $field) {
+                $term_conditions[] = "({$field} LIKE %s)";
+                $prepare_values[] = $like_value;
+            }
+            
+            if (!empty($term_conditions)) {
+                $term_groups[] = '(' . implode(' OR ', $term_conditions) . ')';
+            }
+        }
+        
+        if (empty($term_groups)) {
+            return '';
+        }
+        
+        $search_sql = ' AND ' . implode(' AND ', $term_groups);
+        
+        return $this->wpdb->prepare($search_sql, $prepare_values);
+    }
+    
+    /**
+     * Set post types for search query
+     *
+     * @param WP_Query $query WordPress query object
+     * @return void
+     */
+    private function set_search_post_types(WP_Query $query): void {
+        $search_post_types = $this->config->get('search_post_types', ['post', 'page']);
+        
+        if (!empty($search_post_types) && is_array($search_post_types)) {
+            $query->set('post_type', $search_post_types);
+        }
+    }
+    
+    /**
+     * Set posts per page for search results
+     *
+     * @param WP_Query $query WordPress query object
+     * @return void
+     */
+    private function set_posts_per_page(WP_Query $query): void {
+        $posts_per_page = $this->config->get('posts_per_page');
+        
+        // Ensure we have a valid positive integer
+        if (is_numeric($posts_per_page)) {
+            $posts_per_page = (int) $posts_per_page;
+            if ($posts_per_page > 0 && $posts_per_page <= 100) {
+                $query->set('posts_per_page', $posts_per_page);
+            }
+        }
+    }
+    
+    /**
+     * Get search performance metrics
+     *
+     * @param array $search_terms Search terms used
+     * @param int $results_count Number of results found
+     * @param float $execution_time Query execution time
+     * @return array Performance metrics
+     */
+    public function get_performance_metrics(array $search_terms, int $results_count, float $execution_time): array {
+        return [
+            'terms_count' => count($search_terms),
+            'results_count' => $results_count,
+            'execution_time' => $execution_time,
+            'average_time_per_term' => count($search_terms) > 0 ? $execution_time / count($search_terms) : 0,
+            'normalized_terms' => array_map([$this->normalizer, 'normalize_text'], $search_terms),
+        ];
+    }
+}

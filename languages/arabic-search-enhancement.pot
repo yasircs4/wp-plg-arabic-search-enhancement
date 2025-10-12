@@ -1,0 +1,238 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Arabic Search Enhancement 1.1.0\n"
+"Report-Msgid-Bugs-To: info@maisra.net\n"
+"POT-Creation-Date: 2025-10-12 12:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/Admin/SettingsPage.php:52
+msgid "Arabic Search Settings"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:53
+msgid "Arabic Search"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:125
+msgid "Enable Arabic Enhancement"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:131
+msgid "Enable Arabic text normalization in search"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:134
+msgid "When enabled, searches will find content with different Arabic letter forms (e.g., searching \"قران\" will find \"قرآن\")"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:142
+msgid "Search in Excerpt"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:148
+msgid "Include post excerpts in search"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:167
+msgid "Post Types to Search"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:186
+msgid "No public post types available."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:189
+msgid "Select which post types to include in search results"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:199
+msgid "Results Per Page"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:210
+msgid "Number of search results to show per page"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:218
+msgid "Debug Mode"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:224
+msgid "Enable debug logging"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:227
+msgid "Log errors and performance information for troubleshooting"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:237
+msgid "Normalization Rules"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:238
+msgid "This plugin automatically normalizes the following Arabic text variations:"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:240
+msgid "Removes all diacritics (Tashkeel): َ ُ ِ ّ ْ ً ٌ ٍ and more"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:241
+msgid "Normalizes Alef: أ إ آ ٱ → ا"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:242
+msgid "Normalizes Taa Marbuta: ة → ه"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:243
+msgid "Normalizes Yaa: ى → ي"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:244
+msgid "Normalizes Hamza: ؤ → و, ئ → ي"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:245
+msgid "Removes Tatweel (Kashida): ـ"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:249
+msgid "Test Your Search"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:250
+msgid "Try searching for these examples to see the improvement:"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:252
+msgid "Search \"قران\" to find \"قرآن\""
+msgstr ""
+
+#: src/Admin/SettingsPage.php:253
+msgid "Search \"اسلام\" to find \"إسلام\" or \"الإسلام\""
+msgstr ""
+
+#: src/Admin/SettingsPage.php:254
+msgid "Search \"محمد\" to find \"مُحَمَّد\" (with diacritics)"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:255
+msgid "Search \"سنه\" to find \"سنة\""
+msgstr ""
+
+#: src/Admin/SettingsPage.php:262
+msgid "Plugin Information"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:263
+msgid "Version:"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:264
+msgid "Website:"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:265
+msgid "Database Charset:"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:266
+msgid "Database Collation:"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:290
+msgid "Settings"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:306
+msgid "Plugin Self-Test"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:307
+msgid "Click the button below to run a comprehensive test of the plugin functionality."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:310
+msgid "Run Self-Test"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:314
+msgid "Test Results:"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:321
+msgid "Running Tests..."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:355
+msgid "Note: Server-side tests require the plugin to be fully activated and functional."
+msgstr ""
+
+#: wp-plg-arabic-search-enhancement.php:61
+msgid "Arabic Search Enhancement requires PHP 7.4 or higher. Your version: "
+msgstr ""
+
+#: wp-plg-arabic-search-enhancement.php:70
+msgid "Arabic Search Enhancement requires WordPress 5.0 or higher."
+msgstr ""
+
+#: wp-plg-arabic-search-enhancement.php:81
+msgid "Arabic Search Enhancement requires WordPress function %s which is not available."
+msgstr ""
+
+#: wp-plg-arabic-search-enhancement.php:104
+msgid "Arabic Search Enhancement: Failed to initialize autoloader."
+msgstr ""
+
+#: wp-plg-arabic-search-enhancement.php:114
+msgid "Arabic Search Enhancement: Failed to initialize plugin."
+msgstr ""
+
+#: wp-plg-arabic-search-enhancement.php:120
+msgid "Arabic Search Enhancement initialization error: %s"
+msgstr ""
+
+#: wp-plg-arabic-search-enhancement.php:157
+msgid "Arabic Search Enhancement cannot be activated due to unmet requirements."
+msgstr ""
+
+#: wp-plg-arabic-search-enhancement.php:158
+msgid "Plugin Activation Error"
+msgstr ""
+
+#: wp-plg-arabic-search-enhancement.php:165
+msgid "Arabic Search Enhancement: Failed to initialize autoloader."
+msgstr ""
+
+#: wp-plg-arabic-search-enhancement.php:166
+msgid "Plugin Activation Error"
+msgstr ""
+
+#: wp-plg-arabic-search-enhancement.php:174
+msgid "Arabic Search Enhancement: Essential plugin classes could not be loaded."
+msgstr ""
+
+#: wp-plg-arabic-search-enhancement.php:175
+msgid "Plugin Activation Error"
+msgstr ""
+
+#: wp-plg-arabic-search-enhancement.php:186
+msgid "Arabic Search Enhancement activation failed: %s"
+msgstr ""
+
+#: wp-plg-arabic-search-enhancement.php:189
+msgid "Plugin Activation Error"
+msgstr ""
