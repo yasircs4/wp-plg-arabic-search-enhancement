@@ -37,10 +37,26 @@ class SearchAnalyticsDashboard {
         }
         
         add_action('admin_menu', [$this, 'add_analytics_menu']);
+        add_action('admin_init', [$this, 'ensure_tables_exist']);
         add_action('wp_ajax_arabic_search_analytics_data', [$this, 'get_analytics_data']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_analytics_scripts']);
         
         $this->hooks_initialized = true;
+    }
+
+    /**
+     * Ensure the analytics tables exist before rendering data queries.
+     */
+    public function ensure_tables_exist(): void {
+        global $wpdb;
+
+        $stats_table = $wpdb->prefix . 'arabic_search_stats';
+        $table_like = $wpdb->esc_like($stats_table);
+        $table_exists = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table_like));
+
+        if ($table_exists !== $stats_table) {
+            $this->optimizer->create_optimization_tables();
+        }
     }
     
     /**
@@ -105,6 +121,10 @@ class SearchAnalyticsDashboard {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
         
+        if (!$this->config->get('analytics_enabled', false)) {
+            echo '<div class="notice notice-warning"><p>' . esc_html__('Analytics are currently disabled. Enable "Search analytics" on the plugin settings page to start collecting data.', 'arabic-search-enhancement') . '</p></div>';
+        }
+
         ?>
         <div class="wrap arabic-search-analytics">
             <h1><?php _e('Arabic Search Analytics', 'arabic-search-enhancement'); ?></h1>

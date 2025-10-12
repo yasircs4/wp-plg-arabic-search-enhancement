@@ -260,13 +260,15 @@ class PluginFactory {
             $settings_page = self::create_settings_page($config);
             $analytics_dashboard = self::create_analytics_dashboard($config);
             $rest_api_controller = self::create_rest_api_controller();
+            $performance_optimizer = self::create_performance_optimizer();
             
             self::$instances['plugin'] = new Plugin(
                 $config, 
                 $search_modifier, 
                 $settings_page,
                 $analytics_dashboard,
-                $rest_api_controller
+                $rest_api_controller,
+                $performance_optimizer
             );
         }
         

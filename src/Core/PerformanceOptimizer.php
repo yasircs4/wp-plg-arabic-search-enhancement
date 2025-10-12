@@ -262,6 +262,23 @@ class PerformanceOptimizer {
         
         return $results;
     }
+
+    /**
+     * Track a search event coming from WordPress core queries.
+     *
+     * @param string $original_query Raw search query entered by the user
+     * @param int $result_count Number of posts returned for the query
+     * @param float $search_time Optional timing information
+     */
+    public function track_search_event(string $original_query, int $result_count, float $search_time = 0.0): void {
+        $normalized_query = $this->normalize_content_for_index($original_query);
+
+        if ($normalized_query === '') {
+            return;
+        }
+
+        $this->record_search_stats($original_query, $normalized_query, $result_count, $search_time);
+    }
     
     /**
      * Record search statistics

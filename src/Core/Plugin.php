@@ -22,6 +22,7 @@ use ArabicSearchEnhancement\Interfaces\SearchQueryModifierInterface;
 use ArabicSearchEnhancement\Admin\SettingsPage;
 use ArabicSearchEnhancement\Admin\SearchAnalyticsDashboard;
 use ArabicSearchEnhancement\API\RestApiController;
+use WP_Query;
 
 class Plugin {
     
@@ -66,6 +67,11 @@ class Plugin {
      * @var RestApiController
      */
     private $rest_api_controller;
+
+    /**
+     * Performance optimizer instance.
+     */
+    private ?PerformanceOptimizer $performance_optimizer;
     
     /**
      * Whether plugin is initialized
@@ -95,13 +101,15 @@ class Plugin {
         SearchQueryModifierInterface $search_modifier,
         SettingsPage $settings_page,
         ?SearchAnalyticsDashboard $analytics_dashboard = null,
-        ?RestApiController $rest_api_controller = null
+        ?RestApiController $rest_api_controller = null,
+        ?PerformanceOptimizer $performance_optimizer = null
     ) {
         $this->config = $config;
         $this->search_modifier = $search_modifier;
         $this->settings_page = $settings_page;
         $this->analytics_dashboard = $analytics_dashboard;
         $this->rest_api_controller = $rest_api_controller;
+        $this->performance_optimizer = $performance_optimizer;
     }
     
     /**
@@ -127,6 +135,7 @@ class Plugin {
             return;
         }
         
+        $this->ensure_database_tables();
         $this->init_hooks();
         $this->init_admin();
         
@@ -147,6 +156,7 @@ class Plugin {
         // Search query modification hooks
         add_action('pre_get_posts', [$this->search_modifier, 'modify_query_params']);
         add_filter('posts_search', [$this->search_modifier, 'modify_search_sql'], 10, 2);
+    add_filter('posts_results', [$this, 'track_search_results'], 10, 2);
         
         // Performance monitoring
         if ($this->config->get('performance_monitoring', false)) {
@@ -197,6 +207,9 @@ class Plugin {
                 }
             }
             
+            // Ensure required database tables are present
+            $this->ensure_database_tables(true);
+
             // Clear caches
             $this->clear_caches();
             
@@ -250,6 +263,25 @@ class Plugin {
         
         // Clear configuration cache
         $this->config->clear_cache();
+    }
+
+    /**
+     * Ensure performance-related tables are available.
+     *
+     * @param bool $force When true, always attempt to (re)create the tables
+     */
+    private function ensure_database_tables(bool $force = false): void {
+        if (!$this->performance_optimizer) {
+            return;
+        }
+
+        $status_option = 'ase_tables_version';
+        $current_version = get_option($status_option);
+
+        if ($force || $current_version !== Configuration::VERSION) {
+            $this->performance_optimizer->create_optimization_tables();
+            update_option($status_option, Configuration::VERSION);
+        }
     }
     
     /**
@@ -354,6 +386,35 @@ class Plugin {
      */
     public function get_rest_api_controller(): ?RestApiController {
         return $this->rest_api_controller;
+    }
+
+    /**
+     * Capture search results to feed analytics when enabled.
+     *
+     * @param array $posts Query results
+     * @param WP_Query $query WordPress query object
+     * @return array Original posts array
+     */
+    public function track_search_results(array $posts, WP_Query $query): array {
+        if (!$this->performance_optimizer || is_admin() || !$query->is_main_query() || !$query->is_search()) {
+            return $posts;
+        }
+
+        $search_term = $query->get('s');
+
+        if (!is_string($search_term) || $search_term === '') {
+            return $posts;
+        }
+
+        try {
+            $this->performance_optimizer->track_search_event($search_term, count($posts));
+        } catch (\Throwable $exception) {
+            if ($this->config->get('debug_mode', false)) {
+                error_log('Arabic Search Enhancement Analytics Error: ' . $exception->getMessage());
+            }
+        }
+
+        return $posts;
     }
     
     /**
