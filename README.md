@@ -6,6 +6,7 @@ A production-ready WordPress plugin that improves search functionality for Arabi
 
 - **Arabic Text Normalization**: Removes diacritics and normalizes letter forms for better search results
 - **Multi-term Search Support**: Properly handles multiple search terms with AND logic
+- **Elementor Compatibility**: Full support for Elementor search widgets with identical normalization
 - **Caching System**: Improves performance with intelligent caching
 - **Configurable**: Full admin interface for customization
 - **Arabic Language Support**: Complete RTL support with Arabic translations
@@ -160,6 +161,10 @@ For support and bug reports, please contact the developer.
 
 ### 1.1.0
 - Complete rewrite with modern architecture
+- **Elementor Search Widget Compatibility**: Full support for Elementor's search widgets and AJAX requests
+- **Enhanced Search Detection**: Supports custom query variables (search_term, custom_search)
+- **Frontend AJAX Support**: Works with Elementor Pro search forms and live search features
+- **Filterable Action Support**: Extensible via `arabic_search_enhancement_frontend_ajax_actions` filter
 - Improved performance with caching
 - Better error handling and validation
 - SOLID principles implementation

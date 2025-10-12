@@ -110,7 +110,13 @@ class SearchQueryModifier implements SearchQueryModifierInterface {
      * @return bool True if should modify
      */
     private function should_modify_search(string $search, WP_Query $query): bool {
-        if (empty($search) || !$this->config->get('enable_enhancement', true)) {
+        if (!$this->config->get('enable_enhancement', true)) {
+            return false;
+        }
+
+        $has_search_context = $search !== '' || $this->has_query_search_term($query);
+
+        if (!$has_search_context) {
             return false;
         }
 
@@ -119,6 +125,31 @@ class SearchQueryModifier implements SearchQueryModifierInterface {
         }
 
         return $this->is_frontend_ajax_search($query);
+    }
+
+    /**
+     * Determine if the query contains any usable search term even if the SQL fragment is empty.
+     *
+     * Elementor REST and AJAX requests sometimes set custom flags instead of the regular `s` parameter,
+     * so we inspect the query vars directly.
+     */
+    private function has_query_search_term(WP_Query $query): bool {
+        $search_terms = $query->get('search_terms');
+        if (is_array($search_terms) && !empty(array_filter($search_terms, 'strlen'))) {
+            return true;
+        }
+
+        $term = $query->get('s');
+        if (is_string($term) && $term !== '') {
+            return true;
+        }
+
+        $custom_term = $query->get('search_term');
+        if (is_string($custom_term) && trim($custom_term) !== '') {
+            return true;
+        }
+
+        return false;
     }
     
     /**
@@ -216,7 +247,7 @@ class SearchQueryModifier implements SearchQueryModifierInterface {
         $search_fields = $this->get_search_fields();
         $is_exact = (bool) $wp_query->get('exact');
         
-    return $this->build_search_conditions($search, $search_terms, $search_fields, $is_exact);
+        return $this->build_search_conditions($search, $search_terms, $search_fields, $is_exact);
     }
     
     /**
@@ -232,6 +263,13 @@ class SearchQueryModifier implements SearchQueryModifierInterface {
             $search_term = $wp_query->get('s');
             if (!empty($search_term) && is_string($search_term)) {
                 $search_terms = [$search_term];
+            }
+        }
+
+        if (empty($search_terms)) {
+            $custom_term = $wp_query->get('search_term');
+            if (!empty($custom_term) && is_string($custom_term)) {
+                $search_terms = [$custom_term];
             }
         }
         

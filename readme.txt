@@ -17,6 +17,7 @@ Enhances WordPress search for Arabic content by normalizing text variations, dia
 = Key Features =
 
 * **Smart Arabic Text Normalization** - Removes diacritics and normalizes letter forms for comprehensive search results
+* **Elementor Search Widget Support** - Full compatibility with Elementor's search widgets and AJAX functionality
 * **Multi-term Search Support** - Handles multiple Arabic search terms with intelligent AND logic
 * **Performance Optimized** - Built-in caching system for fast repeated searches
 * **RTL Interface Support** - Complete right-to-left admin interface for Arabic users
@@ -54,6 +55,7 @@ Enhances WordPress search for Arabic content by normalizing text variations, dia
 * Educational institutions with Arabic content
 * Government websites in Arabic-speaking countries
 * E-commerce sites with Arabic product descriptions
+* **Elementor-powered websites** with Arabic search functionality
 * Any WordPress site serving Arabic-speaking users
 
 == Installation ==
@@ -96,6 +98,10 @@ Yes! The plugin includes complete Arabic translations and RTL interface support.
 
 = 1.1.0 =
 * Complete rewrite with modern architecture
+* **Elementor Search Widget Compatibility** - Full support for Elementor's search widgets and AJAX requests
+* **Enhanced Search Detection** - Supports custom query variables (search_term, custom_search)
+* **Frontend AJAX Support** - Works with Elementor Pro search forms and live search features
+* **Filterable Action Support** - Extensible via `arabic_search_enhancement_frontend_ajax_actions` filter
 * Improved performance with intelligent caching
 * Better error handling and validation
 * SOLID principles implementation
