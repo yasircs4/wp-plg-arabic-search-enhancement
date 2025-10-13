@@ -73,8 +73,8 @@ class SettingsPage {
      */
     public function add_settings_page(): void {
         add_options_page(
-            __('Arabic Search Settings', Configuration::TEXT_DOMAIN),
-            __('Arabic Search', Configuration::TEXT_DOMAIN),
+            __('Arabic Search Settings', 'arabic-search-enhancement'),
+            __('Arabic Search', 'arabic-search-enhancement'),
             'manage_options',
             self::PAGE_SLUG,
             [$this, 'render_settings_page']
@@ -170,7 +170,7 @@ class SettingsPage {
      */
     public function render_settings_page(): void {
         if (!current_user_can('manage_options')) {
-            wp_die(__('You do not have sufficient permissions to access this page.'));
+            wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'arabic-search-enhancement'));
         }
         
         $rtl_class = $this->config->is_rtl() ? 'rtl' : '';
@@ -245,10 +245,10 @@ class SettingsPage {
      * @return void
      */
     private function render_notices(): void {
-        if (isset($_GET['settings-updated']) && $_GET['settings-updated']) {
+        if (isset($_GET['settings-updated']) && sanitize_text_field(wp_unslash($_GET['settings-updated']))) {
             ?>
             <div class="notice notice-success is-dismissible">
-                <p><?php esc_html_e('Settings saved.', Configuration::TEXT_DOMAIN); ?></p>
+                <p><?php esc_html_e('Settings saved.', 'arabic-search-enhancement'); ?></p>
             </div>
             <?php
         }
@@ -263,7 +263,7 @@ class SettingsPage {
         ?>
         <tr>
             <th scope="row">
-                <?php esc_html_e('Enable Arabic Enhancement', Configuration::TEXT_DOMAIN); ?>
+                <?php esc_html_e('Enable Arabic Enhancement', 'arabic-search-enhancement'); ?>
             </th>
             <td>
                 <label>
@@ -271,10 +271,10 @@ class SettingsPage {
                            name="<?php echo esc_attr(Configuration::OPTION_PREFIX . 'enable_enhancement'); ?>" 
                            value="1" 
                            <?php checked($this->config->get('enable_enhancement', true), true); ?>>
-                    <?php esc_html_e('Enable Arabic text normalization in search', Configuration::TEXT_DOMAIN); ?>
+                    <?php esc_html_e('Enable Arabic text normalization in search', 'arabic-search-enhancement'); ?>
                 </label>
                 <p class="description">
-                    <?php esc_html_e('When enabled, searches will find content with different Arabic letter forms (e.g., searching "قران" will find "قرآن")', Configuration::TEXT_DOMAIN); ?>
+                    <?php esc_html_e('When enabled, searches will find content with different Arabic letter forms (e.g., searching "قران" will find "قرآن")', 'arabic-search-enhancement'); ?>
                 </p>
             </td>
         </tr>
@@ -290,7 +290,7 @@ class SettingsPage {
         ?>
         <tr>
             <th scope="row">
-                <?php esc_html_e('Search in Excerpt', Configuration::TEXT_DOMAIN); ?>
+                <?php esc_html_e('Search in Excerpt', 'arabic-search-enhancement'); ?>
             </th>
             <td>
                 <label>
@@ -298,7 +298,7 @@ class SettingsPage {
                            name="<?php echo esc_attr(Configuration::OPTION_PREFIX . 'search_excerpt'); ?>" 
                            value="1" 
                            <?php checked($this->config->get('search_excerpt', true), true); ?>>
-                    <?php esc_html_e('Include post excerpts in search', Configuration::TEXT_DOMAIN); ?>
+                    <?php esc_html_e('Include post excerpts in search', 'arabic-search-enhancement'); ?>
                 </label>
             </td>
         </tr>
@@ -328,7 +328,7 @@ class SettingsPage {
         ?>
         <tr>
             <th scope="row">
-                <?php esc_html_e('Post Types to Search', Configuration::TEXT_DOMAIN); ?>
+                <?php esc_html_e('Post Types to Search', 'arabic-search-enhancement'); ?>
             </th>
             <td>
                 <?php if (!empty($post_types)): ?>
@@ -344,10 +344,10 @@ class SettingsPage {
                         <?php endif; ?>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p><?php esc_html_e('No public post types available.', Configuration::TEXT_DOMAIN); ?></p>
+                    <p><?php esc_html_e('No public post types available.', 'arabic-search-enhancement'); ?></p>
                 <?php endif; ?>
                 <p class="description">
-                    <?php esc_html_e('Select which post types to include in search results', Configuration::TEXT_DOMAIN); ?>
+                    <?php esc_html_e('Select which post types to include in search results', 'arabic-search-enhancement'); ?>
                 </p>
             </td>
         </tr>
@@ -364,7 +364,7 @@ class SettingsPage {
         <tr>
             <th scope="row">
                 <label for="<?php echo esc_attr(Configuration::OPTION_PREFIX . 'posts_per_page'); ?>">
-                    <?php esc_html_e('Results Per Page', Configuration::TEXT_DOMAIN); ?>
+                    <?php esc_html_e('Results Per Page', 'arabic-search-enhancement'); ?>
                 </label>
             </th>
             <td>
@@ -376,7 +376,7 @@ class SettingsPage {
                        max="100" 
                        class="small-text">
                 <p class="description">
-                    <?php esc_html_e('Number of search results to show per page', Configuration::TEXT_DOMAIN); ?>
+                    <?php esc_html_e('Number of search results to show per page', 'arabic-search-enhancement'); ?>
                 </p>
             </td>
         </tr>
@@ -392,7 +392,7 @@ class SettingsPage {
         ?>
         <tr>
             <th scope="row">
-                <?php esc_html_e('Debug Mode', Configuration::TEXT_DOMAIN); ?>
+                <?php esc_html_e('Debug Mode', 'arabic-search-enhancement'); ?>
             </th>
             <td>
                 <label>
@@ -400,10 +400,10 @@ class SettingsPage {
                            name="<?php echo esc_attr(Configuration::OPTION_PREFIX . 'debug_mode'); ?>" 
                            value="1" 
                            <?php checked($this->config->get('debug_mode', false), true); ?>>
-                    <?php esc_html_e('Enable debug logging', Configuration::TEXT_DOMAIN); ?>
+                    <?php esc_html_e('Enable debug logging', 'arabic-search-enhancement'); ?>
                 </label>
                 <p class="description">
-                    <?php esc_html_e('Log errors and performance information for troubleshooting', Configuration::TEXT_DOMAIN); ?>
+                    <?php esc_html_e('Log errors and performance information for troubleshooting', 'arabic-search-enhancement'); ?>
                 </p>
             </td>
         </tr>
@@ -464,15 +464,15 @@ class SettingsPage {
     private function render_normalization_info(): void {
         ?>
         <hr>
-        <h2><?php esc_html_e('Normalization Rules', Configuration::TEXT_DOMAIN); ?></h2>
-        <p><?php esc_html_e('This plugin automatically normalizes the following Arabic text variations:', Configuration::TEXT_DOMAIN); ?></p>
+        <h2><?php esc_html_e('Normalization Rules', 'arabic-search-enhancement'); ?></h2>
+        <p><?php esc_html_e('This plugin automatically normalizes the following Arabic text variations:', 'arabic-search-enhancement'); ?></p>
         <ul style="list-style: disc; margin-left: 20px;">
-            <li><?php esc_html_e('Removes all diacritics (Tashkeel): َ ُ ِ ّ ْ ً ٌ ٍ and more', Configuration::TEXT_DOMAIN); ?></li>
-            <li><?php esc_html_e('Normalizes Alef: أ إ آ ٱ → ا', Configuration::TEXT_DOMAIN); ?></li>
-            <li><?php esc_html_e('Normalizes Taa Marbuta: ة → ه', Configuration::TEXT_DOMAIN); ?></li>
-            <li><?php esc_html_e('Normalizes Yaa: ى → ي', Configuration::TEXT_DOMAIN); ?></li>
-            <li><?php esc_html_e('Normalizes Hamza: ؤ → و, ئ → ي', Configuration::TEXT_DOMAIN); ?></li>
-            <li><?php esc_html_e('Removes Tatweel (Kashida): ـ', Configuration::TEXT_DOMAIN); ?></li>
+            <li><?php esc_html_e('Removes all diacritics (Tashkeel): َ ُ ِ ّ ْ ً ٌ ٍ and more', 'arabic-search-enhancement'); ?></li>
+            <li><?php esc_html_e('Normalizes Alef: أ إ آ ٱ → ا', 'arabic-search-enhancement'); ?></li>
+            <li><?php esc_html_e('Normalizes Taa Marbuta: ة → ه', 'arabic-search-enhancement'); ?></li>
+            <li><?php esc_html_e('Normalizes Yaa: ى → ي', 'arabic-search-enhancement'); ?></li>
+            <li><?php esc_html_e('Normalizes Hamza: ؤ → و, ئ → ي', 'arabic-search-enhancement'); ?></li>
+            <li><?php esc_html_e('Removes Tatweel (Kashida): ـ', 'arabic-search-enhancement'); ?></li>
         </ul>
         <?php
     }
@@ -484,13 +484,13 @@ class SettingsPage {
      */
     private function render_examples(): void {
         ?>
-        <h2><?php esc_html_e('Test Your Search', Configuration::TEXT_DOMAIN); ?></h2>
-        <p><?php esc_html_e('Try searching for these examples to see the improvement:', Configuration::TEXT_DOMAIN); ?></p>
+        <h2><?php esc_html_e('Test Your Search', 'arabic-search-enhancement'); ?></h2>
+        <p><?php esc_html_e('Try searching for these examples to see the improvement:', 'arabic-search-enhancement'); ?></p>
         <ul style="list-style: disc; margin-left: 20px;">
-            <li><?php esc_html_e('Search "قران" to find "قرآن"', Configuration::TEXT_DOMAIN); ?></li>
-            <li><?php esc_html_e('Search "اسلام" to find "إسلام" or "الإسلام"', Configuration::TEXT_DOMAIN); ?></li>
-            <li><?php esc_html_e('Search "محمد" to find "مُحَمَّد" (with diacritics)', Configuration::TEXT_DOMAIN); ?></li>
-            <li><?php esc_html_e('Search "سنه" to find "سنة"', Configuration::TEXT_DOMAIN); ?></li>
+            <li><?php esc_html_e('Search "قران" to find "قرآن"', 'arabic-search-enhancement'); ?></li>
+            <li><?php esc_html_e('Search "اسلام" to find "إسلام" or "الإسلام"', 'arabic-search-enhancement'); ?></li>
+            <li><?php esc_html_e('Search "محمد" to find "مُحَمَّد" (with diacritics)', 'arabic-search-enhancement'); ?></li>
+            <li><?php esc_html_e('Search "سنه" to find "سنة"', 'arabic-search-enhancement'); ?></li>
         </ul>
         <?php
     }
@@ -505,11 +505,11 @@ class SettingsPage {
         ?>
         <hr>
         <div class="card" style="max-width: 100%; padding: 20px;">
-            <h2><?php esc_html_e('Plugin Information', Configuration::TEXT_DOMAIN); ?></h2>
-            <p><strong><?php esc_html_e('Version:', Configuration::TEXT_DOMAIN); ?></strong> <?php echo esc_html(Configuration::VERSION); ?></p>
-            <p><strong><?php esc_html_e('Website:', Configuration::TEXT_DOMAIN); ?></strong> <a href="https://maisra.net" target="_blank" rel="noopener">maisra.net</a></p>
-            <p><strong><?php esc_html_e('Database Charset:', Configuration::TEXT_DOMAIN); ?></strong> <?php echo esc_html($wpdb->charset); ?></p>
-            <p><strong><?php esc_html_e('Database Collation:', Configuration::TEXT_DOMAIN); ?></strong> <?php echo esc_html($wpdb->collate); ?></p>
+            <h2><?php esc_html_e('Plugin Information', 'arabic-search-enhancement'); ?></h2>
+            <p><strong><?php esc_html_e('Version:', 'arabic-search-enhancement'); ?></strong> <?php echo esc_html(Configuration::VERSION); ?></p>
+            <p><strong><?php esc_html_e('Website:', 'arabic-search-enhancement'); ?></strong> <a href="https://maisra.net" target="_blank" rel="noopener">maisra.net</a></p>
+            <p><strong><?php esc_html_e('Database Charset:', 'arabic-search-enhancement'); ?></strong> <?php echo esc_html($wpdb->charset); ?></p>
+            <p><strong><?php esc_html_e('Database Collation:', 'arabic-search-enhancement'); ?></strong> <?php echo esc_html($wpdb->collate); ?></p>
         </div>
         <?php
     }
@@ -524,7 +524,7 @@ class SettingsPage {
         $settings_link = sprintf(
             '<a href="%s">%s</a>',
             esc_url(admin_url('options-general.php?page=' . self::PAGE_SLUG)),
-            esc_html__('Settings', Configuration::TEXT_DOMAIN)
+            esc_html__('Settings', 'arabic-search-enhancement')
         );
         
         array_unshift($links, $settings_link);
@@ -540,15 +540,15 @@ class SettingsPage {
         ?>
         <hr>
         <div class="card" style="max-width: 100%; padding: 20px;">
-            <h2><?php esc_html_e('Plugin Self-Test', Configuration::TEXT_DOMAIN); ?></h2>
-            <p><?php esc_html_e('Click the button below to run a comprehensive test of the plugin functionality.', Configuration::TEXT_DOMAIN); ?></p>
+            <h2><?php esc_html_e('Plugin Self-Test', 'arabic-search-enhancement'); ?></h2>
+            <p><?php esc_html_e('Click the button below to run a comprehensive test of the plugin functionality.', 'arabic-search-enhancement'); ?></p>
             
             <button type="button" id="ase-run-test" class="button button-secondary">
-                <?php esc_html_e('Run Self-Test', Configuration::TEXT_DOMAIN); ?>
+                <?php esc_html_e('Run Self-Test', 'arabic-search-enhancement'); ?>
             </button>
             
             <div id="ase-test-results" style="margin-top: 15px; display: none;">
-                <h3><?php esc_html_e('Test Results:', Configuration::TEXT_DOMAIN); ?></h3>
+                <h3><?php esc_html_e('Test Results:', 'arabic-search-enhancement'); ?></h3>
                 <div id="ase-test-output"></div>
             </div>
         </div>
@@ -560,7 +560,7 @@ class SettingsPage {
             var outputDiv = document.getElementById('ase-test-output');
             
             button.disabled = true;
-            button.textContent = '<?php esc_js(__('Running Tests...', Configuration::TEXT_DOMAIN)); ?>';
+            button.textContent = '<?php esc_js(__('Running Tests...', 'arabic-search-enhancement')); ?>';
             
             // Simple client-side tests
             var testResults = [];
@@ -604,13 +604,13 @@ class SettingsPage {
             });
             
             html += '</ul>';
-            html += '<p><em><?php esc_js(__('Note: Server-side tests require the plugin to be fully activated and functional.', Configuration::TEXT_DOMAIN)); ?></em></p>';
+            html += '<p><em><?php esc_js(__('Note: Server-side tests require the plugin to be fully activated and functional.', 'arabic-search-enhancement')); ?></em></p>';
             
             outputDiv.innerHTML = html;
             resultsDiv.style.display = 'block';
             
             button.disabled = false;
-            button.textContent = '<?php esc_js(__('Run Self-Test', Configuration::TEXT_DOMAIN)); ?>';
+            button.textContent = '<?php esc_js(__('Run Self-Test', 'arabic-search-enhancement')); ?>';
         });
         </script>
         <?php

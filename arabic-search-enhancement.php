@@ -12,7 +12,6 @@
  * Text Domain: arabic-search-enhancement
  * Requires at least: 5.0
  * Requires PHP: 7.4
- * Network: false
  * 
  * Copyright (C) 2025 Yasser Nageep Maisra
  * 
@@ -52,35 +51,11 @@ use ArabicSearchEnhancement\Core\Configuration;
 
 /**
  * Load plugin text domain for translations
+ * Note: WordPress.org automatically loads translations for hosted plugins
  */
 function arabic_search_enhancement_load_textdomain(): void {
     $domain = 'arabic-search-enhancement';
     $locale = apply_filters('plugin_locale', get_locale(), $domain);
-    
-    // Always try WordPress standard loading first
-    $loaded = load_plugin_textdomain(
-        $domain,
-        false,
-        basename(ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR) . '/languages'
-    );
-    
-    // If that didn't work, try manual loading with fallbacks
-    if (!$loaded) {
-        // Try to load specific locale file first
-        $mo_file = ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR . 'languages/' . $domain . '-' . $locale . '.mo';
-        if (file_exists($mo_file)) {
-            load_textdomain($domain, $mo_file);
-            $loaded = true;
-        } else {
-            // Try language without country code (e.g., 'ar' instead of 'ar_SA')
-            $language = substr($locale, 0, 2);
-            $mo_file = ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR . 'languages/' . $domain . '-' . $language . '.mo';
-            if (file_exists($mo_file)) {
-                load_textdomain($domain, $mo_file);
-                $loaded = true;
-            }
-        }
-    }
     
     // Special handling for RTL languages - only add once
     $language = substr($locale, 0, 2);
@@ -113,14 +88,12 @@ function arabic_search_enhancement_init_autoloader(): bool {
  * Check plugin requirements
  */
 function arabic_search_enhancement_check_requirements(): bool {
-    $text_domain = 'arabic-search-enhancement';
-    
     // Check PHP version
     if (version_compare(PHP_VERSION, '7.4', '<')) {
-        add_action('admin_notices', function() use ($text_domain) {
+        add_action('admin_notices', function() {
             printf(
                 '<div class="notice notice-error"><p>%s %s</p></div>',
-                esc_html__('Arabic Search Enhancement requires PHP 7.4 or higher. Your version:', $text_domain),
+                esc_html__('Arabic Search Enhancement requires PHP 7.4 or higher. Your version:', 'arabic-search-enhancement'),
                 esc_html(PHP_VERSION)
             );
         });
@@ -129,10 +102,10 @@ function arabic_search_enhancement_check_requirements(): bool {
     
     // Check WordPress version
     if (!isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], '5.0', '<')) {
-        add_action('admin_notices', function() use ($text_domain) {
+        add_action('admin_notices', function() {
             printf(
                 '<div class="notice notice-error"><p>%s</p></div>',
-                esc_html__('Arabic Search Enhancement requires WordPress 5.0 or higher.', $text_domain)
+                esc_html__('Arabic Search Enhancement requires WordPress 5.0 or higher.', 'arabic-search-enhancement')
             );
         });
         return false;
@@ -142,11 +115,11 @@ function arabic_search_enhancement_check_requirements(): bool {
     $required_functions = ['add_option', 'get_option', 'update_option', 'delete_option', 'wp_cache_get', 'wp_cache_set'];
     foreach ($required_functions as $function) {
         if (!function_exists($function)) {
-            add_action('admin_notices', function() use ($text_domain, $function) {
+            add_action('admin_notices', function() use ($function) {
                 printf(
                     '<div class="notice notice-error"><p>%s</p></div>',
                     sprintf(
-                        esc_html__('Arabic Search Enhancement requires WordPress function %s which is not available.', $text_domain),
+                        esc_html__('Arabic Search Enhancement requires WordPress function %s which is not available.', 'arabic-search-enhancement'),
                         esc_html($function)
                     )
                 );
@@ -197,8 +170,6 @@ function arabic_search_enhancement_get_plugin(): ?Plugin {
  * Initialize the plugin
  */
 function arabic_search_enhancement_init(): void {
-    $text_domain = 'arabic-search-enhancement';
-    
     try {
         // Check requirements first
         if (!arabic_search_enhancement_check_requirements()) {
@@ -207,10 +178,10 @@ function arabic_search_enhancement_init(): void {
         
         // Initialize autoloader
         if (!arabic_search_enhancement_init_autoloader()) {
-            add_action('admin_notices', function() use ($text_domain) {
+            add_action('admin_notices', function() {
                 printf(
                     '<div class="notice notice-error"><p>%s</p></div>',
-                    esc_html__('Arabic Search Enhancement: Failed to initialize autoloader.', $text_domain)
+                    esc_html__('Arabic Search Enhancement: Failed to initialize autoloader.', 'arabic-search-enhancement')
                 );
             });
             return;
@@ -222,20 +193,20 @@ function arabic_search_enhancement_init(): void {
         if ($plugin) {
             $plugin->init();
         } else {
-            add_action('admin_notices', function() use ($text_domain) {
+            add_action('admin_notices', function() {
                 printf(
                     '<div class="notice notice-error"><p>%s</p></div>',
-                    esc_html__('Arabic Search Enhancement: Failed to initialize plugin.', $text_domain)
+                    esc_html__('Arabic Search Enhancement: Failed to initialize plugin.', 'arabic-search-enhancement')
                 );
             });
         }
         
     } catch (\Throwable $e) {
-        add_action('admin_notices', function() use ($text_domain, $e) {
+        add_action('admin_notices', function() use ($e) {
             printf(
                 '<div class="notice notice-error"><p>%s</p></div>',
                 sprintf(
-                    esc_html__('Arabic Search Enhancement initialization error: %s', $text_domain),
+                    esc_html__('Arabic Search Enhancement initialization error: %s', 'arabic-search-enhancement'),
                     esc_html($e->getMessage())
                 )
             );

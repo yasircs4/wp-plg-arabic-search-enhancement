@@ -179,7 +179,7 @@ class SearchQueryModifier implements SearchQueryModifierInterface {
             return false;
         }
 
-        $action = isset($_REQUEST['action']) ? (string) $_REQUEST['action'] : '';
+        $action = isset($_REQUEST['action']) ? sanitize_text_field(wp_unslash($_REQUEST['action'])) : '';
 
         if ($action === '') {
             return false;

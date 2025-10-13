@@ -118,7 +118,7 @@ class SearchAnalyticsDashboard {
      */
     public function render_analytics_page(): void {
         if (!current_user_can('manage_options')) {
-            wp_die(__('You do not have sufficient permissions to access this page.'));
+            wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'arabic-search-enhancement'));
         }
         
         if (!$this->config->get('analytics_enabled', false)) {
@@ -389,11 +389,11 @@ class SearchAnalyticsDashboard {
         check_ajax_referer('arabic_search_analytics_nonce', 'nonce');
         
         if (!current_user_can('manage_options')) {
-            wp_die(__('You do not have sufficient permissions.'));
+            wp_die(esc_html__('You do not have sufficient permissions.', 'arabic-search-enhancement'));
         }
         
-        $period = intval($_POST['period'] ?? 30);
-        $data_type = sanitize_text_field($_POST['data_type'] ?? 'overview');
+        $period = intval(wp_unslash($_POST['period'] ?? 30));
+        $data_type = sanitize_text_field(wp_unslash($_POST['data_type'] ?? 'overview'));
         
         switch ($data_type) {
             case 'overview':
