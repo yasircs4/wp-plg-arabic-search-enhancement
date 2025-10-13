@@ -127,42 +127,42 @@ class SearchAnalyticsDashboard {
 
         ?>
         <div class="wrap arabic-search-analytics">
-            <h1><?php _e('Arabic Search Analytics', 'arabic-search-enhancement'); ?></h1>
+            <h1><?php esc_html_e('Arabic Search Analytics', 'arabic-search-enhancement'); ?></h1>
             
             <div class="analytics-header">
                 <div class="period-selector">
-                    <label for="analytics-period"><?php _e('Time Period:', 'arabic-search-enhancement'); ?></label>
+                    <label for="analytics-period"><?php esc_html_e('Time Period:', 'arabic-search-enhancement'); ?></label>
                     <select id="analytics-period">
-                        <option value="7"><?php _e('Last 7 days', 'arabic-search-enhancement'); ?></option>
-                        <option value="30" selected><?php _e('Last 30 days', 'arabic-search-enhancement'); ?></option>
-                        <option value="90"><?php _e('Last 90 days', 'arabic-search-enhancement'); ?></option>
+                        <option value="7"><?php esc_html_e('Last 7 days', 'arabic-search-enhancement'); ?></option>
+                        <option value="30" selected><?php esc_html_e('Last 30 days', 'arabic-search-enhancement'); ?></option>
+                        <option value="90"><?php esc_html_e('Last 90 days', 'arabic-search-enhancement'); ?></option>
                     </select>
-                    <button id="refresh-analytics" class="button"><?php _e('Refresh', 'arabic-search-enhancement'); ?></button>
+                    <button id="refresh-analytics" class="button"><?php esc_html_e('Refresh', 'arabic-search-enhancement'); ?></button>
                 </div>
             </div>
             
             <!-- Key Metrics Cards -->
             <div class="analytics-cards">
                 <div class="analytics-card">
-                    <h3><?php _e('Total Searches', 'arabic-search-enhancement'); ?></h3>
+                    <h3><?php esc_html_e('Total Searches', 'arabic-search-enhancement'); ?></h3>
                     <div class="metric-value" id="total-searches">-</div>
                     <div class="metric-change" id="searches-change"></div>
                 </div>
                 
                 <div class="analytics-card">
-                    <h3><?php _e('Unique Queries', 'arabic-search-enhancement'); ?></h3>
+                    <h3><?php esc_html_e('Unique Queries', 'arabic-search-enhancement'); ?></h3>
                     <div class="metric-value" id="unique-queries">-</div>
                     <div class="metric-change" id="queries-change"></div>
                 </div>
                 
                 <div class="analytics-card">
-                    <h3><?php _e('Avg Results per Search', 'arabic-search-enhancement'); ?></h3>
+                    <h3><?php esc_html_e('Avg Results per Search', 'arabic-search-enhancement'); ?></h3>
                     <div class="metric-value" id="avg-results">-</div>
                     <div class="metric-change" id="results-change"></div>
                 </div>
                 
                 <div class="analytics-card">
-                    <h3><?php _e('Search Success Rate', 'arabic-search-enhancement'); ?></h3>
+                    <h3><?php esc_html_e('Search Success Rate', 'arabic-search-enhancement'); ?></h3>
                     <div class="metric-value" id="success-rate">-</div>
                     <div class="metric-change" id="success-change"></div>
                 </div>
@@ -184,36 +184,36 @@ class SearchAnalyticsDashboard {
             <!-- Data Tables -->
             <div class="analytics-tables">
                 <div class="table-container">
-                    <h3><?php _e('Top Search Queries', 'arabic-search-enhancement'); ?></h3>
+                    <h3><?php esc_html_e('Top Search Queries', 'arabic-search-enhancement'); ?></h3>
                     <table class="wp-list-table widefat fixed striped" id="top-queries-table">
                         <thead>
                             <tr>
-                                <th><?php _e('Query', 'arabic-search-enhancement'); ?></th>
-                                <th><?php _e('Searches', 'arabic-search-enhancement'); ?></th>
-                                <th><?php _e('Avg Results', 'arabic-search-enhancement'); ?></th>
-                                <th><?php _e('Success Rate', 'arabic-search-enhancement'); ?></th>
-                                <th><?php _e('Last Searched', 'arabic-search-enhancement'); ?></th>
+                                <th><?php esc_html_e('Query', 'arabic-search-enhancement'); ?></th>
+                                <th><?php esc_html_e('Searches', 'arabic-search-enhancement'); ?></th>
+                                <th><?php esc_html_e('Avg Results', 'arabic-search-enhancement'); ?></th>
+                                <th><?php esc_html_e('Success Rate', 'arabic-search-enhancement'); ?></th>
+                                <th><?php esc_html_e('Last Searched', 'arabic-search-enhancement'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td colspan="5"><?php _e('Loading...', 'arabic-search-enhancement'); ?></td></tr>
+                            <tr><td colspan="5"><?php esc_html_e('Loading...', 'arabic-search-enhancement'); ?></td></tr>
                         </tbody>
                     </table>
                 </div>
                 
                 <div class="table-container">
-                    <h3><?php _e('Failed Searches', 'arabic-search-enhancement'); ?></h3>
+                    <h3><?php esc_html_e('Failed Searches', 'arabic-search-enhancement'); ?></h3>
                     <table class="wp-list-table widefat fixed striped" id="failed-searches-table">
                         <thead>
                             <tr>
-                                <th><?php _e('Query', 'arabic-search-enhancement'); ?></th>
-                                <th><?php _e('Attempts', 'arabic-search-enhancement'); ?></th>
-                                <th><?php _e('Suggestions', 'arabic-search-enhancement'); ?></th>
-                                <th><?php _e('Last Attempt', 'arabic-search-enhancement'); ?></th>
+                                <th><?php esc_html_e('Query', 'arabic-search-enhancement'); ?></th>
+                                <th><?php esc_html_e('Attempts', 'arabic-search-enhancement'); ?></th>
+                                <th><?php esc_html_e('Suggestions', 'arabic-search-enhancement'); ?></th>
+                                <th><?php esc_html_e('Last Attempt', 'arabic-search-enhancement'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td colspan="4"><?php _e('Loading...', 'arabic-search-enhancement'); ?></td></tr>
+                            <tr><td colspan="4"><?php esc_html_e('Loading...', 'arabic-search-enhancement'); ?></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -221,9 +221,9 @@ class SearchAnalyticsDashboard {
             
             <!-- Performance Insights -->
             <div class="performance-insights">
-                <h3><?php _e('Performance Insights', 'arabic-search-enhancement'); ?></h3>
+                <h3><?php esc_html_e('Performance Insights', 'arabic-search-enhancement'); ?></h3>
                 <div id="insights-content">
-                    <p><?php _e('Loading insights...', 'arabic-search-enhancement'); ?></p>
+                    <p><?php esc_html_e('Loading insights...', 'arabic-search-enhancement'); ?></p>
                 </div>
             </div>
         </div>
@@ -582,12 +582,13 @@ class SearchAnalyticsDashboard {
         
         // Generate insights based on data
         if ($stats['success_rate'] < 70) {
+            // translators: %s: search success rate percentage without the percent sign
             $insights[] = [
                 'type' => 'warning',
                 'title' => __('Low Search Success Rate', 'arabic-search-enhancement'),
                 'message' => sprintf(
                     __('Your search success rate is %s%%. Consider rebuilding the search index or improving content.', 'arabic-search-enhancement'),
-                    $stats['success_rate']
+                    esc_html($stats['success_rate'])
                 )
             ];
         }

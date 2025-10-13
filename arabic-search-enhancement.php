@@ -116,6 +116,7 @@ function arabic_search_enhancement_check_requirements(): bool {
     foreach ($required_functions as $function) {
         if (!function_exists($function)) {
             add_action('admin_notices', function() use ($function) {
+                // translators: %s: WordPress function name
                 printf(
                     '<div class="notice notice-error"><p>%s</p></div>',
                     sprintf(
@@ -203,6 +204,7 @@ function arabic_search_enhancement_init(): void {
         
     } catch (\Throwable $e) {
         add_action('admin_notices', function() use ($e) {
+            // translators: %s: error message text
             printf(
                 '<div class="notice notice-error"><p>%s</p></div>',
                 sprintf(
@@ -263,6 +265,7 @@ function arabic_search_enhancement_activate(): void {
         
     } catch (\Throwable $e) {
         deactivate_plugins(plugin_basename(__FILE__));
+        // translators: %s: error message text
         wp_die(
             sprintf(
                 esc_html__('Arabic Search Enhancement activation failed: %s', 'arabic-search-enhancement'),
