@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arabic Search Enhancement - WordPress Plugin | تحسين البحث العربي لووردبريس</title>
+    <meta name="description" content="Enhance WordPress search for Arabic content by normalizing text variations, diacritics, and letter forms. Supports RTL, Elementor, and multilingual sites. Free WordPress plugin for better Arabic search results.">
+    <meta name="keywords" content="WordPress plugin, Arabic search, RTL support, multilingual, text normalization, diacritics, Elementor compatibility, search enhancement, Arabic content, WordPress Arabic, search optimization, text variations, letter forms, Tashkeel, Alef normalization, Arabic SEO, WordPress RTL, Arabic website, search improvement, Arabic text processing">
+    <meta name="author" content="Yasser Nageep Maisra">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="https://yasircs4.github.io/wp-plg-arabic-search-enhancement/">
+    
+    <!-- Google Fonts - Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Language and Region -->
+    <meta name="language" content="English, Arabic">
+    <meta name="geo.region" content="QA">
+    <meta name="geo.placename" content="QATAR">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Arabic Search Enhancement",
+        "alternateName": "تحسين البحث العربي",
+        "description": "WordPress plugin that enhances search functionality for Arabic content by normalizing text variations, diacritics, and letter forms",
+        "url": "https://yasircs4.github.io/wp-plg-arabic-search-enhancement/",
+        "applicationCategory": "WordPress Plugin",
+        "operatingSystem": "WordPress",
+        "softwareVersion": "1.1.0",
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-10-13",
+        "author": {
+            "@type": "Person",
+            "name": "Yasser Nageep Maisra",
+            "alternateName": "ياسر نجيب ميسرة",
+            "url": "http://maisra.net",
+            "jobTitle": "Software Engineer & Designer",
+            "description": "Software engineer and designer who creates professional Android/iOS apps and creative websites"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Yasser Nageep Maisra",
+            "alternateName": "ياسر نجيب ميسرة",
+            "url": "http://maisra.net"
+        },
+        "copyrightHolder": {
+            "@type": "Person",
+            "name": "Yasser Nageep Maisra",
+            "url": "http://maisra.net"
+        },
+        "copyrightYear": "2025",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "downloadUrl": "https://wordpress.org/plugins/arabic-search-enhancement/",
+        "screenshot": "https://yasircs4.github.io/wp-plg-arabic-search-enhancement/assets/screenshots/admin-settings.png"
+    }
+    </script>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yasircs4.github.io/wp-plg-arabic-search-enhancement/">
+    <meta property="og:title" content="Arabic Search Enhancement - WordPress Plugin | تحسين البحث العربي لووردبريس">
+    <meta property="og:description" content="Enhance WordPress search for Arabic content by normalizing text variations, diacritics, and letter forms. Free plugin by Yasser Nageep Maisra.">
+    <meta property="og:image" content="https://yasircs4.github.io/wp-plg-arabic-search-enhancement/assets/og-image.png">
+    <meta property="og:site_name" content="Arabic Search Enhancement">
+    <meta property="article:author" content="Yasser Nageep Maisra">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yasircs4.github.io/wp-plg-arabic-search-enhancement/">
+    <meta property="twitter:title" content="Arabic Search Enhancement - WordPress Plugin">
+    <meta property="twitter:description" content="Enhance WordPress search for Arabic content by normalizing text variations, diacritics, and letter forms for better search results.">
+    <meta property="twitter:image" content="https://yasircs4.github.io/wp-plg-arabic-search-enhancement/assets/og-image.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1a202c;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(0, 0, 0, 0.2);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
+            padding: 1.5rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(0, 0, 0, 0.3);
+            -webkit-backdrop-filter: blur(25px) saturate(200%);
+            backdrop-filter: blur(25px) saturate(200%);
+            padding: 1rem 0;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo::before {
+            content: "";
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.2);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.2);
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            color: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.25);
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Screenshots Section */
+        .screenshots {
+            background: transparent;
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .screenshots::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 20px;
+            margin: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .screenshot-card {
+            background: rgba(255, 255, 255, 0.1);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .screenshot-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.15);
+            -webkit-backdrop-filter: blur(25px) saturate(200%);
+            backdrop-filter: blur(25px) saturate(200%);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .screenshot-placeholder {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screenshot-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" opacity="0.2"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>') center/80px no-repeat;
+        }
+
+        .screenshot-placeholder::after {
+            content: '📸';
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .screenshot-content {
+            padding: 1.5rem;
+            color: #ffffff;
+        }
+
+        .screenshot-content h3 {
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .screenshot-content p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+
+
+        /* Bilingual Content */
+        .bilingual {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .english {
+            direction: ltr;
+            text-align: left;
+            display: block;
+        }
+
+        .arabic {
+            direction: rtl;
+            text-align: right;
+            font-family: 'Almarai', 'Segoe UI', Tahoma, Arial, sans-serif;
+            font-weight: 400;
+            line-height: 1.8;
+            display: none;
+        }
+
+        /* Language switching states */
+        [lang="ar"] .english {
+            display: none !important;
+        }
+
+        [lang="ar"] .arabic {
+            display: block !important;
+        }
+
+        [lang="en"] .english {
+            display: block !important;
+        }
+
+        [lang="en"] .arabic {
+            display: none !important;
+        }
+
+        /* Ensure proper display for bilingual containers */
+        .bilingual-container {
+            display: block;
+        }
+
+        [lang="ar"] .bilingual .english {
+            display: none !important;
+        }
+
+        [lang="ar"] .bilingual .arabic {
+            display: block !important;
+        }
+
+        [lang="en"] .bilingual .english {
+            display: block !important;
+        }
+
+        [lang="en"] .bilingual .arabic {
+            display: none !important;
+        }
+
+        /* Arabic Typography Enhancements */
+        .arabic h1, .arabic h2, .arabic h3, .arabic h4, .arabic h5, .arabic h6 {
+            font-family: 'Almarai', 'Segoe UI', Tahoma, Arial, sans-serif;
+            font-weight: 700;
+        }
+
+        .arabic strong {
+            font-family: 'Almarai', 'Segoe UI', Tahoma, Arial, sans-serif;
+            font-weight: 700;
+        }
+
+        /* RTL Support */
+        [dir="rtl"] .nav-links {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .features-grid {
+            direction: rtl;
+        }
+
+        [dir="rtl"] .demo-content {
+            direction: rtl;
+        }
+
+        [dir="rtl"] .steps {
+            direction: rtl;
+        }
+
+        [dir="rtl"] .screenshots-grid {
+            direction: rtl;
+        }
+
+        [dir="rtl"] .specs-grid {
+            direction: rtl;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 0 100px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 20px;
+            margin: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.02) 50%, transparent 70%);
+            animation: shimmer 8s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+            letter-spacing: -0.02em;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero .arabic-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            direction: rtl;
+            font-family: 'Almarai', 'Segoe UI', Tahoma, Arial, sans-serif;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out 0.4s both;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: rgba(255, 255, 255, 0.2);
+            -webkit-backdrop-filter: blur(15px) saturate(180%);
+            backdrop-filter: blur(15px) saturate(180%);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:hover {
+            background: rgba(255, 255, 255, 0.25);
+            -webkit-backdrop-filter: blur(20px) saturate(200%);
+            backdrop-filter: blur(20px) saturate(200%);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            -webkit-backdrop-filter: blur(15px) saturate(180%);
+            backdrop-filter: blur(15px) saturate(180%);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            -webkit-backdrop-filter: blur(20px) saturate(200%);
+            backdrop-filter: blur(20px) saturate(200%);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Features Section */
+        .features {
+            background: transparent;
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 20px;
+            margin: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.75rem;
+            margin-bottom: 4rem;
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
+            padding: 3rem 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.15);
+            -webkit-backdrop-filter: blur(25px) saturate(200%);
+            backdrop-filter: blur(25px) saturate(200%);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            -webkit-backdrop-filter: blur(15px) saturate(180%);
+            backdrop-filter: blur(15px) saturate(180%);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            color: white;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.25);
+            -webkit-backdrop-filter: blur(20px) saturate(200%);
+            backdrop-filter: blur(20px) saturate(200%);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        /* Demo Section */
+        .demo {
+            background: transparent;
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .demo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 20px;
+            margin: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .demo-text h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-text p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .demo-example {
+            background: rgba(255, 255, 255, 0.1);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .before-after {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .before, .after {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+
+        .before {
+            background: #ffe6e6;
+            border-left: 4px solid #dc3545;
+        }
+
+        .after {
+            background: #e6ffe6;
+            border-left: 4px solid #28a745;
+        }
+
+        .before h4, .after h4 {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .before h4 {
+            color: #dc3545;
+        }
+
+        .after h4 {
+            color: #28a745;
+        }
+
+        /* Installation Section */
+        .installation {
+            background: transparent;
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .installation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 20px;
+            margin: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .step:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.15);
+            -webkit-backdrop-filter: blur(25px) saturate(200%);
+            backdrop-filter: blur(25px) saturate(200%);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            -webkit-backdrop-filter: blur(15px) saturate(180%);
+            backdrop-filter: blur(15px) saturate(180%);
+            color: white;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            line-height: 60px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .step h3 {
+            margin-bottom: 1rem;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .step p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.3);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #ffffff;
+            font-size: 1.2rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #ffffff;
+        }
+
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .arabic-title {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .demo-content {
+                grid-template-columns: 1fr;
+            }
+
+            .before-after {
+                flex-direction: column;
+            }
+        }
+
+        /* RTL Support */
+        .rtl {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .rtl .feature-card {
+            text-align: right;
+        }
+
+        .rtl .step {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo bilingual">
+                    <span class="english">Arabic Search Enhancement</span>
+                    <span class="arabic">تحسين البحث العربي</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 2rem;">
+                    <ul class="nav-links">
+                        <li><a href="#features" class="bilingual"><span class="english">Features</span><span class="arabic">الميزات</span></a></li>
+                        <li><a href="#screenshots" class="bilingual"><span class="english">Screenshots</span><span class="arabic">لقطات الشاشة</span></a></li>
+                        <li><a href="#demo" class="bilingual"><span class="english">Demo</span><span class="arabic">عرض توضيحي</span></a></li>
+                        <li><a href="#installation" class="bilingual"><span class="english">Installation</span><span class="arabic">التثبيت</span></a></li>
+                        <li><a href="https://github.com/yasircs4/wp-plg-arabic-search-enhancement" target="_blank" rel="noopener" class="bilingual"><span class="english">GitHub</span><span class="arabic">GitHub</span></a></li>
+                    </ul>
+                    <div class="language-switcher" aria-label="Language selector">
+                        <button class="lang-btn active" onclick="switchLanguage('en')" aria-label="Switch to English" aria-pressed="true">EN</button>
+                        <button class="lang-btn" onclick="switchLanguage('ar')" aria-label="Switch to Arabic" aria-pressed="false">العربية</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Arabic Search Enhancement</h1>
+            <div class="arabic-title">تحسين البحث العربي</div>
+            <div class="bilingual">
+                <p class="english">Enhance WordPress search for Arabic content by normalizing text variations, diacritics, and letter forms for better search results.</p>
+                <p class="arabic">يحسن البحث في ووردبريس للمحتوى العربي من خلال توحيد تنويعات النصوص العربية وعلامات التشكيل وأشكال الحروف للحصول على نتائج بحث أفضل.</p>
+            </div>
+            <div class="cta-buttons">
+                <a href="https://wordpress.org/plugins/arabic-search-enhancement/" class="btn btn-primary" target="_blank" rel="noopener">Download from WordPress.org</a>
+                <a href="https://github.com/yasircs4/wp-plg-arabic-search-enhancement" class="btn btn-secondary" target="_blank" rel="noopener">View on GitHub</a>
+            </div>
+            <div class="bilingual" style="margin-top: 2rem; font-size: 0.8rem; opacity: 0.6;">
+                <p class="english">by <a href="http://maisra.net" target="_blank" rel="noopener" style="color: rgba(255,255,255,0.8);">Yasser Nageep</a></p>
+                <p class="arabic">بواسطة <a href="http://maisra.net" target="_blank" rel="noopener" style="color: rgba(255,255,255,0.8);">ياسر نجيب</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title bilingual">
+                <span class="english">Key Features</span>
+                <span class="arabic">الميزات الرئيسية</span>
+            </h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                        </svg>
+                    </div>
+                    <h3>Smart Arabic Text Normalization</h3>
+                    <div class="bilingual">
+                        <p class="english">Advanced text processing that removes diacritics, normalizes letter forms, and handles all Arabic text variations for comprehensive search results.</p>
+                        <p class="arabic">معالجة متقدمة للنصوص تزيل التشكيل وتوحد أشكال الحروف وتتعامل مع جميع تنويعات النص العربي للحصول على نتائج بحث شاملة.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <h3>Elementor Compatibility</h3>
+                    <div class="bilingual">
+                        <p class="english">Seamless integration with Elementor's search widgets, AJAX functionality, and live search features for modern page builders.</p>
+                        <p class="arabic">تكامل سلس مع عناصر البحث في Elementor ووظائف AJAX وميزات البحث المباشر لصانعي الصفحات الحديثة.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+                        </svg>
+                    </div>
+                    <h3>Performance Optimized</h3>
+                    <div class="bilingual">
+                        <p class="english">Intelligent caching system with performance monitoring, database optimization, and minimal resource usage for lightning-fast searches.</p>
+                        <p class="arabic">نظام تخزين مؤقت ذكي مع مراقبة الأداء وتحسين قاعدة البيانات واستخدام موارد محدود للبحث السريع كالبرق.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <h3>RTL Interface Support</h3>
+                    <div class="bilingual">
+                        <p class="english">Complete right-to-left interface with Arabic translations, proper RTL layout, and native Arabic typography support.</p>
+                        <p class="arabic">واجهة كاملة من اليمين إلى اليسار مع ترجمات عربية وتخطيط RTL صحيح ودعم طباعة عربية أصيلة.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+                        </svg>
+                    </div>
+                    <h3>Configurable Settings</h3>
+                    <div class="bilingual">
+                        <p class="english">Comprehensive admin panel with advanced settings, post type selection, caching configuration, and debug mode for customization.</p>
+                        <p class="arabic">لوحة تحكم شاملة مع إعدادات متقدمة واختيار أنواع المنشورات وتكوين التخزين المؤقت ووضع التصحيح للتخصيص.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                        </svg>
+                    </div>
+                    <h3>Developer Friendly</h3>
+                    <div class="bilingual">
+                        <p class="english">Built with SOLID principles, modern PHP architecture, comprehensive error handling, and extensive logging for developers.</p>
+                        <p class="arabic">مبني بمبادئ SOLID وهندسة PHP حديثة ومعالجة شاملة للأخطاء وتسجيل موسع للمطورين.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section class="screenshots" id="screenshots">
+        <div class="container">
+            <h2 class="section-title bilingual">
+                <span class="english">Plugin Screenshots</span>
+                <span class="arabic">لقطات شاشة الإضافة</span>
+            </h2>
+            <div class="bilingual">
+                <p class="english" style="text-align: center; margin-bottom: 2rem;">See how the plugin works with these screenshots of the admin interface and search functionality.</p>
+                <p class="arabic" style="text-align: center; margin-bottom: 2rem;">شاهد كيف يعمل الإضافة من خلال هذه الصور للوحة التحكم ووظيفة البحث.</p>
+            </div>
+            <div class="screenshots-grid">
+                <div class="screenshot-card">
+                    <div class="screenshot-placeholder">
+                        Admin Settings Page
+                    </div>
+                    <div class="screenshot-content">
+                        <h3>Admin Settings Page</h3>
+                        <div class="bilingual">
+                            <p class="english">Configure plugin settings, enable/disable features, and customize search behavior.</p>
+                            <p class="arabic">قم بتكوين إعدادات الإضافة وتفعيل/إلغاء الميزات وتخصيص سلوك البحث.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="screenshot-card">
+                    <div class="screenshot-placeholder">
+                        Search Analytics Dashboard
+                    </div>
+                    <div class="screenshot-content">
+                        <h3>Search Analytics Dashboard</h3>
+                        <div class="bilingual">
+                            <p class="english">Monitor search performance, view popular queries, and analyze search trends.</p>
+                            <p class="arabic">راقب أداء البحث وعرض الاستعلامات الشائعة وحلل اتجاهات البحث.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="screenshot-card">
+                    <div class="screenshot-placeholder">
+                        Search Results Comparison
+                    </div>
+                    <div class="screenshot-content">
+                        <h3>Search Results Comparison</h3>
+                        <div class="bilingual">
+                            <p class="english">Before and after comparison showing improved Arabic search results.</p>
+                            <p class="arabic">مقارنة قبل وبعد تظهر تحسن نتائج البحث العربي.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="screenshot-card">
+                    <div class="screenshot-placeholder">
+                        RTL Interface
+                    </div>
+                    <div class="screenshot-content">
+                        <h3>RTL Interface Support</h3>
+                        <div class="bilingual">
+                            <p class="english">Complete right-to-left interface for Arabic administrators.</p>
+                            <p class="arabic">واجهة كاملة من اليمين إلى اليسار للمديرين العرب.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="screenshot-card">
+                    <div class="screenshot-placeholder">
+                        Elementor Integration
+                    </div>
+                    <div class="screenshot-content">
+                        <h3>Elementor Integration</h3>
+                        <div class="bilingual">
+                            <p class="english">Seamless integration with Elementor search widgets and forms.</p>
+                            <p class="arabic">تكامل سلس مع عناصر البحث والنماذج في Elementor.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="screenshot-card">
+                    <div class="screenshot-placeholder">
+                        Self-Test Functionality
+                    </div>
+                    <div class="screenshot-content">
+                        <h3>Self-Test Functionality</h3>
+                        <div class="bilingual">
+                            <p class="english">Built-in testing tool to verify plugin functionality and normalization.</p>
+                            <p class="arabic">أداة اختبار مدمجة للتحقق من وظائف الإضافة والتوحيد.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="demo" id="demo">
+        <div class="container">
+            <h2 class="section-title bilingual">
+                <span class="english">See the Difference</span>
+                <span class="arabic">شاهد الفرق</span>
+            </h2>
+            <div class="demo-content">
+                <div class="demo-text">
+                    <h2 class="bilingual">
+                        <span class="english">Before vs After</span>
+                        <span class="arabic">قبل وبعد</span>
+                    </h2>
+                    <div class="bilingual">
+                        <p class="english">Arabic search can be frustrating when different text variations don't match. Our plugin solves this by normalizing all Arabic text forms.</p>
+                        <p class="arabic">يمكن أن يكون البحث العربي محبطاً عندما لا تتطابق تنويعات النصوص المختلفة. تحل إضافتنا هذه المشكلة من خلال توحيد جميع أشكال النص العربي.</p>
+                        <p class="english"><strong>Example:</strong> Searching for "قران" will now find "قرآن" (with diacritics), "الكتاب" will match "ألكتاب" (different Alef forms), and "محمد" will find "مُحَمَّد" (with Tashkeel).</p>
+                        <p class="arabic"><strong>مثال:</strong> البحث عن "قران" سيجد الآن "قرآن" (مع التشكيل)، "الكتاب" سيطابق "ألكتاب" (أشكال ألف مختلفة)، و"محمد" سيجد "مُحَمَّد" (مع التشكيل).</p>
+                    </div>
+                </div>
+                <div class="demo-example">
+                    <div class="before-after">
+                        <div class="before">
+                            <h4 class="bilingual">
+                                <span class="english">Before</span>
+                                <span class="arabic">قبل</span>
+                            </h4>
+                            <div class="bilingual">
+                                <p class="english">Search: "قران"</p>
+                                <p class="arabic">البحث: "قران"</p>
+                                <p class="english">Results: 0 found</p>
+                                <p class="arabic">النتائج: 0 موجود</p>
+                                <p class="english">❌ "قرآن" not found</p>
+                                <p class="arabic">❌ "قرآن" غير موجود</p>
+                            </div>
+                        </div>
+                        <div class="after">
+                            <h4 class="bilingual">
+                                <span class="english">After</span>
+                                <span class="arabic">بعد</span>
+                            </h4>
+                            <div class="bilingual">
+                                <p class="english">Search: "قران"</p>
+                                <p class="arabic">البحث: "قران"</p>
+                                <p class="english">Results: 3 found</p>
+                                <p class="arabic">النتائج: 3 موجود</p>
+                                <p class="english">✅ "قرآن" found!</p>
+                                <p class="arabic">✅ "قرآن" موجود!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="before-after">
+                        <div class="before">
+                            <h4 class="bilingual">
+                                <span class="english">Before</span>
+                                <span class="arabic">قبل</span>
+                            </h4>
+                            <div class="bilingual">
+                                <p class="english">Search: "الكتاب"</p>
+                                <p class="arabic">البحث: "الكتاب"</p>
+                                <p class="english">Results: 1 found</p>
+                                <p class="arabic">النتائج: 1 موجود</p>
+                                <p class="english">❌ "ألكتاب" not found</p>
+                                <p class="arabic">❌ "ألكتاب" غير موجود</p>
+                            </div>
+                        </div>
+                        <div class="after">
+                            <h4 class="bilingual">
+                                <span class="english">After</span>
+                                <span class="arabic">بعد</span>
+                            </h4>
+                            <div class="bilingual">
+                                <p class="english">Search: "الكتاب"</p>
+                                <p class="arabic">البحث: "الكتاب"</p>
+                                <p class="english">Results: 5 found</p>
+                                <p class="arabic">النتائج: 5 موجود</p>
+                                <p class="english">✅ "ألكتاب" found!</p>
+                                <p class="arabic">✅ "ألكتاب" موجود!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section class="installation" id="installation">
+        <div class="container">
+            <h2 class="section-title bilingual">
+                <span class="english">Easy Installation</span>
+                <span class="arabic">تثبيت سهل</span>
+            </h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 class="bilingual">
+                        <span class="english">Download</span>
+                        <span class="arabic">تحميل</span>
+                    </h3>
+                    <div class="bilingual">
+                        <p class="english">Get the plugin from WordPress.org or download from GitHub</p>
+                        <p class="arabic">احصل على الإضافة من ووردبريس أو حمل من GitHub</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 class="bilingual">
+                        <span class="english">Install</span>
+                        <span class="arabic">تثبيت</span>
+                    </h3>
+                    <div class="bilingual">
+                        <p class="english">Upload and activate through WordPress admin or install via plugin directory</p>
+                        <p class="arabic">ارفع وفعل من خلال إدارة ووردبريس أو ثبت عبر مجلد الإضافات</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 class="bilingual">
+                        <span class="english">Configure</span>
+                        <span class="arabic">تكوين</span>
+                    </h3>
+                    <div class="bilingual">
+                        <p class="english">Go to Settings → Arabic Search to customize options and run self-test</p>
+                        <p class="arabic">اذهب إلى الإعدادات → البحث العربي لتخصيص الخيارات وتشغيل الاختبار الذاتي</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3 class="bilingual">
+                        <span class="english">Enjoy</span>
+                        <span class="arabic">استمتع</span>
+                    </h3>
+                    <div class="bilingual">
+                        <p class="english">Your Arabic search is now enhanced! Test with different text variations</p>
+                        <p class="arabic">البحث العربي محسن الآن! اختبر مع تنويعات نصية مختلفة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Specifications -->
+    <section class="specifications" style="background: transparent; padding: 80px 0; position: relative;">
+        <div class="container">
+            <h2 class="section-title bilingual">
+                <span class="english">Technical Specifications</span>
+                <span class="arabic">المواصفات التقنية</span>
+            </h2>
+            <div class="bilingual">
+                <p class="english" style="text-align: center; margin-bottom: 3rem; color: rgba(255, 255, 255, 0.8);">Built with modern web standards and best practices for optimal performance and security.</p>
+                <p class="arabic" style="text-align: center; margin-bottom: 3rem; color: rgba(255, 255, 255, 0.8);">مبني بمعايير الويب الحديثة وأفضل الممارسات للأداء والأمان الأمثل.</p>
+            </div>
+            <div class="specs-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div class="spec-card" style="background: rgba(255, 255, 255, 0.1); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); padding: 2rem; border-radius: 20px; text-align: center; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);">
+                    <div style="width: 60px; height: 60px; background: rgba(255, 255, 255, 0.2); -webkit-backdrop-filter: blur(15px) saturate(180%); backdrop-filter: blur(15px) saturate(180%); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 1.5rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">⚡</div>
+                    <h3 style="margin-bottom: 1rem; color: #ffffff; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">Performance</h3>
+                    <div class="bilingual">
+                        <p class="english" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">SQL-level processing, intelligent caching, minimal resource usage</p>
+                        <p class="arabic" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">معالجة على مستوى SQL، تخزين مؤقت ذكي، استخدام موارد محدود</p>
+                    </div>
+                </div>
+                <div class="spec-card" style="background: rgba(255, 255, 255, 0.1); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); padding: 2rem; border-radius: 20px; text-align: center; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);">
+                    <div style="width: 60px; height: 60px; background: rgba(255, 255, 255, 0.2); -webkit-backdrop-filter: blur(15px) saturate(180%); backdrop-filter: blur(15px) saturate(180%); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 1.5rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">🛡️</div>
+                    <h3 style="margin-bottom: 1rem; color: #ffffff; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">Security</h3>
+                    <div class="bilingual">
+                        <p class="english" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">Input sanitization, output escaping, nonce verification</p>
+                        <p class="arabic" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">تنظيف المدخلات، هروب المخرجات، التحقق من nonce</p>
+                    </div>
+                </div>
+                <div class="spec-card" style="background: rgba(255, 255, 255, 0.1); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); padding: 2rem; border-radius: 20px; text-align: center; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);">
+                    <div style="width: 60px; height: 60px; background: rgba(255, 255, 255, 0.2); -webkit-backdrop-filter: blur(15px) saturate(180%); backdrop-filter: blur(15px) saturate(180%); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 1.5rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">🌐</div>
+                    <h3 style="margin-bottom: 1rem; color: #ffffff; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">Compatibility</h3>
+                    <div class="bilingual">
+                        <p class="english" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">WordPress 5.0+, PHP 7.4+, Elementor, RTL themes</p>
+                        <p class="arabic" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">ووردبريس 5.0+، PHP 7.4+، Elementor، قوالب RTL</p>
+                    </div>
+                </div>
+                <div class="spec-card" style="background: rgba(255, 255, 255, 0.1); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); padding: 2rem; border-radius: 20px; text-align: center; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);">
+                    <div style="width: 60px; height: 60px; background: rgba(255, 255, 255, 0.2); -webkit-backdrop-filter: blur(15px) saturate(180%); backdrop-filter: blur(15px) saturate(180%); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 1.5rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">🔧</div>
+                    <h3 style="margin-bottom: 1rem; color: #ffffff; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">Architecture</h3>
+                    <div class="bilingual">
+                        <p class="english" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">SOLID principles, PSR-4 autoloading, dependency injection</p>
+                        <p class="arabic" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">مبادئ SOLID، تحميل تلقائي PSR-4، حقن التبعيات</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Plugin Information</h3>
+                    <div class="bilingual">
+                        <p class="english"><strong>Version:</strong> 1.2.0</p>
+                        <p class="arabic"><strong>الإصدار:</strong> 1.2.0</p>
+                        <p class="english"><strong>WordPress:</strong> 5.0+</p>
+                        <p class="arabic"><strong>ووردبريس:</strong> 5.0+</p>
+                        <p class="english"><strong>PHP:</strong> 7.4+</p>
+                        <p class="arabic"><strong>PHP:</strong> 7.4+</p>
+                        <p class="english"><strong>License:</strong> GPL v2+</p>
+                        <p class="arabic"><strong>الترخيص:</strong> GPL v2+</p>
+                        <p class="english"><strong>Language:</strong> English, Arabic</p>
+                        <p class="arabic"><strong>اللغة:</strong> الإنجليزية، العربية</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <div class="bilingual">
+                        <p class="english"><a href="https://wordpress.org/plugins/arabic-search-enhancement/" target="_blank" rel="noopener">📦 Download from WordPress.org</a></p>
+                        <p class="arabic"><a href="https://wordpress.org/plugins/arabic-search-enhancement/" target="_blank" rel="noopener">📦 تحميل من ووردبريس</a></p>
+                        <p class="english"><a href="https://github.com/yasircs4/wp-plg-arabic-search-enhancement" target="_blank" rel="noopener">💻 GitHub Repository</a></p>
+                        <p class="arabic"><a href="https://github.com/yasircs4/wp-plg-arabic-search-enhancement" target="_blank" rel="noopener">💻 مستودع GitHub</a></p>
+                        <p class="english"><a href="http://maisra.net" target="_blank" rel="noopener">🌐 Developer Website</a></p>
+                        <p class="arabic"><a href="http://maisra.net" target="_blank" rel="noopener">🌐 موقع المطور</a></p>
+                        <p class="english"><a href="https://yasircs4.github.io/wp-plg-arabic-search-enhancement/" target="_blank" rel="noopener">📄 Plugin Landing Page</a></p>
+                        <p class="arabic"><a href="https://yasircs4.github.io/wp-plg-arabic-search-enhancement/" target="_blank" rel="noopener">📄 صفحة الإضافة</a></p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Support & Community</h3>
+                    <div class="bilingual">
+                        <p class="english"><a href="https://github.com/yasircs4/wp-plg-arabic-search-enhancement/issues" target="_blank" rel="noopener">🐛 Report Issues</a></p>
+                        <p class="arabic"><a href="https://github.com/yasircs4/wp-plg-arabic-search-enhancement/issues" target="_blank" rel="noopener">🐛 الإبلاغ عن مشاكل</a></p>
+                        <p class="english"><a href="https://github.com/yasircs4/wp-plg-arabic-search-enhancement/discussions" target="_blank" rel="noopener">💬 Discussions</a></p>
+                        <p class="arabic"><a href="https://github.com/yasircs4/wp-plg-arabic-search-enhancement/discussions" target="_blank" rel="noopener">💬 مناقشات</a></p>
+                        <p class="english"><a href="mailto:info@maisra.net" rel="noopener">📧 Contact Developer</a></p>
+                        <p class="arabic"><a href="mailto:info@maisra.net" rel="noopener">📧 تواصل مع المطور</a></p>
+                        <p class="english"><a href="https://wordpress.org/support/plugin/arabic-search-enhancement/" target="_blank" rel="noopener">🆘 WordPress Support</a></p>
+                        <p class="arabic"><a href="https://wordpress.org/support/plugin/arabic-search-enhancement/" target="_blank" rel="noopener">🆘 دعم ووردبريس</a></p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Key Features</h3>
+                    <div class="bilingual">
+                        <p class="english">✅ Arabic Text Normalization</p>
+                        <p class="arabic">✅ توحيد النص العربي</p>
+                        <p class="english">✅ Elementor Integration</p>
+                        <p class="arabic">✅ تكامل Elementor</p>
+                        <p class="english">✅ RTL Interface</p>
+                        <p class="arabic">✅ واجهة RTL</p>
+                        <p class="english">✅ Performance Optimized</p>
+                        <p class="arabic">✅ محسن للأداء</p>
+                        <p class="english">✅ Search Analytics</p>
+                        <p class="arabic">✅ تحليلات البحث</p>
+                        <p class="english">✅ Multi-language Support</p>
+                        <p class="arabic">✅ دعم متعدد اللغات</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="bilingual">
+                    <p class="english">&copy; 2025 Yasser Nageep Maisra. All rights reserved. | Made with ❤️ for the Arabic WordPress community</p>
+                    <p class="arabic">&copy; 2025 ياسر نجيب ميسرة. جميع الحقوق محفوظة. | صنع بحب لمجتمع ووردبريس العربي</p>
+                </div>
+                <div class="bilingual" style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                    <p class="english">Licensed under GPL v2 or later | <a href="http://maisra.net" target="_blank" rel="noopener" style="color: #4f46e5;">Developer Website</a></p>
+                    <p class="arabic">مرخصة تحت GPL v2 أو أحدث | <a href="http://maisra.net" target="_blank" rel="noopener" style="color: #4f46e5;">موقع المطور</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all feature cards and steps
+        document.querySelectorAll('.feature-card, .step').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Language switching functionality
+        function switchLanguage(lang) {
+            const langButtons = document.querySelectorAll('.lang-btn');
+            const htmlElement = document.documentElement;
+
+            // Update button states
+            langButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-pressed', 'false');
+            });
+            
+            // Find and activate the correct button
+            const targetButton = document.querySelector(`.lang-btn[onclick="switchLanguage('${lang}')"]`);
+            if (targetButton) {
+                targetButton.classList.add('active');
+                targetButton.setAttribute('aria-pressed', 'true');
+            }
+
+            if (lang === 'ar') {
+                // Switch to Arabic
+                htmlElement.setAttribute('dir', 'rtl');
+                htmlElement.setAttribute('lang', 'ar');
+            } else {
+                // Switch to English
+                htmlElement.setAttribute('dir', 'ltr');
+                htmlElement.setAttribute('lang', 'en');
+            }
+
+            // Store preference
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // Load saved language preference
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            const langButtons = document.querySelectorAll('.lang-btn');
+            const htmlElement = document.documentElement;
+            
+            // Remove active class from all buttons
+            langButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-pressed', 'false');
+            });
+            
+            // Set initial language
+            if (savedLang === 'ar') {
+                const arButton = document.querySelector('.lang-btn[onclick="switchLanguage(\'ar\')"]');
+                if (arButton) {
+                    arButton.classList.add('active');
+                    arButton.setAttribute('aria-pressed', 'true');
+                }
+                htmlElement.setAttribute('dir', 'rtl');
+                htmlElement.setAttribute('lang', 'ar');
+            } else {
+                const enButton = document.querySelector('.lang-btn[onclick="switchLanguage(\'en\')"]');
+                if (enButton) {
+                    enButton.classList.add('active');
+                    enButton.setAttribute('aria-pressed', 'true');
+                }
+                htmlElement.setAttribute('dir', 'ltr');
+                htmlElement.setAttribute('lang', 'en');
+            }
+        });
+
+        // SEO: Add structured data for better search visibility
+        const structuredData = {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Arabic Search Enhancement WordPress Plugin",
+            "description": "Free WordPress plugin that enhances search functionality for Arabic content",
+            "url": "https://yasircs4.github.io/wp-plg-arabic-search-enhancement/",
+            "inLanguage": ["en", "ar"],
+            "isPartOf": {
+                "@type": "WebSite",
+                "name": "Arabic Search Enhancement",
+                "url": "https://yasircs4.github.io/wp-plg-arabic-search-enhancement/"
+            },
+            "breadcrumb": {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://yasircs4.github.io/wp-plg-arabic-search-enhancement/"
+                    }
+                ]
+            }
+        };
+
+        // Add structured data to page
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(structuredData);
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>
