@@ -90,11 +90,13 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
-            color: #1a202c;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: #ffffff;
+            background: #0f172a;
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            margin: 0;
+            padding: 0;
         }
 
         body::before {
@@ -105,9 +107,9 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+                linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             z-index: -1;
             animation: pulse 20s ease-in-out infinite;
         }
@@ -254,7 +256,7 @@
 
         /* Screenshots Section */
         .screenshots {
-            background: white;
+            background: rgba(255, 255, 255, 0.03);
             padding: 80px 0;
             position: relative;
         }
@@ -271,18 +273,21 @@
         }
 
         .screenshot-card {
-            background: white;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
             transition: all 0.3s ease;
-            border: 1px solid #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
 
         .screenshot-card:hover {
-            transform: translateY(-4px);
-            border-color: #cbd5e1;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 16px 48px 0 rgba(99, 102, 241, 0.25);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .screenshot-placeholder {
@@ -319,17 +324,18 @@
 
         .screenshot-content {
             padding: 1.5rem;
-            background: white;
+            background: rgba(255, 255, 255, 0.03);
         }
 
         .screenshot-content h3 {
-            color: #0f172a;
+            color: #ffffff;
             margin-bottom: 0.75rem;
             font-size: 1.1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .screenshot-content p {
-            color: #64748b;
+            color: rgba(255, 255, 255, 0.8);
             font-size: 0.95rem;
         }
 
@@ -549,35 +555,40 @@
         }
 
         .btn-primary {
-            background: #4f46e5;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             color: #fff;
-            border: none;
-            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.4);
             font-weight: 600;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
         }
 
         .btn-primary:hover {
-            background: #4338ca;
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
+            box-shadow: 0 12px 40px 0 rgba(99, 102, 241, 0.5);
         }
 
         .btn-secondary {
-            background: white;
-            color: #4f46e5;
-            border: 2px solid #4f46e5;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
             font-weight: 500;
         }
 
         .btn-secondary:hover {
-            background: #f1f5f9;
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.15);
         }
 
         /* Features Section */
         .features {
-            background: #f8fafc;
+            background: rgba(255, 255, 255, 0.03);
             padding: 100px 0;
             position: relative;
         }
@@ -590,9 +601,10 @@
             text-align: center;
             font-size: 2.75rem;
             margin-bottom: 4rem;
-            color: #0f172a;
+            color: #ffffff;
             font-weight: 700;
             letter-spacing: -0.02em;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
         }
 
         .features-grid {
@@ -603,25 +615,36 @@
         }
 
         .feature-card {
-            background: white;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
             padding: 3rem 2.5rem;
             border-radius: 16px;
             text-align: center;
             transition: all 0.3s ease;
-            border: 1px solid #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.18);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
         }
 
         .feature-card::before {
-            display: none;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
         }
 
         .feature-card:hover {
-            transform: translateY(-4px);
-            border-color: #cbd5e1;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 16px 48px 0 rgba(99, 102, 241, 0.25);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .feature-card:hover::before {
@@ -632,36 +655,41 @@
             width: 72px;
             height: 72px;
             margin: 0 auto 2rem;
-            background: #ede9fe;
+            background: rgba(99, 102, 241, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.75rem;
-            color: #4f46e5;
+            color: #ffffff;
             transition: all 0.3s ease;
+            box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.2);
         }
 
         .feature-card:hover .feature-icon {
-            transform: scale(1.05);
-            background: #4f46e5;
-            color: white;
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            box-shadow: 0 12px 40px 0 rgba(99, 102, 241, 0.4);
         }
 
         .feature-card h3 {
             font-size: 1.3rem;
             margin-bottom: 1rem;
-            color: #0f172a;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .feature-card p {
-            color: #64748b;
+            color: rgba(255, 255, 255, 0.8);
             line-height: 1.6;
         }
 
         /* Demo Section */
         .demo {
-            background: #f8fafc;
+            background: rgba(255, 255, 255, 0.02);
             padding: 80px 0;
             position: relative;
         }
@@ -680,20 +708,23 @@
         .demo-text h2 {
             font-size: 2rem;
             margin-bottom: 1rem;
-            color: #0f172a;
+            color: #ffffff;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
         }
 
         .demo-text p {
-            color: #64748b;
+            color: rgba(255, 255, 255, 0.8);
             margin-bottom: 1.5rem;
         }
 
         .demo-example {
-            background: white;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
             padding: 2rem;
             border-radius: 16px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
         }
 
         .before-after {
@@ -735,7 +766,7 @@
 
         /* Installation Section */
         .installation {
-            background: white;
+            background: rgba(255, 255, 255, 0.03);
             padding: 80px 0;
             position: relative;
         }
@@ -754,49 +785,56 @@
         .step {
             text-align: center;
             padding: 2rem;
-            background: white;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
             border-radius: 16px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
             transition: all 0.3s ease;
         }
 
         .step:hover {
             transform: translateY(-4px);
-            border-color: #cbd5e1;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 16px 48px 0 rgba(99, 102, 241, 0.25);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .step-number {
             display: inline-block;
             width: 60px;
             height: 60px;
-            background: #4f46e5;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             color: white;
             border-radius: 50%;
             line-height: 60px;
             font-size: 1.5rem;
             font-weight: bold;
             margin-bottom: 1rem;
-            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
 
         .step h3 {
             margin-bottom: 1rem;
-            color: #0f172a;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .step p {
-            color: #64748b;
+            color: rgba(255, 255, 255, 0.8);
         }
 
         /* Footer */
         .footer {
-            background: #0f172a;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             color: white;
             padding: 40px 0;
             text-align: center;
-            border-top: 1px solid #1e293b;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .footer-content {
@@ -819,7 +857,7 @@
         }
 
         .footer-section a:hover {
-            color: #4f46e5;
+            color: #a78bfa;
         }
 
         .footer-section p {
@@ -828,7 +866,7 @@
         }
 
         .footer-bottom {
-            border-top: 1px solid #1e293b;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 2rem;
             color: #94a3b8;
             text-align: center;
@@ -1234,47 +1272,47 @@
     </section>
 
     <!-- Technical Specifications -->
-    <section class="specifications" style="background: #f8fafc; padding: 80px 0; position: relative;">
+    <section class="specifications" style="background: rgba(255, 255, 255, 0.02); padding: 80px 0; position: relative;">
         <div class="container">
             <h2 class="section-title bilingual">
                 <span class="english">Technical Specifications</span>
                 <span class="arabic">المواصفات التقنية</span>
             </h2>
             <div class="bilingual">
-                <p class="english" style="text-align: center; margin-bottom: 3rem; color: #64748b;">Built with modern web standards and best practices for optimal performance and security.</p>
-                <p class="arabic" style="text-align: center; margin-bottom: 3rem; color: #64748b;">مبني بمعايير الويب الحديثة وأفضل الممارسات للأداء والأمان الأمثل.</p>
+                <p class="english" style="text-align: center; margin-bottom: 3rem; color: rgba(255, 255, 255, 0.8); text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);">Built with modern web standards and best practices for optimal performance and security.</p>
+                <p class="arabic" style="text-align: center; margin-bottom: 3rem; color: rgba(255, 255, 255, 0.8); text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);">مبني بمعايير الويب الحديثة وأفضل الممارسات للأداء والأمان الأمثل.</p>
             </div>
             <div class="specs-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-                <div class="spec-card" style="background: white; padding: 2rem; border-radius: 16px; text-align: center; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0;">
-                    <div style="width: 60px; height: 60px; background: #ede9fe; border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: #4f46e5; font-size: 1.5rem;">⚡</div>
-                    <h3 style="margin-bottom: 1rem; color: #0f172a;">Performance</h3>
+                <div class="spec-card" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); padding: 2rem; border-radius: 16px; text-align: center; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15); border: 1px solid rgba(255, 255, 255, 0.18);">
+                    <div style="width: 60px; height: 60px; background: rgba(99, 102, 241, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.18); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: #ffffff; font-size: 1.5rem; box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.2);">⚡</div>
+                    <h3 style="margin-bottom: 1rem; color: #ffffff; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);">Performance</h3>
                     <div class="bilingual">
-                        <p class="english" style="color: #64748b; font-size: 0.9rem;">SQL-level processing, intelligent caching, minimal resource usage</p>
-                        <p class="arabic" style="color: #64748b; font-size: 0.9rem;">معالجة على مستوى SQL، تخزين مؤقت ذكي، استخدام موارد محدود</p>
+                        <p class="english" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">SQL-level processing, intelligent caching, minimal resource usage</p>
+                        <p class="arabic" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">معالجة على مستوى SQL، تخزين مؤقت ذكي، استخدام موارد محدود</p>
                     </div>
                 </div>
-                <div class="spec-card" style="background: white; padding: 2rem; border-radius: 16px; text-align: center; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0;">
-                    <div style="width: 60px; height: 60px; background: #ede9fe; border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: #4f46e5; font-size: 1.5rem;">🛡️</div>
-                    <h3 style="margin-bottom: 1rem; color: #0f172a;">Security</h3>
+                <div class="spec-card" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); padding: 2rem; border-radius: 16px; text-align: center; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15); border: 1px solid rgba(255, 255, 255, 0.18);">
+                    <div style="width: 60px; height: 60px; background: rgba(99, 102, 241, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.18); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: #ffffff; font-size: 1.5rem; box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.2);">🛡️</div>
+                    <h3 style="margin-bottom: 1rem; color: #ffffff; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);">Security</h3>
                     <div class="bilingual">
-                        <p class="english" style="color: #64748b; font-size: 0.9rem;">Input sanitization, output escaping, nonce verification</p>
-                        <p class="arabic" style="color: #64748b; font-size: 0.9rem;">تنظيف المدخلات، هروب المخرجات، التحقق من nonce</p>
+                        <p class="english" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">Input sanitization, output escaping, nonce verification</p>
+                        <p class="arabic" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">تنظيف المدخلات، هروب المخرجات، التحقق من nonce</p>
                     </div>
                 </div>
-                <div class="spec-card" style="background: white; padding: 2rem; border-radius: 16px; text-align: center; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0;">
-                    <div style="width: 60px; height: 60px; background: #ede9fe; border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: #4f46e5; font-size: 1.5rem;">🌐</div>
-                    <h3 style="margin-bottom: 1rem; color: #0f172a;">Compatibility</h3>
+                <div class="spec-card" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); padding: 2rem; border-radius: 16px; text-align: center; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15); border: 1px solid rgba(255, 255, 255, 0.18);">
+                    <div style="width: 60px; height: 60px; background: rgba(99, 102, 241, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.18); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: #ffffff; font-size: 1.5rem; box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.2);">🌐</div>
+                    <h3 style="margin-bottom: 1rem; color: #ffffff; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);">Compatibility</h3>
                     <div class="bilingual">
-                        <p class="english" style="color: #64748b; font-size: 0.9rem;">WordPress 5.0+, PHP 7.4+, Elementor, RTL themes</p>
-                        <p class="arabic" style="color: #64748b; font-size: 0.9rem;">ووردبريس 5.0+، PHP 7.4+، Elementor، قوالب RTL</p>
+                        <p class="english" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">WordPress 5.0+, PHP 7.4+, Elementor, RTL themes</p>
+                        <p class="arabic" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">ووردبريس 5.0+، PHP 7.4+، Elementor، قوالب RTL</p>
                     </div>
                 </div>
-                <div class="spec-card" style="background: white; padding: 2rem; border-radius: 16px; text-align: center; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0;">
-                    <div style="width: 60px; height: 60px; background: #ede9fe; border-radius: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: #4f46e5; font-size: 1.5rem;">🔧</div>
-                    <h3 style="margin-bottom: 1rem; color: #0f172a;">Architecture</h3>
+                <div class="spec-card" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); padding: 2rem; border-radius: 16px; text-align: center; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15); border: 1px solid rgba(255, 255, 255, 0.18);">
+                    <div style="width: 60px; height: 60px; background: rgba(99, 102, 241, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.18); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: #ffffff; font-size: 1.5rem; box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.2);">🔧</div>
+                    <h3 style="margin-bottom: 1rem; color: #ffffff; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);">Architecture</h3>
                     <div class="bilingual">
-                        <p class="english" style="color: #64748b; font-size: 0.9rem;">SOLID principles, PSR-4 autoloading, dependency injection</p>
-                        <p class="arabic" style="color: #64748b; font-size: 0.9rem;">مبادئ SOLID، تحميل تلقائي PSR-4، حقن التبعيات</p>
+                        <p class="english" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">SOLID principles, PSR-4 autoloading, dependency injection</p>
+                        <p class="arabic" style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">مبادئ SOLID، تحميل تلقائي PSR-4، حقن التبعيات</p>
                     </div>
                 </div>
             </div>
