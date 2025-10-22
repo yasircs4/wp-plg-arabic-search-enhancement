@@ -218,7 +218,7 @@ class SearchAnalyticsDashboard {
                     </table>
                 </div>
             </div>
-            
+
             <!-- Performance Insights -->
             <div class="performance-insights">
                 <h3><?php esc_html_e('Performance Insights', 'arabic-search-enhancement'); ?></h3>
@@ -227,158 +227,6 @@ class SearchAnalyticsDashboard {
                 </div>
             </div>
         </div>
-        
-        <style>
-        .arabic-search-analytics .analytics-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-        
-        .analytics-card {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .analytics-card h3 {
-            margin: 0 0 10px 0;
-            font-size: 14px;
-            color: #666;
-            text-transform: uppercase;
-        }
-        
-        .metric-value {
-            font-size: 32px;
-            font-weight: bold;
-            color: #2271b1;
-            margin-bottom: 5px;
-        }
-        
-        .metric-change {
-            font-size: 12px;
-            color: #666;
-        }
-        
-        .metric-change.positive { color: #00a32a; }
-        .metric-change.negative { color: #d63638; }
-        
-        .analytics-charts {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 20px 0;
-        }
-        
-        .chart-container {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-        }
-        
-        /* CSS Bar Chart Styles */
-        .css-bar-chart {
-            margin-top: 15px;
-        }
-        
-        .bar-item {
-            margin-bottom: 12px;
-        }
-        
-        .bar-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 4px;
-        }
-        
-        .bar-container {
-            position: relative;
-            background: #f5f5f5;
-            height: 24px;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        
-        .bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #0073aa, #00a0d2);
-            border-radius: 12px;
-            transition: width 0.5s ease;
-        }
-        
-        .bar-value {
-            position: absolute;
-            right: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 11px;
-            color: #333;
-            font-weight: 600;
-        }
-        
-        /* CSS Pie Chart Styles */
-        .css-pie-chart {
-            margin-top: 15px;
-        }
-        
-        .pie-legend {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .legend-color {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-        
-        .legend-text {
-            font-size: 13px;
-            color: #333;
-        }
-        
-        .analytics-tables {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 20px 0;
-        }
-        
-        .table-container {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-        }
-        
-        .performance-insights {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        @media (max-width: 768px) {
-            .analytics-charts,
-            .analytics-tables {
-                grid-template-columns: 1fr;
-            }
-        }
-        </style>
         <?php
     }
     
@@ -453,7 +301,7 @@ class SearchAnalyticsDashboard {
     private function get_trends_data(int $period): array {
         global $wpdb;
         
-        $date_limit = date('Y-m-d H:i:s', strtotime("-{$period} days"));
+        $date_limit = gmdate('Y-m-d H:i:s', strtotime("-{$period} days"));
         
         $trends = $wpdb->get_results($wpdb->prepare("
             SELECT 
@@ -471,7 +319,7 @@ class SearchAnalyticsDashboard {
         $queries = [];
         
         foreach ($trends as $trend) {
-            $labels[] = date('M j', strtotime($trend->search_date));
+            $labels[] = gmdate('M j', strtotime($trend->search_date));
             $searches[] = intval($trend->daily_searches);
             $queries[] = intval($trend->unique_queries);
         }
@@ -492,7 +340,7 @@ class SearchAnalyticsDashboard {
     private function get_top_queries_data(int $period): array {
         global $wpdb;
         
-        $date_limit = date('Y-m-d H:i:s', strtotime("-{$period} days"));
+        $date_limit = gmdate('Y-m-d H:i:s', strtotime("-{$period} days"));
         
         $queries = $wpdb->get_results($wpdb->prepare("
             SELECT 
@@ -516,7 +364,7 @@ class SearchAnalyticsDashboard {
                 'searches' => intval($query->search_count),
                 'avg_results' => intval($query->result_count),
                 'success_rate' => intval($query->success_rate) . '%',
-                'last_searched' => date('M j, Y H:i', strtotime($query->last_searched))
+                'last_searched' => gmdate('M j, Y H:i', strtotime($query->last_searched))
             ];
         }, $queries);
     }
@@ -530,7 +378,7 @@ class SearchAnalyticsDashboard {
     private function get_failed_searches_data(int $period): array {
         global $wpdb;
         
-        $date_limit = date('Y-m-d H:i:s', strtotime("-{$period} days"));
+        $date_limit = gmdate('Y-m-d H:i:s', strtotime("-{$period} days"));
         
         $failed = $wpdb->get_results($wpdb->prepare("
             SELECT 
@@ -549,7 +397,7 @@ class SearchAnalyticsDashboard {
                 'query' => $query->original_query,
                 'attempts' => intval($query->search_count),
                 'suggestions' => $this->generate_suggestions($query->original_query),
-                'last_attempt' => date('M j, Y H:i', strtotime($query->last_searched))
+                'last_attempt' => gmdate('M j, Y H:i', strtotime($query->last_searched))
             ];
         }, $failed);
     }
@@ -621,7 +469,7 @@ class SearchAnalyticsDashboard {
     private function get_failed_searches_count(int $period): int {
         global $wpdb;
         
-        $date_limit = date('Y-m-d H:i:s', strtotime("-{$period} days"));
+        $date_limit = gmdate('Y-m-d H:i:s', strtotime("-{$period} days"));
         
         return intval($wpdb->get_var($wpdb->prepare("
             SELECT SUM(search_count)
@@ -722,7 +570,7 @@ class SearchAnalyticsDashboard {
         
         $trends = [];
         for ($i = 6; $i >= 0; $i--) {
-            $date = date('Y-m-d', strtotime("-{$i} days"));
+            $date = gmdate('Y-m-d', strtotime("-{$i} days"));
             $date_start = $date . ' 00:00:00';
             $date_end = $date . ' 23:59:59';
             
@@ -733,7 +581,7 @@ class SearchAnalyticsDashboard {
             ", $date_start, $date_end));
             
             $trends[] = [
-                'label' => date('M j', strtotime($date)),
+                'label' => gmdate('M j', strtotime($date)),
                 'value' => intval($count ?: 0)
             ];
         }

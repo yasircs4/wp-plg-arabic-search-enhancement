@@ -80,7 +80,9 @@ class SearchQueryModifier implements SearchQueryModifierInterface {
         } catch (\Exception $e) {
             // Log error if debug mode is enabled
             if ($this->config->get('debug_mode', false)) {
-                error_log('Arabic Search Enhancement Error: ' . $e->getMessage());
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log('Arabic Search Enhancement Error: ' . $e->getMessage());
+                }
             }
             
             // Return original search on error
@@ -340,9 +342,8 @@ class SearchQueryModifier implements SearchQueryModifierInterface {
         
         $search_sql = ' AND ' . implode(' AND ', $term_groups);
         
-        $prepared = $this->wpdb->prepare($search_sql, $prepare_values);
-
-        return $prepared !== false ? $prepared : $original_search;
+        // The SQL is already properly prepared with placeholders, just return it
+        return $search_sql;
     }
     
     /**

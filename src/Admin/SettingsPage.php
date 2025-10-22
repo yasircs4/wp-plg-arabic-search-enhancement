@@ -54,9 +54,9 @@ class SettingsPage {
      * @return void
      */
     public function init_hooks(): void {
-    add_action('admin_menu', [$this, 'add_settings_page']);
-    add_action('admin_init', [$this, 'register_settings']);
-    add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
+        add_action('admin_menu', [$this, 'add_settings_page']);
+        add_action('admin_init', [$this, 'register_settings']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
         
         // Get the correct plugin file path
         $plugin_file = defined('ARABIC_SEARCH_ENHANCEMENT_PLUGIN_FILE') 
@@ -176,38 +176,7 @@ class SettingsPage {
         $rtl_class = $this->config->is_rtl() ? 'rtl' : '';
         
         ?>
-        <div class="wrap <?php echo esc_attr($rtl_class); ?>">
-            <?php if ($this->config->is_rtl()): ?>
-            <style type="text/css">
-                .wrap.rtl {
-                    direction: rtl;
-                    text-align: right;
-                }
-                .wrap.rtl .form-table th {
-                    text-align: right;
-                    padding-right: 0;
-                    padding-left: 20px;
-                }
-                .wrap.rtl .form-table td {
-                    text-align: right;
-                }
-                .wrap.rtl ul {
-                    margin-right: 20px;
-                    margin-left: 0;
-                }
-                .wrap.rtl .card {
-                    text-align: right;
-                }
-                .wrap.rtl input[type="checkbox"] {
-                    margin-left: 10px;
-                    margin-right: 0;
-                }
-                .wrap.rtl label {
-                    display: inline-block;
-                }
-            </style>
-            <?php endif; ?>
-            
+    <div class="wrap arabic-search-enhancement <?php echo esc_attr($rtl_class); ?>">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
             
             <?php $this->render_notices(); ?>
@@ -507,7 +476,7 @@ class SettingsPage {
         <div class="card" style="max-width: 100%; padding: 20px;">
             <h2><?php esc_html_e('Plugin Information', 'arabic-search-enhancement'); ?></h2>
             <p><strong><?php esc_html_e('Version:', 'arabic-search-enhancement'); ?></strong> <?php echo esc_html(Configuration::VERSION); ?></p>
-            <p><strong><?php esc_html_e('Website:', 'arabic-search-enhancement'); ?></strong> <a href="https://maisra.net" target="_blank" rel="noopener">maisra.net</a></p>
+            <p><strong><?php esc_html_e('Website:', 'arabic-search-enhancement'); ?></strong> <a href="https://yasircs4.github.io/wp-plg-arabic-search-enhancement/" target="_blank" rel="noopener">yasircs4.github.io</a></p>
             <p><strong><?php esc_html_e('Database Charset:', 'arabic-search-enhancement'); ?></strong> <?php echo esc_html($wpdb->charset); ?></p>
             <p><strong><?php esc_html_e('Database Collation:', 'arabic-search-enhancement'); ?></strong> <?php echo esc_html($wpdb->collate); ?></p>
         </div>
@@ -552,67 +521,6 @@ class SettingsPage {
                 <div id="ase-test-output"></div>
             </div>
         </div>
-        
-        <script type="text/javascript">
-        document.getElementById('ase-run-test').addEventListener('click', function() {
-            var button = this;
-            var resultsDiv = document.getElementById('ase-test-results');
-            var outputDiv = document.getElementById('ase-test-output');
-            
-            button.disabled = true;
-            button.textContent = '<?php esc_js(__('Running Tests...', 'arabic-search-enhancement')); ?>';
-            
-            // Simple client-side tests
-            var testResults = [];
-            
-            // Test 1: Check if essential functions exist
-            try {
-                if (typeof jQuery !== 'undefined') {
-                    testResults.push({name: 'jQuery Available', status: 'passed', message: 'jQuery is loaded'});
-                } else {
-                    testResults.push({name: 'jQuery Available', status: 'warning', message: 'jQuery not detected'});
-                }
-            } catch(e) {
-                testResults.push({name: 'jQuery Test', status: 'failed', message: e.message});
-            }
-            
-            // Test 2: Check Arabic text rendering
-            try {
-                var testDiv = document.createElement('div');
-                testDiv.innerHTML = 'قرآن كريم';
-                testDiv.style.visibility = 'hidden';
-                document.body.appendChild(testDiv);
-                
-                if (testDiv.offsetWidth > 0) {
-                    testResults.push({name: 'Arabic Text Rendering', status: 'passed', message: 'Arabic text can be rendered'});
-                } else {
-                    testResults.push({name: 'Arabic Text Rendering', status: 'warning', message: 'Arabic text rendering may have issues'});
-                }
-                
-                document.body.removeChild(testDiv);
-            } catch(e) {
-                testResults.push({name: 'Arabic Text Rendering', status: 'failed', message: e.message});
-            }
-            
-            // Display results
-            var html = '<div class="notice notice-info"><p><strong>Client-side tests completed.</strong></p></div>';
-            html += '<ul>';
-            
-            testResults.forEach(function(result) {
-                var statusClass = result.status === 'passed' ? 'green' : (result.status === 'warning' ? 'orange' : 'red');
-                html += '<li><span style="color: ' + statusClass + ';">●</span> <strong>' + result.name + ':</strong> ' + result.message + '</li>';
-            });
-            
-            html += '</ul>';
-            html += '<p><em><?php esc_js(__('Note: Server-side tests require the plugin to be fully activated and functional.', 'arabic-search-enhancement')); ?></em></p>';
-            
-            outputDiv.innerHTML = html;
-            resultsDiv.style.display = 'block';
-            
-            button.disabled = false;
-            button.textContent = '<?php esc_js(__('Run Self-Test', 'arabic-search-enhancement')); ?>';
-        });
-        </script>
         <?php
     }
     
@@ -623,49 +531,52 @@ class SettingsPage {
      * @return void
      */
     public function enqueue_admin_scripts(string $hook_suffix): void {
-        // Only load on our settings page
         if ($hook_suffix !== 'settings_page_' . self::PAGE_SLUG) {
             return;
         }
-        
-        // Load JavaScript translations if available
-        $locale = get_locale();
-        $json_file = ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR . 'languages/arabic-search-enhancement-' . $locale . '-json.json';
-        
-        if (!file_exists($json_file)) {
-            // Try with just language code
-            $language = substr($locale, 0, 2);
-            $json_file = ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR . 'languages/arabic-search-enhancement-' . $language . '-json.json';
-        }
-        
-        if (file_exists($json_file)) {
-            wp_add_inline_script('jquery', '
-                window.wp = window.wp || {};
-                window.wp.i18n = window.wp.i18n || {};
-                window.wp.i18n.setLocaleData(' . file_get_contents($json_file) . ');
-            ');
-        }
-        
-        // Add RTL styles for Arabic
+
+        wp_enqueue_style(
+            'arabic-search-enhancement-admin',
+            ARABIC_SEARCH_ENHANCEMENT_PLUGIN_URL . 'assets/admin/admin-styles.css',
+            [],
+            ARABIC_SEARCH_ENHANCEMENT_VERSION
+        );
+
         if ($this->config->is_rtl()) {
-            wp_add_inline_style('wp-admin', '
-                .arabic-search-enhancement .wrap {
-                    direction: rtl;
-                    text-align: right;
-                }
-                .arabic-search-enhancement .form-table th {
-                    text-align: right;
-                    padding-right: 0;
-                    padding-left: 20px;
-                }
-                .arabic-search-enhancement .form-table td {
-                    text-align: right;
-                }
-                .arabic-search-enhancement input[type="checkbox"] {
-                    margin-left: 10px;
-                    margin-right: 0;
-                }
-            ');
+            $rtl_css = '.wrap.arabic-search-enhancement { direction: rtl; text-align: right; }';
+            wp_add_inline_style('arabic-search-enhancement-admin', $rtl_css);
         }
+
+        wp_enqueue_script(
+            'arabic-search-enhancement-admin',
+            ARABIC_SEARCH_ENHANCEMENT_PLUGIN_URL . 'assets/admin/admin-scripts.js',
+            ['jquery'],
+            ARABIC_SEARCH_ENHANCEMENT_VERSION,
+            true
+        );
+
+        wp_set_script_translations(
+            'arabic-search-enhancement-admin',
+            'arabic-search-enhancement',
+            ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR . 'languages'
+        );
+
+        wp_localize_script('arabic-search-enhancement-admin', 'arabicSearchAdmin', [
+            'nonce' => wp_create_nonce('arabic_search_admin'),
+            'i18n' => [
+                'testRunning' => esc_html__('Running Tests...', 'arabic-search-enhancement'),
+                'runTest' => esc_html__('Run Self-Test', 'arabic-search-enhancement'),
+                'clientTestsComplete' => esc_html__('Client-side tests completed.', 'arabic-search-enhancement'),
+                'jqueryAvailable' => esc_html__('jQuery Available', 'arabic-search-enhancement'),
+                'jqueryLoaded' => esc_html__('jQuery is loaded', 'arabic-search-enhancement'),
+                'jqueryMissing' => esc_html__('jQuery not detected', 'arabic-search-enhancement'),
+                'jqueryError' => esc_html__('jQuery test failed', 'arabic-search-enhancement'),
+                'arabicRendering' => esc_html__('Arabic Text Rendering', 'arabic-search-enhancement'),
+                'arabicRenderingPass' => esc_html__('Arabic text renders correctly', 'arabic-search-enhancement'),
+                'arabicRenderingWarn' => esc_html__('Arabic text rendering may have issues', 'arabic-search-enhancement'),
+                'arabicRenderingError' => esc_html__('Arabic rendering test failed', 'arabic-search-enhancement'),
+                'testNote' => esc_html__('Note: Server-side tests require the plugin to be fully activated and functional.', 'arabic-search-enhancement')
+            ]
+        ]);
     }
 }

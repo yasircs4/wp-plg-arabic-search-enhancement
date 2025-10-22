@@ -122,7 +122,9 @@ class PerformanceOptimizer {
                     $stats['updated']++;
                 } catch (Exception $e) {
                     $stats['errors']++;
-                    error_log("Arabic Search Index Error for Post {$post->ID}: " . $e->getMessage());
+                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                        error_log("Arabic Search Index Error for Post {$post->ID}: " . $e->getMessage());
+                    }
                 }
                 $stats['processed']++;
             }
@@ -344,7 +346,7 @@ class PerformanceOptimizer {
             return $cached_stats;
         }
         
-        $date_limit = date('Y-m-d H:i:s', strtotime("-{$days} days"));
+        $date_limit = gmdate('Y-m-d H:i:s', strtotime("-{$days} days"));
         
         $stats = [
             'total_searches' => 0,
@@ -412,7 +414,7 @@ class PerformanceOptimizer {
     public function cleanup_old_stats(int $days = 90): int {
         global $wpdb;
         
-        $date_limit = date('Y-m-d H:i:s', strtotime("-{$days} days"));
+        $date_limit = gmdate('Y-m-d H:i:s', strtotime("-{$days} days"));
         
         $deleted = $wpdb->query($wpdb->prepare("
             DELETE FROM {$this->stats_table}

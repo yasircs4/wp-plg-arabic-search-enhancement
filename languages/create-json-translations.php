@@ -22,7 +22,7 @@ if (!defined('ABSPATH') && php_sapi_name() !== 'cli') {
  */
 function create_js_translations($po_file, $json_file) {
     if (!file_exists($po_file)) {
-        echo "PO file not found: $po_file\n";
+        echo esc_html("PO file not found: $po_file\n");
         return false;
     }
     
@@ -54,11 +54,11 @@ function create_js_translations($po_file, $json_file) {
     $json_content = json_encode($json_data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     
     if (file_put_contents($json_file, $json_content) !== false) {
-        echo "Created JSON translation: $json_file\n";
+        echo esc_html("Created JSON translation: $json_file\n");
         return true;
     }
     
-    echo "Failed to create JSON file: $json_file\n";
+    echo esc_html("Failed to create JSON file: $json_file\n");
     return false;
 }
 

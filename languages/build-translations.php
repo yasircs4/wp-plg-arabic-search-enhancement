@@ -34,9 +34,9 @@ $files_to_check = [
 foreach ($files_to_check as $file) {
     $path = __DIR__ . '/' . $file;
     if (file_exists($path)) {
-        echo "✓ $file (size: " . filesize($path) . " bytes)\n";
+        echo esc_html("✓ $file (size: " . filesize($path) . " bytes)\n");
     } else {
-        echo "✗ $file (missing)\n";
+            echo esc_html("✗ $file (missing)\n");
     }
 }
 

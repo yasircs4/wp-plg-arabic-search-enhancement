@@ -315,7 +315,7 @@ class RestApiController {
         $limit = $request->get_param('limit');
         
         global $wpdb;
-        $date_limit = date('Y-m-d H:i:s', strtotime("-{$period} days"));
+        $date_limit = gmdate('Y-m-d H:i:s', strtotime("-{$period} days"));
         
         $queries = $wpdb->get_results($wpdb->prepare("
             SELECT 

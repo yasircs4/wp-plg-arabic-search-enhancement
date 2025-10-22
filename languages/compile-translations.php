@@ -191,9 +191,9 @@ if (php_sapi_name() === 'cli' || (defined('DOING_AJAX') && DOING_AJAX)) {
         
         if (file_exists($po_file)) {
             if (POToMOConverter::convert($po_file, $mo_file)) {
-                echo "Compiled {$lang} translation successfully.\n";
+                echo esc_html("Compiled {$lang} translation successfully.\n");
             } else {
-                echo "Failed to compile {$lang} translation.\n";
+                echo esc_html("Failed to compile {$lang} translation.\n");
             }
         }
     }

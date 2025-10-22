@@ -114,7 +114,7 @@ class MultiLanguageNormalizer implements TextNormalizerInterface {
     public function set_language(string $language_code): void {
         if (!isset($this->language_configs[$language_code])) {
             // translators: %s: unsupported language code
-            throw new InvalidArgumentException(sprintf(__('Language %s is not supported.', 'arabic-search-enhancement'), $language_code));
+            throw new InvalidArgumentException(sprintf(esc_html__('Language %s is not supported.', 'arabic-search-enhancement'), esc_html($language_code)));
         }
         
         $this->current_language = $language_code;

@@ -1,0 +1,58 @@
+/* Settings Page */
+.wrap.arabic-search-enhancement .card {
+    max-width: 100%;
+}
+
+.wrap.arabic-search-enhancement .ase-test-results-list {
+    margin: 15px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.wrap.arabic-search-enhancement .ase-test-results-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    gap: 8px;
+}
+
+.wrap.arabic-search-enhancement .ase-status-dot {
+    font-size: 18px;
+    line-height: 1;
+}
+
+/* Analytics Dashboard Styles */
+.arabic-search-analytics .analytics-card {
+    margin: 15px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.arabic-search-analytics .metric-value {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.arabic-search-analytics .metric-change {
+    color: #666;
+    font-size: 14px;
+}
+
+.arabic-search-analytics .analytics-charts {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.arabic-search-analytics .chart-container {
+    flex: 1;
+    min-width: 300px;
+    margin: 15px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}

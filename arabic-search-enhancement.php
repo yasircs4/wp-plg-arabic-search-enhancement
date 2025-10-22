@@ -2,12 +2,12 @@
 /**
  * Plugin Name: Arabic Search Enhancement
  * Plugin Name (Arabic): تحسين البحث العربي
- * Plugin URI: https://maisra.net/arabic-search-enhancement
+ * Plugin URI: https://yasircs4.github.io/wp-plg-arabic-search-enhancement/
  * Description: Improves WordPress search for Arabic content by normalizing Arabic text variations, diacritics, and letter forms
  * Description (Arabic): يحسن البحث في ووردبريس للمحتوى العربي من خلال توحيد تنويعات النصوص العربية وعلامات التشكيل وأشكال الحروف
- * Version: 1.2.0
- * Author: Yasser Nageep Maisra
- * Author URI: https://maisra.net/
+ * Version: 1.3.0
+ * Author: yasircs4
+ * Author URI: https://github.com/yasircs4
  * License: GPL v2 or later
  * Text Domain: arabic-search-enhancement
  * Requires at least: 5.0
@@ -36,7 +36,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('ARABIC_SEARCH_ENHANCEMENT_VERSION', '1.2.0');
+define('ARABIC_SEARCH_ENHANCEMENT_VERSION', '1.3.0');
 define('ARABIC_SEARCH_ENHANCEMENT_PLUGIN_FILE', __FILE__);
 define('ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ARABIC_SEARCH_ENHANCEMENT_PLUGIN_URL', plugin_dir_url(__FILE__));
@@ -56,19 +56,6 @@ use ArabicSearchEnhancement\Core\Configuration;
 function arabic_search_enhancement_load_textdomain(): void {
     $domain = 'arabic-search-enhancement';
     $locale = apply_filters('plugin_locale', get_locale(), $domain);
-    
-    // Special handling for RTL languages - only add once
-    $language = substr($locale, 0, 2);
-    if (in_array($language, ['ar', 'he', 'fa', 'ur']) && !has_action('admin_head', 'arabic_search_enhancement_rtl_styles')) {
-        add_action('admin_head', 'arabic_search_enhancement_rtl_styles');
-    }
-}
-
-/**
- * Add RTL styles for Arabic languages
- */
-function arabic_search_enhancement_rtl_styles(): void {
-    echo '<style>.arabic-search-enhancement .wrap { direction: rtl; text-align: right; }</style>';
 }
 
 /**
@@ -79,7 +66,9 @@ function arabic_search_enhancement_init_autoloader(): bool {
         $autoloader = Autoloader::get_instance(ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR . 'src');
         return $autoloader->register();
     } catch (\Exception $e) {
-        error_log('Arabic Search Enhancement Autoloader Error: ' . $e->getMessage());
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('Arabic Search Enhancement Autoloader Error: ' . $e->getMessage());
+        }
         return false;
     }
 }
@@ -159,7 +148,9 @@ function arabic_search_enhancement_get_plugin(): ?Plugin {
             
         } catch (\Throwable $e) {
             $failed = true;
+        if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('Arabic Search Enhancement Plugin Creation Error: ' . $e->getMessage());
+        }
             return null;
         }
     }
@@ -215,7 +206,9 @@ function arabic_search_enhancement_init(): void {
         });
         
         // Log the error for debugging
-        error_log('Arabic Search Enhancement: ' . $e->getMessage());
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('Arabic Search Enhancement: ' . $e->getMessage());
+        }
     }
 }
 

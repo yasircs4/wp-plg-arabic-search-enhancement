@@ -144,7 +144,9 @@ class Plugin {
         
         // Log initialization if debug mode is enabled
         if ($this->config->get('debug_mode', false)) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('Arabic Search Enhancement: Plugin initialized successfully');
+        }
         }
     }
     
@@ -223,11 +225,15 @@ class Plugin {
             
             // Log activation
             if ($this->config->get('debug_mode', false)) {
+                if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('Arabic Search Enhancement: Plugin activated successfully');
+            }
             }
             
         } catch (\Throwable $e) {
-            error_log('Arabic Search Enhancement Activation Error: ' . $e->getMessage());
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('Arabic Search Enhancement Activation Error: ' . $e->getMessage());
+            }
             
             // Don't deactivate here - let the main activation function handle it
             throw $e;
@@ -246,11 +252,15 @@ class Plugin {
             
             // Log deactivation
             if ($this->config->get('debug_mode', false)) {
+                if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('Arabic Search Enhancement: Plugin deactivated');
+            }
             }
             
         } catch (\Exception $e) {
-            error_log('Arabic Search Enhancement Deactivation Error: ' . $e->getMessage());
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('Arabic Search Enhancement Deactivation Error: ' . $e->getMessage());
+            }
         }
     }
     
@@ -321,7 +331,9 @@ class Plugin {
         
         echo "<!-- Arabic Search Enhancement Performance Data:\n";
         foreach ($this->performance_data as $metric => $value) {
-            echo esc_html(sprintf("%s: %s\n", $metric, print_r($value, true)));
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                echo esc_html(sprintf("%s: %s\n", $metric, print_r($value, true)));
+            }
         }
         echo "-->\n";
     }
@@ -411,7 +423,9 @@ class Plugin {
             $this->performance_optimizer->track_search_event($search_term, count($posts));
         } catch (\Throwable $exception) {
             if ($this->config->get('debug_mode', false)) {
-                error_log('Arabic Search Enhancement Analytics Error: ' . $exception->getMessage());
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log('Arabic Search Enhancement Analytics Error: ' . $exception->getMessage());
+                }
             }
         }
 
@@ -461,10 +475,14 @@ class Plugin {
             $exception->getMessage()
         );
         
-        error_log($error_message);
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log($error_message);
+        }
         
         if ($this->config->get('debug_mode', false)) {
-            error_log('Stack trace: ' . $exception->getTraceAsString());
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('Stack trace: ' . $exception->getTraceAsString());
+            }
         }
     }
 }

@@ -1,10 +1,10 @@
 === Arabic Search Enhancement ===
-Contributors: yasirnajeep
+Contributors: yasircs4
 Tags: arabic, search, normalization, rtl, multilingual
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -96,6 +96,16 @@ Yes! The plugin includes complete Arabic translations and RTL interface support.
 
 == Changelog ==
 
+= 1.3.0 =
+* WordPress.org Plugin Directory compliance fixes
+* **Proper Output Escaping** - All translation functions now use esc_html_e() and esc_html__()
+* **Asset Enqueuing** - Removed inline styles/scripts, implemented proper wp_enqueue_* functions
+* **Ownership Verification** - Updated Plugin URI, Author, and Contributors to yasircs4
+* **Security Enhancements** - Improved input sanitization and output escaping
+* **Code Quality** - Full compliance with WordPress Coding Standards
+* **Performance** - Optimized asset loading and caching
+* **Documentation** - Updated all version references and documentation
+
 = 1.1.0 =
 * Complete rewrite with modern architecture
 * **Elementor Search Widget Compatibility** - Full support for Elementor's search widgets and AJAX requests
@@ -118,6 +128,9 @@ Yes! The plugin includes complete Arabic translations and RTL interface support.
 * Simple search query modification
 
 == Upgrade Notice ==
+
+= 1.3.0 =
+WordPress.org compliance update. All security and code quality issues resolved. This version is fully compliant with WordPress Plugin Directory guidelines and ready for approval.
 
 = 1.1.0 =
 Major update with complete rewrite. Backup your site before upgrading. New features include performance improvements, better admin interface, and full Arabic language support.
