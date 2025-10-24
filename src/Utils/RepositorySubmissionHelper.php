@@ -4,7 +4,7 @@
  *
  * Prepares the plugin for WordPress.org repository submission
  *
- * @copyright 2024 Yasir Najeep
+ * @copyright 2025 yasircs4
  * @license   GPL v2 or later
  */
 
@@ -168,7 +168,7 @@ class RepositorySubmissionHelper {
      */
     private function get_wordpress_readme_content(): string {
         return "=== Arabic Search Enhancement ===
-Contributors: yasirnajeep
+Contributors: yasircs4
 Tags: arabic, search, enhancement, multilingual, rtl
 Requires at least: 5.0
 Tested up to: 6.4

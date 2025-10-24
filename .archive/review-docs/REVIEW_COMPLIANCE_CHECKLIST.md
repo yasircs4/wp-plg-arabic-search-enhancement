@@ -33,7 +33,7 @@
   - Location: `readme.txt` line 2
 
 #### Clarification for Reviewers:
-The plugin is being submitted by **yasircs4** (GitHub username), which is the correct owner. Previous references to "Yasser Nageep" or "maisra.net" in code comments are historical and the plugin has been updated to reflect the correct ownership under the yasircs4 account.
+The plugin is being submitted by **yasircs4** (GitHub username), which is the correct owner. All references now consistently use the **yasircs4** identity across all plugin files, documentation, and translation files.
 
 ---
 

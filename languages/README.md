@@ -53,4 +53,4 @@ php build-translations.php
 
 ## Copyright
 
-© 2024 Yasir Najeep. All translation files licensed under GPL v2 or later.
+© 2025 yasircs4. All translation files licensed under GPL v2 or later.

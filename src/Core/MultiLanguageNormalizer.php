@@ -4,7 +4,7 @@
  *
  * Extends Arabic search to support Urdu, Persian, and other related languages
  *
- * @copyright 2024 Yasir Najeep
+ * @copyright 2025 yasircs4
  * @license   GPL v2 or later
  */
 

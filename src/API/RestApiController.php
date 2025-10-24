@@ -4,7 +4,7 @@
  *
  * Provides REST API endpoints for external search integration and headless WordPress
  *
- * @copyright 2024 Yasir Najeep
+ * @copyright 2025 yasircs4
  * @license   GPL v2 or later
  */
 

@@ -4,13 +4,29 @@
  *
  * This script creates JSON translation files for JavaScript from PO files
  *
- * @copyright 2024 Yasir Najeep
+ * @copyright 2025 yasircs4
  * @license   GPL v2 or later
  */
 
 // Prevent direct access
 if (!defined('ABSPATH') && php_sapi_name() !== 'cli') {
     exit;
+}
+
+if (!function_exists('ase_cli_escape')) {
+    function ase_cli_escape(string $message): string {
+        if (function_exists('esc_html')) {
+            return esc_html($message);
+        }
+
+        return htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
+    }
+}
+
+if (!function_exists('ase_cli_echo')) {
+    function ase_cli_echo(string $message): void {
+        echo ase_cli_escape($message);
+    }
 }
 
 /**
@@ -22,7 +38,7 @@ if (!defined('ABSPATH') && php_sapi_name() !== 'cli') {
  */
 function create_js_translations($po_file, $json_file) {
     if (!file_exists($po_file)) {
-        echo esc_html("PO file not found: $po_file\n");
+        ase_cli_echo("PO file not found: $po_file\n");
         return false;
     }
     
@@ -54,11 +70,11 @@ function create_js_translations($po_file, $json_file) {
     $json_content = json_encode($json_data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     
     if (file_put_contents($json_file, $json_content) !== false) {
-        echo esc_html("Created JSON translation: $json_file\n");
+        ase_cli_echo("Created JSON translation: $json_file\n");
         return true;
     }
     
-    echo esc_html("Failed to create JSON file: $json_file\n");
+    ase_cli_echo("Failed to create JSON file: $json_file\n");
     return false;
 }
 

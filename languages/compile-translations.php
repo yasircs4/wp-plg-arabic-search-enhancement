@@ -7,15 +7,31 @@
  *
  * @package ArabicSearchEnhancement
  * @since 1.1.0
- * @author Yasser Nageep Maisra <info@maisra.net>
- * @copyright 2025 Yasser Nageep Maisra
+ * @author yasircs4 <yasircs4@live.com>
+ * @copyright 2025 yasircs4
  * @license GPL-2.0-or-later
- * @link https://maisra.net
+ * @link https://yasircs4.github.io/wp-plg-arabic-search-enhancement/
  */
 
 // Exit if accessed directly
 if (!defined('ABSPATH') && php_sapi_name() !== 'cli') {
     exit;
+}
+
+if (!function_exists('ase_cli_escape')) {
+    function ase_cli_escape(string $message): string {
+        if (function_exists('esc_html')) {
+            return esc_html($message);
+        }
+
+        return htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
+    }
+}
+
+if (!function_exists('ase_cli_echo')) {
+    function ase_cli_echo(string $message): void {
+        echo ase_cli_escape($message);
+    }
 }
 
 /**
@@ -191,9 +207,9 @@ if (php_sapi_name() === 'cli' || (defined('DOING_AJAX') && DOING_AJAX)) {
         
         if (file_exists($po_file)) {
             if (POToMOConverter::convert($po_file, $mo_file)) {
-                echo esc_html("Compiled {$lang} translation successfully.\n");
+                ase_cli_echo("Compiled {$lang} translation successfully.\n");
             } else {
-                echo esc_html("Failed to compile {$lang} translation.\n");
+                ase_cli_echo("Failed to compile {$lang} translation.\n");
             }
         }
     }

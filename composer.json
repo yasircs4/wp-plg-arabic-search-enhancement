@@ -1,12 +1,12 @@
 {
-    "name": "yasirnajeep/wp-arabic-search-enhancement",
+    "name": "yasircs4/wp-arabic-search-enhancement",
     "description": "WordPress plugin that enhances search functionality for Arabic content",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
     "authors": [
         {
-            "name": "Yasir Najeep",
-            "email": "info@maisra.net"
+            "name": "yasircs4",
+            "email": "yasircs4@live.com"
         }
     ],
     "require": {

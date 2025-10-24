@@ -13,7 +13,7 @@
  * Requires at least: 5.0
  * Requires PHP: 7.4
  * 
- * Copyright (C) 2025 Yasser Nageep Maisra
+ * Copyright (C) 2025 yasircs4
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

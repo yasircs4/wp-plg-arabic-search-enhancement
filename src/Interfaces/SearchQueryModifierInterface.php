@@ -4,10 +4,10 @@
  *
  * @package ArabicSearchEnhancement
  * @since 1.1.0
- * @author Yasser Nageep Maisra <info@maisra.net>
- * @copyright 2025 Yasser Nageep Maisra
+ * @author yasircs4 <yasircs4@live.com>
+ * @copyright 2025 yasircs4
  * @license GPL-2.0-or-later
- * @link https://maisra.net
+ * @link https://yasircs4.github.io/wp-plg-arabic-search-enhancement/
  */
 
 namespace ArabicSearchEnhancement\Interfaces;

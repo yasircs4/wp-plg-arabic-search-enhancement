@@ -1,13 +1,13 @@
 # Arabic Search Enhancement - Arabic Translation
-# Copyright (C) 2025 Yasser Nageep Maisra
+# Copyright (C) 2025 yasircs4
 # This file is distributed under the same license as the Arabic Search Enhancement plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Arabic Search Enhancement 1.3.0\n"
-"Report-Msgid-Bugs-To: info@maisra.net\n"
+"Project-Id-Version: Arabic Search Enhancement 1.3.0
+"Report-Msgid-Bugs-To: yasircs4@live.com
 "POT-Creation-Date: 2025-10-12 12:00+0000\n"
 "PO-Revision-Date: 2025-10-12 12:00+0000\n"
-"Last-Translator: Yasser Nageep Maisra <info@maisra.net>\n"
+"Last-Translator: yasircs4 <yasircs4@live.com>
 "Language-Team: Arabic\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"

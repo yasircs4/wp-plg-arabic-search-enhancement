@@ -1,3 +1,0 @@
-Arabic Search Enhancement improves WordPress search functionality for Arabic content by normalizing text variations, diacritics, and letter forms. The plugin handles Arabic-specific search challenges like different Alef forms (أ إ آ), Tashkeel marks, and letter variations to provide comprehensive search results. Features include Elementor compatibility, RTL interface support, performance optimization with caching, and a complete Arabic language interface. Built with modern PHP architecture following SOLID principles and WordPress best practices.
-
-GitHub URL: https://github.com/yasircs4/wp-plg-arabic-search-enhancement
