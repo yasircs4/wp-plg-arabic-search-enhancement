@@ -52,6 +52,7 @@ class SearchAnalyticsDashboard {
 
         $stats_table = $wpdb->prefix . 'arabic_search_stats';
         $table_like = $wpdb->esc_like($stats_table);
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $table_exists = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table_like));
 
         if ($table_exists !== $stats_table) {
@@ -89,7 +90,7 @@ class SearchAnalyticsDashboard {
         // Enqueue our custom analytics script (Chart.js removed for WordPress.org compliance)
         wp_enqueue_script(
             'arabic-search-analytics',
-            ARABIC_SEARCH_ENHANCEMENT_PLUGIN_URL . 'admin/js/analytics.js',
+            ARABIC_SEARCH_ENHANCEMENT_PLUGIN_URL . 'assets/admin/analytics.js',
             ['jquery'],
             ARABIC_SEARCH_ENHANCEMENT_VERSION,
             true
@@ -99,17 +100,17 @@ class SearchAnalyticsDashboard {
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('arabic_search_analytics_nonce'),
             'strings' => [
-                'loading' => __('Loading analytics...', 'arabic-search-enhancement'),
-                'error' => __('Error loading data', 'arabic-search-enhancement'),
-                'no_data' => __('No data available', 'arabic-search-enhancement')
+                'loading' => esc_html__('Loading analytics...', 'arabic-search-enhancement'),
+                'error' => esc_html__('Error loading data', 'arabic-search-enhancement'),
+                'no_data' => esc_html__('No data available', 'arabic-search-enhancement')
             ]
         ]);
         
         wp_enqueue_style(
             'arabic-search-analytics',
-            plugins_url('assets/css/analytics.css', ARABIC_SEARCH_ENHANCEMENT_PLUGIN_FILE),
+            ARABIC_SEARCH_ENHANCEMENT_PLUGIN_URL . 'assets/admin/analytics.css',
             [],
-            '1.1.0'
+            ARABIC_SEARCH_ENHANCEMENT_VERSION
         );
     }
     
@@ -303,6 +304,7 @@ class SearchAnalyticsDashboard {
         
         $date_limit = gmdate('Y-m-d H:i:s', strtotime("-{$period} days"));
         
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $trends = $wpdb->get_results($wpdb->prepare("
             SELECT 
                 DATE(last_searched) as search_date,
@@ -342,6 +344,7 @@ class SearchAnalyticsDashboard {
         
         $date_limit = gmdate('Y-m-d H:i:s', strtotime("-{$period} days"));
         
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $queries = $wpdb->get_results($wpdb->prepare("
             SELECT 
                 original_query,
@@ -380,6 +383,7 @@ class SearchAnalyticsDashboard {
         
         $date_limit = gmdate('Y-m-d H:i:s', strtotime("-{$period} days"));
         
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $failed = $wpdb->get_results($wpdb->prepare("
             SELECT 
                 original_query,
@@ -402,12 +406,6 @@ class SearchAnalyticsDashboard {
         }, $failed);
     }
     
-    /**
-     * Get languages distribution data
-     *
-     * @param int $period Days to analyze
-     * @return array Languages data
-     */
     private function get_languages_data(int $period): array {
         // This is a simplified implementation
         // In a real scenario, you'd detect language from queries
@@ -430,10 +428,9 @@ class SearchAnalyticsDashboard {
         
         // Generate insights based on data
         if ($stats['success_rate'] < 70) {
-            // translators: %s: search success rate percentage without the percent sign
-            $insights[] = [
                 'type' => 'warning',
                 'title' => __('Low Search Success Rate', 'arabic-search-enhancement'),
+                // translators: %s: search success rate percentage without the percent sign
                 'message' => sprintf(
                     __('Your search success rate is %s%%. Consider rebuilding the search index or improving content.', 'arabic-search-enhancement'),
                     esc_html($stats['success_rate'])
@@ -471,6 +468,7 @@ class SearchAnalyticsDashboard {
         
         $date_limit = gmdate('Y-m-d H:i:s', strtotime("-{$period} days"));
         
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         return intval($wpdb->get_var($wpdb->prepare("
             SELECT SUM(search_count)
             FROM {$wpdb->prefix}arabic_search_stats
@@ -574,6 +572,7 @@ class SearchAnalyticsDashboard {
             $date_start = $date . ' 00:00:00';
             $date_end = $date . ' 23:59:59';
             
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
             $count = $wpdb->get_var($wpdb->prepare("
                 SELECT COUNT(*) 
                 FROM {$wpdb->prefix}arabic_search_stats 
@@ -597,6 +596,7 @@ class SearchAnalyticsDashboard {
     private function get_language_distribution_data(): array {
         global $wpdb;
         
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $languages = $wpdb->get_results("
             SELECT 
                 detected_language,

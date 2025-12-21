@@ -1,0 +1,171 @@
+/* Analytics Dashboard Styles */
+.arabic-search-analytics .analytics-header {
+    margin-bottom: 20px;
+    background: #fff;
+    padding: 15px;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+}
+
+.arabic-search-analytics .period-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.arabic-search-analytics .analytics-cards {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px -10px;
+}
+
+.arabic-search-analytics .analytics-card {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 4px;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    text-align: center;
+}
+
+.arabic-search-analytics .analytics-card h3 {
+    margin-top: 0;
+    font-size: 1.1em;
+    color: #50575e;
+}
+
+.arabic-search-analytics .metric-value {
+    font-size: 32px;
+    font-weight: bold;
+    color: #1d2327;
+    margin: 10px 0;
+    line-height: 1;
+}
+
+.arabic-search-analytics .metric-change {
+    color: #666;
+    font-size: 13px;
+}
+
+.arabic-search-analytics .analytics-charts {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px -10px;
+}
+
+.arabic-search-analytics .chart-container {
+    flex: 1;
+    min-width: 300px;
+    margin: 10px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 4px;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+}
+
+.arabic-search-analytics .analytics-tables {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px -10px;
+}
+
+.arabic-search-analytics .table-container {
+    flex: 1;
+    min-width: 300px;
+    margin: 10px;
+}
+
+/* CSS Bar Chart */
+.css-bar-chart {
+    margin-top: 20px;
+    height: 200px;
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    padding-bottom: 30px; /* Space for labels */
+}
+
+.css-bar-chart .bar-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    position: relative;
+}
+
+.css-bar-chart .bar-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: #f0f0f1;
+    border-radius: 4px 4px 0 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.css-bar-chart .bar-fill {
+    background: #2271b1;
+    width: 100%;
+    transition: height 0.3s ease;
+    min-height: 1px;
+}
+
+.css-bar-chart .bar-value {
+    position: absolute;
+    top: -20px;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: #50575e;
+}
+
+.css-bar-chart .bar-label {
+    position: absolute;
+    bottom: -25px;
+    width: 100%;
+    text-align: center;
+    font-size: 11px;
+    color: #50575e;
+    transform: rotate(-45deg);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* CSS Pie Chart */
+.css-pie-chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.css-pie-chart .pie-legend {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.css-pie-chart .legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.css-pie-chart .legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.rtl .css-pie-chart .legend-color {
+    margin-right: 0;
+    margin-left: 10px;
+}

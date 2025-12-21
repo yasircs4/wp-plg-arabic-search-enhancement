@@ -13,8 +13,8 @@ if (!defined('ABSPATH') && php_sapi_name() !== 'cli') {
     exit;
 }
 
-if (!function_exists('ase_cli_escape')) {
-    function ase_cli_escape(string $message): string {
+if (!function_exists('arabic_search_enhancement_cli_escape')) {
+    function arabic_search_enhancement_cli_escape(string $message): string {
         if (function_exists('esc_html')) {
             return esc_html($message);
         }
@@ -23,9 +23,10 @@ if (!function_exists('ase_cli_escape')) {
     }
 }
 
-if (!function_exists('ase_cli_echo')) {
-    function ase_cli_echo(string $message): void {
-        echo ase_cli_escape($message);
+if (!function_exists('arabic_search_enhancement_cli_echo')) {
+    function arabic_search_enhancement_cli_echo(string $message): void {
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo arabic_search_enhancement_cli_escape($message);
     }
 }
 
@@ -36,9 +37,9 @@ if (!function_exists('ase_cli_echo')) {
  * @param string $json_file Path to output JSON file
  * @return bool Success status
  */
-function create_js_translations($po_file, $json_file) {
+function arabic_search_enhancement_create_js_translations($po_file, $json_file) {
     if (!file_exists($po_file)) {
-        ase_cli_echo("PO file not found: $po_file\n");
+        arabic_search_enhancement_cli_echo("PO file not found: $po_file\n");
         return false;
     }
     
@@ -46,7 +47,7 @@ function create_js_translations($po_file, $json_file) {
     $content = file_get_contents($po_file);
     
     // Parse PO file
-    preg_match_all('/msgid\s+"([^"]+)"\s+msgstr\s+"([^"]*)"/', $content, $matches, PREG_SET_ORDER);
+    preg_match_all('/msgid\s+\"([^\"]+)\"\s+msgstr\s+\"([^\"]*)\"/', $content, $matches, PREG_SET_ORDER);
     
     foreach ($matches as $match) {
         $msgid = $match[1];
@@ -70,27 +71,28 @@ function create_js_translations($po_file, $json_file) {
     $json_content = json_encode($json_data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     
     if (file_put_contents($json_file, $json_content) !== false) {
-        ase_cli_echo("Created JSON translation: $json_file\n");
+        arabic_search_enhancement_cli_echo("Created JSON translation: $json_file\n");
         return true;
     }
     
-    ase_cli_echo("Failed to create JSON file: $json_file\n");
+    arabic_search_enhancement_cli_echo("Failed to create JSON file: $json_file\n");
     return false;
 }
 
 // Get script directory
-$script_dir = __DIR__;
+$arabic_search_enhancement_script_dir = __DIR__;
 
 // Define file paths
-$po_files = [
-    'ar' => $script_dir . '/arabic-search-enhancement-ar.po',
+$arabic_search_enhancement_po_files = [
+    'ar' => $arabic_search_enhancement_script_dir . '/arabic-search-enhancement-ar.po',
 ];
 
 // Create JSON translations
-foreach ($po_files as $locale => $po_file) {
-    $json_file = $script_dir . '/arabic-search-enhancement-' . $locale . '-json.json';
-    create_js_translations($po_file, $json_file);
+foreach ($arabic_search_enhancement_po_files as $locale => $po_file) {
+    $arabic_search_enhancement_json_file = $arabic_search_enhancement_script_dir . '/arabic-search-enhancement-' . $locale . '-json.json';
+    arabic_search_enhancement_create_js_translations($po_file, $arabic_search_enhancement_json_file);
 }
 
+// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 echo "JavaScript translation generation completed!\n";
 ?>

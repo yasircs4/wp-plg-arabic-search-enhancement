@@ -107,14 +107,17 @@ class PerformanceOptimizer {
         $offset = 0;
         
         while ($offset < $total_posts) {
-            $posts = $wpdb->get_results($wpdb->prepare("
+            $query = "
                 SELECT ID, post_title, post_content, post_excerpt, post_modified
                 FROM {$wpdb->posts}
                 WHERE post_status = 'publish'
                 AND post_type IN ('post', 'page')
                 ORDER BY ID
                 LIMIT %d OFFSET %d
-            ", $batch_size, $offset));
+            ";
+            
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+            $posts = $wpdb->get_results($wpdb->prepare($query, $batch_size, $offset));
             
             foreach ($posts as $post) {
                 try {
@@ -156,11 +159,14 @@ class PerformanceOptimizer {
         $content_hash = md5($content . $post->post_modified);
         
         // Check if already indexed and unchanged
-        $existing = $wpdb->get_var($wpdb->prepare("
+        $query = "
             SELECT content_hash 
             FROM {$this->index_table} 
             WHERE post_id = %d
-        ", $post->ID));
+        ";
+        
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $existing = $wpdb->get_var($wpdb->prepare($query, $post->ID));
         
         if ($existing === $content_hash) {
             return; // No changes, skip indexing
@@ -245,8 +251,7 @@ class PerformanceOptimizer {
         
         $search_string = implode(' ', $search_terms);
         
-        // Execute optimized search
-        $results = $wpdb->get_results($wpdb->prepare("
+        $query = "
             SELECT 
                 i.post_id,
                 p.post_title,
@@ -259,7 +264,16 @@ class PerformanceOptimizer {
             AND p.post_status = 'publish'
             ORDER BY relevance_score DESC, p.post_date DESC
             LIMIT %d
-        ", $search_string, $search_string, $args['posts_per_page'] ?? 20));
+        ";
+        
+        // Execute optimized search
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $results = $wpdb->get_results($wpdb->prepare(
+            $query, 
+            $search_string, 
+            $search_string, 
+            $args['posts_per_page'] ?? 20
+        ));
         
         $search_time = microtime(true) - $start_time;
         
@@ -319,7 +333,7 @@ class PerformanceOptimizer {
         }
         
         // Update or insert search statistics
-        $wpdb->query($wpdb->prepare("
+        $query = "
             INSERT INTO {$this->stats_table} 
             (query_hash, original_query, normalized_query, detected_language, result_count, search_count)
             VALUES (%s, %s, %s, %s, %d, 1)
@@ -327,7 +341,18 @@ class PerformanceOptimizer {
             result_count = %d,
             search_count = search_count + 1,
             detected_language = VALUES(detected_language)
-        ", $query_hash, $original_query, $normalized_query, $detected_language, $result_count, $result_count));
+        ";
+        
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        $wpdb->query($wpdb->prepare(
+            $query, 
+            $query_hash, 
+            $original_query, 
+            $normalized_query, 
+            $detected_language, 
+            $result_count, 
+            $result_count
+        ));
     }
     
     /**
@@ -358,14 +383,17 @@ class PerformanceOptimizer {
         ];
         
         // Total and unique searches
-        $search_stats = $wpdb->get_row("
+        $query_overview = "
             SELECT 
                 SUM(search_count) as total_searches,
                 COUNT(*) as unique_queries,
                 AVG(result_count) as avg_results
             FROM {$this->stats_table}
-            WHERE last_searched >= '{$date_limit}'
-        ");
+            WHERE last_searched >= %s
+        ";
+        
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $search_stats = $wpdb->get_row($wpdb->prepare($query_overview, $date_limit));
         
         if ($search_stats) {
             $stats['total_searches'] = (int) $search_stats->total_searches;
@@ -374,22 +402,28 @@ class PerformanceOptimizer {
         }
         
         // Top queries
-        $stats['top_queries'] = $wpdb->get_results("
+        $query_top = "
             SELECT original_query, search_count, result_count
             FROM {$this->stats_table}
-            WHERE last_searched >= '{$date_limit}'
+            WHERE last_searched >= %s
             ORDER BY search_count DESC
             LIMIT 10
-        ");
+        ";
+        
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $stats['top_queries'] = $wpdb->get_results($wpdb->prepare($query_top, $date_limit));
         
         // Index statistics
-        $index_stats = $wpdb->get_row("
+        $query_index = "
             SELECT 
                 COUNT(*) as indexed_posts,
                 AVG(word_count) as avg_word_count,
                 MAX(last_updated) as last_index_update
             FROM {$this->index_table}
-        ");
+        ";
+        
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $index_stats = $wpdb->get_row($query_index);
         
         if ($index_stats) {
             $stats['index_stats'] = [
@@ -416,11 +450,14 @@ class PerformanceOptimizer {
         
         $date_limit = gmdate('Y-m-d H:i:s', strtotime("-{$days} days"));
         
-        $deleted = $wpdb->query($wpdb->prepare("
+        $query = "
             DELETE FROM {$this->stats_table}
             WHERE last_searched < %s
             AND search_count < 2
-        ", $date_limit));
+        ";
+        
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        $deleted = $wpdb->query($wpdb->prepare($query, $date_limit));
         
         return $deleted;
     }
@@ -431,7 +468,10 @@ class PerformanceOptimizer {
     public function optimize_tables(): void {
         global $wpdb;
         
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $wpdb->query("OPTIMIZE TABLE {$this->index_table}");
+        
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $wpdb->query("OPTIMIZE TABLE {$this->stats_table}");
     }
 }

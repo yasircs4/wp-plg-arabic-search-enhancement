@@ -214,6 +214,7 @@ class SettingsPage {
      * @return void
      */
     private function render_notices(): void {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         if (isset($_GET['settings-updated']) && sanitize_text_field(wp_unslash($_GET['settings-updated']))) {
             ?>
             <div class="notice notice-success is-dismissible">

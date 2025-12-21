@@ -18,8 +18,8 @@ if (!defined('ABSPATH') && php_sapi_name() !== 'cli') {
     exit;
 }
 
-if (!function_exists('ase_cli_escape')) {
-    function ase_cli_escape(string $message): string {
+if (!function_exists('arabic_search_enhancement_cli_escape')) {
+    function arabic_search_enhancement_cli_escape(string $message): string {
         if (function_exists('esc_html')) {
             return esc_html($message);
         }
@@ -28,16 +28,17 @@ if (!function_exists('ase_cli_escape')) {
     }
 }
 
-if (!function_exists('ase_cli_echo')) {
-    function ase_cli_echo(string $message): void {
-        echo ase_cli_escape($message);
+if (!function_exists('arabic_search_enhancement_cli_echo')) {
+    function arabic_search_enhancement_cli_echo(string $message): void {
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo arabic_search_enhancement_cli_escape($message);
     }
 }
 
 /**
  * Simple PO to MO converter
  */
-class POToMOConverter {
+class Arabic_Search_Enhancement_PO_To_MO_Converter {
     
     /**
      * Convert PO file to MO file
@@ -122,7 +123,7 @@ class POToMOConverter {
         if (preg_match('/msgid "(.*)"|msgstr "(.*)"|"(.*)"/', $line, $matches)) {
             $string = isset($matches[3]) ? $matches[3] : (isset($matches[2]) ? $matches[2] : $matches[1]);
             // Unescape quotes and newlines
-            $string = str_replace(['\\"', '\\n', '\\t'], ['"', "\n", "\t"], $string);
+            $string = str_replace(['\"', '\n', '\t'], ['"', "\n", "\t"], $string);
             return $string;
         }
         return '';
@@ -198,18 +199,18 @@ class POToMOConverter {
 
 // Auto-compile if running as script
 if (php_sapi_name() === 'cli' || (defined('DOING_AJAX') && DOING_AJAX)) {
-    $plugin_dir = dirname(__FILE__);
-    $languages = ['ar'];
+    $arabic_search_enhancement_plugin_dir = dirname(__FILE__);
+    $arabic_search_enhancement_languages = ['ar'];
     
-    foreach ($languages as $lang) {
-        $po_file = $plugin_dir . "/arabic-search-enhancement-{$lang}.po";
-        $mo_file = $plugin_dir . "/arabic-search-enhancement-{$lang}.mo";
+    foreach ($arabic_search_enhancement_languages as $arabic_search_enhancement_lang) {
+        $arabic_search_enhancement_po_file = $arabic_search_enhancement_plugin_dir . "/arabic-search-enhancement-".$arabic_search_enhancement_lang.".po";
+        $arabic_search_enhancement_mo_file = $arabic_search_enhancement_plugin_dir . "/arabic-search-enhancement-".$arabic_search_enhancement_lang.".mo";
         
-        if (file_exists($po_file)) {
-            if (POToMOConverter::convert($po_file, $mo_file)) {
-                ase_cli_echo("Compiled {$lang} translation successfully.\n");
+        if (file_exists($arabic_search_enhancement_po_file)) {
+            if (Arabic_Search_Enhancement_PO_To_MO_Converter::convert($arabic_search_enhancement_po_file, $arabic_search_enhancement_mo_file)) {
+                arabic_search_enhancement_cli_echo("Compiled ".$arabic_search_enhancement_lang." translation successfully.\n");
             } else {
-                ase_cli_echo("Failed to compile {$lang} translation.\n");
+                arabic_search_enhancement_cli_echo("Failed to compile ".$arabic_search_enhancement_lang." translation.\n");
             }
         }
     }

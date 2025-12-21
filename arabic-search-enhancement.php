@@ -2,12 +2,12 @@
 /**
  * Plugin Name: Arabic Search Enhancement
  * Plugin Name (Arabic): تحسين البحث العربي
- * Plugin URI: https://yasircs4.github.io/wp-plg-arabic-search-enhancement/
+ * Plugin URI: https://maisra.net/arabic-search-enhancement
  * Description: Improves WordPress search for Arabic content by normalizing Arabic text variations, diacritics, and letter forms
  * Description (Arabic): يحسن البحث في ووردبريس للمحتوى العربي من خلال توحيد تنويعات النصوص العربية وعلامات التشكيل وأشكال الحروف
- * Version: 1.3.0
+ * Version: 1.4.1
  * Author: yasircs4
- * Author URI: https://github.com/yasircs4
+ * Author URI: https://maisra.net/
  * License: GPL v2 or later
  * Text Domain: arabic-search-enhancement
  * Requires at least: 5.0
@@ -36,7 +36,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('ARABIC_SEARCH_ENHANCEMENT_VERSION', '1.3.0');
+define('ARABIC_SEARCH_ENHANCEMENT_VERSION', '1.4.1');
 define('ARABIC_SEARCH_ENHANCEMENT_PLUGIN_FILE', __FILE__);
 define('ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ARABIC_SEARCH_ENHANCEMENT_PLUGIN_URL', plugin_dir_url(__FILE__));
@@ -50,15 +50,6 @@ use ArabicSearchEnhancement\Core\Plugin;
 use ArabicSearchEnhancement\Core\Configuration;
 
 /**
- * Load plugin text domain for translations
- * Note: WordPress.org automatically loads translations for hosted plugins
- */
-function arabic_search_enhancement_load_textdomain(): void {
-    $domain = 'arabic-search-enhancement';
-    $locale = apply_filters('plugin_locale', get_locale(), $domain);
-}
-
-/**
  * Initialize the plugin autoloader
  */
 function arabic_search_enhancement_init_autoloader(): bool {
@@ -67,6 +58,7 @@ function arabic_search_enhancement_init_autoloader(): bool {
         return $autoloader->register();
     } catch (\Exception $e) {
         if (defined('WP_DEBUG') && WP_DEBUG) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
             error_log('Arabic Search Enhancement Autoloader Error: ' . $e->getMessage());
         }
         return false;
@@ -82,6 +74,7 @@ function arabic_search_enhancement_check_requirements(): bool {
         add_action('admin_notices', function() {
             printf(
                 '<div class="notice notice-error"><p>%s %s</p></div>',
+                // translators: %s: PHP version
                 esc_html__('Arabic Search Enhancement requires PHP 7.4 or higher. Your version:', 'arabic-search-enhancement'),
                 esc_html(PHP_VERSION)
             );
@@ -149,6 +142,7 @@ function arabic_search_enhancement_get_plugin(): ?Plugin {
         } catch (\Throwable $e) {
             $failed = true;
         if (defined('WP_DEBUG') && WP_DEBUG) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
             error_log('Arabic Search Enhancement Plugin Creation Error: ' . $e->getMessage());
         }
             return null;
@@ -199,6 +193,7 @@ function arabic_search_enhancement_init(): void {
             printf(
                 '<div class="notice notice-error"><p>%s</p></div>',
                 sprintf(
+                    // translators: %s: error message text
                     esc_html__('Arabic Search Enhancement initialization error: %s', 'arabic-search-enhancement'),
                     esc_html($e->getMessage())
                 )
@@ -207,6 +202,7 @@ function arabic_search_enhancement_init(): void {
         
         // Log the error for debugging
         if (defined('WP_DEBUG') && WP_DEBUG) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
             error_log('Arabic Search Enhancement: ' . $e->getMessage());
         }
     }
@@ -261,6 +257,7 @@ function arabic_search_enhancement_activate(): void {
         // translators: %s: error message text
         wp_die(
             sprintf(
+                // translators: %s: error message text
                 esc_html__('Arabic Search Enhancement activation failed: %s', 'arabic-search-enhancement'),
                 esc_html($e->getMessage())
             ),
@@ -281,7 +278,6 @@ function arabic_search_enhancement_deactivate(): void {
 }
 
 // Register hooks
-add_action('plugins_loaded', 'arabic_search_enhancement_load_textdomain', 5); // Load translations early
 add_action('plugins_loaded', 'arabic_search_enhancement_init');
 register_activation_hook(__FILE__, 'arabic_search_enhancement_activate');
 register_deactivation_hook(__FILE__, 'arabic_search_enhancement_deactivate');

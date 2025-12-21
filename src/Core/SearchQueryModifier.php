@@ -181,6 +181,7 @@ class SearchQueryModifier implements SearchQueryModifierInterface {
             return false;
         }
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $action = isset($_REQUEST['action']) ? sanitize_text_field(wp_unslash($_REQUEST['action'])) : '';
 
         if ($action === '') {

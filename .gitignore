@@ -72,3 +72,4 @@ composer.lock
 
 # Python virtual environment
 .venv/
+*.zip
