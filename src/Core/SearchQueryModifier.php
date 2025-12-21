@@ -81,6 +81,7 @@ class SearchQueryModifier implements SearchQueryModifierInterface {
             // Log error if debug mode is enabled
             if ($this->config->get('debug_mode', false)) {
                 if (defined('WP_DEBUG') && WP_DEBUG) {
+                    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
                     error_log('Arabic Search Enhancement Error: ' . $e->getMessage());
                 }
             }
