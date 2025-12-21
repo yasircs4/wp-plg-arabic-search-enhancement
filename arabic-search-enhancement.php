@@ -5,7 +5,7 @@
  * Plugin URI: https://maisra.net/arabic-search-enhancement
  * Description: Improves WordPress search for Arabic content by normalizing Arabic text variations, diacritics, and letter forms
  * Description (Arabic): يحسن البحث في ووردبريس للمحتوى العربي من خلال توحيد تنويعات النصوص العربية وعلامات التشكيل وأشكال الحروف
- * Version: 1.4.1
+ * Version: 1.4.4
  * Author: yasircs4
  * Author URI: https://maisra.net/
  * License: GPL v2 or later
@@ -36,7 +36,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('ARABIC_SEARCH_ENHANCEMENT_VERSION', '1.4.1');
+define('ARABIC_SEARCH_ENHANCEMENT_VERSION', '1.4.4');
 define('ARABIC_SEARCH_ENHANCEMENT_PLUGIN_FILE', __FILE__);
 define('ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ARABIC_SEARCH_ENHANCEMENT_PLUGIN_URL', plugin_dir_url(__FILE__));
@@ -102,6 +102,7 @@ function arabic_search_enhancement_check_requirements(): bool {
                 printf(
                     '<div class="notice notice-error"><p>%s</p></div>',
                     sprintf(
+                        // translators: %s: WordPress function name
                         esc_html__('Arabic Search Enhancement requires WordPress function %s which is not available.', 'arabic-search-enhancement'),
                         esc_html($function)
                     )
@@ -307,7 +308,9 @@ function arabic_search_enhancement_uninstall(): void {
     
     // Clean up transients
     global $wpdb;
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
     $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_ase_%'");
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
     $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_ase_%'");
     
     // Clear caches

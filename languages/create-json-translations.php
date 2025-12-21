@@ -88,9 +88,9 @@ $arabic_search_enhancement_po_files = [
 ];
 
 // Create JSON translations
-foreach ($arabic_search_enhancement_po_files as $locale => $po_file) {
+foreach ($arabic_search_enhancement_po_files as $locale => $arabic_search_enhancement_po_file) {
     $arabic_search_enhancement_json_file = $arabic_search_enhancement_script_dir . '/arabic-search-enhancement-' . $locale . '-json.json';
-    arabic_search_enhancement_create_js_translations($po_file, $arabic_search_enhancement_json_file);
+    arabic_search_enhancement_create_js_translations($arabic_search_enhancement_po_file, $arabic_search_enhancement_json_file);
 }
 
 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

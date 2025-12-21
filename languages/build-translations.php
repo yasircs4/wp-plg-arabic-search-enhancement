@@ -48,12 +48,12 @@ $arabic_search_enhancement_files_to_check = [
     'arabic-search-enhancement-ar-json.json'
 ];
 
-foreach ($arabic_search_enhancement_files_to_check as $file) {
-    $path = __DIR__ . '/' . $file;
+foreach ($arabic_search_enhancement_files_to_check as $arabic_search_enhancement_file) {
+    $path = __DIR__ . '/' . $arabic_search_enhancement_file;
     if (file_exists($path)) {
-        arabic_search_enhancement_cli_echo("✓ $file (size: " . filesize($path) . " bytes)\n");
+        arabic_search_enhancement_cli_echo("✓ $arabic_search_enhancement_file (size: " . filesize($path) . " bytes)\n");
     } else {
-            arabic_search_enhancement_cli_echo("✗ $file (missing)\n");
+            arabic_search_enhancement_cli_echo("✗ $arabic_search_enhancement_file (missing)\n");
     }
 }
 

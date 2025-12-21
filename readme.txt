@@ -4,7 +4,7 @@ Tags: arabic, search, normalization, rtl, multilingual
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.4.1
+Stable tag: 1.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -96,6 +96,17 @@ Yes! The plugin includes complete Arabic translations and RTL interface support.
 
 == Changelog ==
 
+= 1.4.4 =
+*   **Fix:** Resolved `PreparedSQL.NotPrepared` issues by explicitly inlining SQL query strings.
+*   **Fix:** Addressed `NamingConventions.PrefixAllGlobals` warnings in translation build scripts.
+*   **Fix:** Handled `DirectDatabaseQuery` and `UnescapedDBParameter` warnings for core plugin functionality.
+
+= 1.4.3 =
+*   **Fix:** Resolved `WordPress.DB.PreparedSQL.NotPrepared` issues by inlining SQL queries into `$wpdb->prepare()` calls.
+
+= 1.4.2 =
+*   **Fix:** Added missing translator comments to resolve automated check errors.
+
 = 1.4.1 =
 *   **Fix:** Removed discouraged `load_plugin_textdomain()` call as translations are handled automatically by WordPress.org for hosted plugins.
 
@@ -138,6 +149,14 @@ Yes! The plugin includes complete Arabic translations and RTL interface support.
 * Simple search query modification
 
 == Upgrade Notice ==
+
+= 1.4.4 =
+Comprehensive security and coding standards compliance update.
+
+= 1.4.3 =
+
+= 1.4.2 =
+Resolved translation comment issues. Ready for review.
 
 = 1.4.1 =
 Addresses automated scan rejection regarding load_plugin_textdomain() call. This version is ready for re-submission.

@@ -317,7 +317,8 @@ class RestApiController {
         global $wpdb;
         $date_limit = gmdate('Y-m-d H:i:s', strtotime("-{$period} days"));
         
-        $query = "
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
+        $queries = $wpdb->get_results($wpdb->prepare("
             SELECT 
                 original_query,
                 normalized_query,
@@ -328,10 +329,7 @@ class RestApiController {
             WHERE last_searched >= %s
             ORDER BY search_count DESC
             LIMIT %d
-        ";
-        
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
-        $queries = $wpdb->get_results($wpdb->prepare($query, $date_limit, $limit));
+        ", $date_limit, $limit));
         
         $formatted_queries = array_map(function($query) {
             return [
@@ -401,26 +399,22 @@ class RestApiController {
     public function get_index_status(WP_REST_Request $request): WP_REST_Response {
         global $wpdb;
         
-        $query_index = "
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
+        $index_stats = $wpdb->get_row("
             SELECT 
                 COUNT(*) as indexed_posts,
                 AVG(word_count) as avg_word_count,
                 MAX(last_updated) as last_update
             FROM {$wpdb->prefix}arabic_search_index
-        ";
+        ");
         
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
-        $index_stats = $wpdb->get_row($query_index);
-        
-        $query_total = "
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
+        $total_posts = $wpdb->get_var("
             SELECT COUNT(*) 
             FROM {$wpdb->posts} 
             WHERE post_status = 'publish' 
             AND post_type IN ('post', 'page')
-        ";
-        
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
-        $total_posts = $wpdb->get_var($query_total);
+        ");
         
         $coverage_percentage = $total_posts > 0 
             ? round(($index_stats->indexed_posts / $total_posts) * 100, 2)

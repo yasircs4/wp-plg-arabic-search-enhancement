@@ -428,10 +428,11 @@ class SearchAnalyticsDashboard {
         
         // Generate insights based on data
         if ($stats['success_rate'] < 70) {
+            $insights[] = [
                 'type' => 'warning',
                 'title' => __('Low Search Success Rate', 'arabic-search-enhancement'),
-                // translators: %s: search success rate percentage without the percent sign
                 'message' => sprintf(
+                    // translators: %s: search success rate percentage without the percent sign
                     __('Your search success rate is %s%%. Consider rebuilding the search index or improving content.', 'arabic-search-enhancement'),
                     esc_html($stats['success_rate'])
                 )
