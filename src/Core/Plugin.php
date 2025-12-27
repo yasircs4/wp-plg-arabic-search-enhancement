@@ -301,7 +301,9 @@ class Plugin {
      * @return string Plugin file path
      */
     private function get_plugin_file(): string {
-        return dirname(__DIR__, 2) . '/wp-plg-arabic-search-enhancement.php';
+        return defined('ARABIC_SEARCH_ENHANCEMENT_PLUGIN_FILE') 
+            ? ARABIC_SEARCH_ENHANCEMENT_PLUGIN_FILE 
+            : plugin_dir_path(dirname(__DIR__)) . 'wp-plg-arabic-search-enhancement.php';
     }
     
     /**

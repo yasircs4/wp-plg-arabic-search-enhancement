@@ -61,7 +61,7 @@ class SettingsPage {
         // Get the correct plugin file path
         $plugin_file = defined('ARABIC_SEARCH_ENHANCEMENT_PLUGIN_FILE') 
             ? ARABIC_SEARCH_ENHANCEMENT_PLUGIN_FILE 
-            : dirname(__DIR__, 2) . '/wp-plg-arabic-search-enhancement.php';
+            : plugin_dir_path(dirname(__DIR__)) . 'wp-plg-arabic-search-enhancement.php';
             
         add_filter('plugin_action_links_' . plugin_basename($plugin_file), [$this, 'add_settings_link']);
     }
