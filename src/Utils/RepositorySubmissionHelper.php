@@ -117,7 +117,7 @@ class RepositorySubmissionHelper {
         
         // Required files
         $required_files = [
-            'wp-plg-arabic-search-enhancement.php' => 'Main plugin file',
+            'arabic-search-enhancement.php' => 'Main plugin file',
             'readme.txt' => 'WordPress.org readme',
             'languages/arabic-search-enhancement.pot' => 'Translation template'
         ];
@@ -130,7 +130,7 @@ class RepositorySubmissionHelper {
         }
         
         // Check main plugin file headers
-        $main_file = $this->plugin_dir . '/wp-plg-arabic-search-enhancement.php';
+        $main_file = $this->plugin_dir . '/arabic-search-enhancement.php';
         if (file_exists($main_file)) {
             $headers = get_file_data($main_file, [
                 'Plugin Name' => 'Plugin Name',

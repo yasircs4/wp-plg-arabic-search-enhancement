@@ -303,7 +303,7 @@ class Plugin {
     private function get_plugin_file(): string {
         return defined('ARABIC_SEARCH_ENHANCEMENT_PLUGIN_FILE') 
             ? ARABIC_SEARCH_ENHANCEMENT_PLUGIN_FILE 
-            : plugin_dir_path(dirname(__DIR__)) . 'wp-plg-arabic-search-enhancement.php';
+            : plugin_dir_path(dirname(__DIR__)) . 'arabic-search-enhancement.php';
     }
     
     /**

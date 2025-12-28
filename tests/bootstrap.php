@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 
 // Define plugin constants for testing
 define('ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR', dirname(__DIR__) . '/');
-define('ARABIC_SEARCH_ENHANCEMENT_PLUGIN_FILE', dirname(__DIR__) . '/wp-plg-arabic-search-enhancement.php');
+define('ARABIC_SEARCH_ENHANCEMENT_PLUGIN_FILE', dirname(__DIR__) . '/arabic-search-enhancement.php');
 
 // WordPress test environment (if available)
 if (file_exists(dirname(__FILE__) . '/wordpress-tests-lib/includes/functions.php')) {
