@@ -60,9 +60,9 @@ Enhances WordPress search for Arabic content by normalizing text variations, dia
 
 == Installation ==
 
-1. Upload the plugin files to `/wp-content/plugins/arabic-search-enhancement/`
+1. Upload the plugin files to the `/wp-content/plugins/arabic-search-enhancement` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress
-3. Navigate to Settings > Arabic Search to configure options
+3. Navigate to Settings > Arabic Search to configure the plugin (optional)
 4. Run the self-test to verify everything is working correctly
 
 == Frequently Asked Questions ==

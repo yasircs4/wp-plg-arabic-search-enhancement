@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface {
     /**
      * Plugin version
      */
-    public const VERSION = '1.3.0';
+    public const VERSION = '1.4.7';
     
     /**
      * Plugin text domain
