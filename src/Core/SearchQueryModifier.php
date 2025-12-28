@@ -344,8 +344,10 @@ class SearchQueryModifier implements SearchQueryModifierInterface {
         
         $search_sql = ' AND ' . implode(' AND ', $term_groups);
         
-        // The SQL is already properly prepared with placeholders, just return it
-        return $search_sql;
+        $search_sql = ' AND ' . implode(' AND ', $term_groups);
+        
+        // Prepare the SQL with the collected values
+        return $this->wpdb->prepare($search_sql, $prepare_values);
     }
     
     /**
