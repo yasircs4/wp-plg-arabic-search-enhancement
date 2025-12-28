@@ -4,7 +4,7 @@ Tags: arabic, search, normalization, rtl, multilingual
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.4.6
+Stable tag: 1.4.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -96,6 +96,11 @@ Yes! The plugin includes complete Arabic translations and RTL interface support.
 
 == Changelog ==
 
+= 1.4.7 =
+*   **Fix:** Critical issue where search terms were being discarded in query generation.
+*   **Update:** Improved file path handling for better WordPress standard compliance.
+*   **Update:** Removed custom translation build scripts in favor of native system.
+
 = 1.4.6 =
 *   **Fix:** Suppressed `error_log` warning in `SearchQueryModifier.php` (already wrapped in `WP_DEBUG`).
 *   **Note:** Text domain is correctly set to `arabic-search-enhancement`. Mismatches in automated scans are due to the review environment's folder naming (e.g., adding version suffix).
@@ -158,6 +163,9 @@ Yes! The plugin includes complete Arabic translations and RTL interface support.
 * Simple search query modification
 
 == Upgrade Notice ==
+
+= 1.4.7 =
+Critical search logic fix and compliance updates.
 
 = 1.4.6 =
 Minor fix for debug logging compliance.
