@@ -10,6 +10,10 @@
 
 namespace ArabicSearchEnhancement\Admin;
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
 use ArabicSearchEnhancement\Interfaces\ConfigurationInterface;
 use ArabicSearchEnhancement\Core\PerformanceOptimizer;
 

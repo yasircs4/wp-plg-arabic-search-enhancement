@@ -8,6 +8,10 @@
  * @license   GPL v2 or later
  */
 
+// Exit if accessed directly
+if (!defined('ABSPATH')) {
+    exit;
+}
 namespace ArabicSearchEnhancement\Core;
 
 use ArabicSearchEnhancement\Interfaces\CacheInterface;

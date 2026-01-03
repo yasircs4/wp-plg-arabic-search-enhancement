@@ -10,6 +10,10 @@
 
 namespace ArabicSearchEnhancement\API;
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
 use ArabicSearchEnhancement\Core\ArabicTextNormalizer;
 use ArabicSearchEnhancement\Core\AdvancedSearchFeatures;
 use ArabicSearchEnhancement\Core\PerformanceOptimizer;
