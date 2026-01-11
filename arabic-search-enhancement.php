@@ -5,7 +5,7 @@
  * Plugin URI: https://maisra.net/arabic-search-enhancement
  * Description: Improves WordPress search for Arabic content by normalizing Arabic text variations, diacritics, and letter forms
  * Description (Arabic): يحسن البحث في ووردبريس للمحتوى العربي من خلال توحيد تنويعات النصوص العربية وعلامات التشكيل وأشكال الحروف
- * Version: 1.4.7
+ * Version: 1.4.8
  * Author: yasircs4
  * Author URI: https://maisra.net/
  * License: GPL v2 or later

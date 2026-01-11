@@ -4,7 +4,7 @@ Tags: arabic, search, normalization, rtl, multilingual
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.4.7
+Stable tag: 1.4.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,13 @@ Yes! The plugin includes complete Arabic translations and RTL interface support.
 4. RTL interface for Arabic administrators
 
 == Changelog ==
+
+= 1.4.8 =
+*   **Fix:** Addressed manual review feedback (Review 3.8RC1).
+*   **Fix:** Corrected placement of `namespace` declarations in PHP files.
+*   **Fix:** Updated option names to use strict prefixing (`arabseen_`).
+*   **Update:** Excluded documentation folder to prevent external link flags.
+*   **Update:** Explicitly documented use of external services (GitHub Pages) in `readme.txt`.
 
 = 1.4.7 =
 *   **Fix:** Critical issue where search terms were being discarded in query generation.
