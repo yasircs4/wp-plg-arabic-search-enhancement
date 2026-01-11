@@ -1,22 +1,29 @@
 <?php
+
+namespace ArabicSearchEnhancement\Core;
+
 /**
  * Performance Optimization for Arabic Search
  *
  * Provides search indexing, query optimization, and advanced caching
  *
+ * @package ArabicSearchEnhancement
+ * @since 1.2.0
  * @copyright 2025 yasircs4
  * @license   GPL v2 or later
  */
+
+use ArabicSearchEnhancement\Interfaces\CacheInterface;
+use ArabicSearchEnhancement\Interfaces\ConfigurationInterface;
 
 // Exit if accessed directly
 if (!defined('ABSPATH')) {
     exit;
 }
-namespace ArabicSearchEnhancement\Core;
 
-use ArabicSearchEnhancement\Interfaces\CacheInterface;
-use ArabicSearchEnhancement\Interfaces\ConfigurationInterface;
-
+/**
+ * Performance optimizer for Arabic search
+ */
 class PerformanceOptimizer {
     
     private CacheInterface $cache;

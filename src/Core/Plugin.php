@@ -1,4 +1,7 @@
 <?php
+
+namespace ArabicSearchEnhancement\Core;
+
 /**
  * Main Plugin Class
  *
@@ -9,8 +12,6 @@
  * @license GPL-2.0-or-later
  * @link https://yasircs4.github.io/wp-plg-arabic-search-enhancement/
  */
-
-namespace ArabicSearchEnhancement\Core;
 
 // Exit if accessed directly
 if (!defined('ABSPATH')) {
@@ -286,7 +287,7 @@ class Plugin {
             return;
         }
 
-        $status_option = 'ase_tables_version';
+        $status_option = 'arabseen_tables_version';
         $current_version = get_option($status_option);
 
         if ($force || $current_version !== Configuration::VERSION) {

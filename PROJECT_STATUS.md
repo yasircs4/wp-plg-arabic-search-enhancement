@@ -33,3 +33,15 @@ We have addressed the reported errors and warnings from the Plugin Check tool.
 
 ## Next Steps
 - Submit the updated plugin files to the WordPress.org review team.
+## Recent Updates (Review 3.8RC1 Fixes - Jan 2026)
+
+Addressed issues from WordPress.org Manual Review.
+
+### 1. PHP Syntax & Namespace Declarations (Fixed)
+- Moved `namespace` declarations to the very top of `src/Core/PerformanceOptimizer.php`, `src/Core/Plugin.php`, and `src/Utils/RepositorySubmissionHelper.php` to comply with PHP standards.
+
+### 2. Prefixing & Generic Names (Fixed)
+- Removed backward compatibility code in `src/Core/Plugin.php` that referenced the unprefixed option `ase_tables_version`. Now strictly uses `arabseen_tables_version`.
+
+### 3. Submission Artifacts (Fixed)
+- Excluded `/docs` directory from the submission package in `src/Utils/RepositorySubmissionHelper.php` to prevent inclusion of unnecessary files with external links.

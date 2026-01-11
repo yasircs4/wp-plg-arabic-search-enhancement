@@ -1,23 +1,29 @@
 <?php
+
+namespace ArabicSearchEnhancement\Utils;
+
 /**
  * WordPress.org Submission Helper
  *
  * Prepares the plugin for WordPress.org repository submission
  *
+ * @package ArabicSearchEnhancement
+ * @since 1.2.0
  * @copyright 2025 yasircs4
  * @license   GPL v2 or later
  */
+
+use ArabicSearchEnhancement\Core\Plugin;
+use ArabicSearchEnhancement\Interfaces\ConfigurationInterface;
 
 // Exit if accessed directly
 if (!defined('ABSPATH')) {
     exit;
 }
 
-namespace ArabicSearchEnhancement\Utils;
-
-use ArabicSearchEnhancement\Core\Plugin;
-use ArabicSearchEnhancement\Interfaces\ConfigurationInterface;
-
+/**
+ * Helper for WordPress.org repository submission
+ */
 class RepositorySubmissionHelper {
     
     private ConfigurationInterface $config;
@@ -103,7 +109,7 @@ class RepositorySubmissionHelper {
         }
         
         // Create subdirectories
-        $subdirs = ['assets', 'docs', 'screenshots', 'package'];
+        $subdirs = ['assets', 'screenshots', 'package'];
         foreach ($subdirs as $subdir) {
             $path = $this->submission_dir . '/' . $subdir;
             if (!file_exists($path)) {
