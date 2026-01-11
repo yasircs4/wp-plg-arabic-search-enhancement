@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Arabic Search Enhancement Admin Settings</title>
+  <desc id="desc">Placeholder illustration for the plugin admin settings screen</desc>
+  <defs>
+    <linearGradient id="panel" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#111827" />
+    </linearGradient>
+  </defs>
+  <rect width="1440" height="900" fill="#0b1222" />
+  <rect x="80" y="80" width="1280" height="740" rx="24" fill="url(#panel)" stroke="#1f2937" stroke-width="2" />
+  <rect x="120" y="140" width="400" height="60" rx="12" fill="#1f2937" />
+  <rect x="560" y="140" width="320" height="60" rx="12" fill="#1f2937" />
+  <rect x="920" y="140" width="320" height="60" rx="12" fill="#1f2937" />
+  <text x="140" y="178" font-family="'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="26" fill="#e5e7eb" font-weight="700">Arabic Search Settings</text>
+  <text x="580" y="178" font-family="'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="24" fill="#cbd5e1">Caching</text>
+  <text x="940" y="178" font-family="'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="24" fill="#cbd5e1">Self-Test</text>
+  <rect x="120" y="240" width="1120" height="430" rx="18" fill="#111827" stroke="#1f2937" stroke-width="2" />
+  <rect x="160" y="280" width="520" height="40" rx="10" fill="#111827" stroke="#334155" stroke-width="1" />
+  <rect x="720" y="280" width="480" height="40" rx="10" fill="#111827" stroke="#334155" stroke-width="1" />
+  <rect x="160" y="340" width="1040" height="40" rx="10" fill="#111827" stroke="#334155" stroke-width="1" />
+  <rect x="160" y="400" width="1040" height="40" rx="10" fill="#111827" stroke="#334155" stroke-width="1" />
+  <rect x="160" y="460" width="1040" height="40" rx="10" fill="#111827" stroke="#334155" stroke-width="1" />
+  <rect x="160" y="520" width="1040" height="40" rx="10" fill="#111827" stroke="#334155" stroke-width="1" />
+  <rect x="160" y="580" width="280" height="56" rx="14" fill="#111827" stroke="#6366f1" stroke-width="2" />
+  <text x="180" y="618" font-family="'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="22" fill="#cbd5e1">Save Settings</text>
+</svg>

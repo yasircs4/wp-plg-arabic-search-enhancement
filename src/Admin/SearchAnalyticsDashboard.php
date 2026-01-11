@@ -100,7 +100,7 @@ class SearchAnalyticsDashboard {
             true
         );
         
-        wp_localize_script('arabic-search-analytics', 'arabicSearchAnalytics', [
+        wp_localize_script('arabic-search-analytics', 'arabseenAnalytics', [
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('arabic_search_analytics_nonce'),
             'strings' => [

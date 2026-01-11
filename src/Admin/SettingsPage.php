@@ -562,7 +562,7 @@ class SettingsPage {
             ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR . 'languages'
         );
 
-        wp_localize_script('arabic-search-enhancement-admin', 'arabicSearchAdmin', [
+        wp_localize_script('arabic-search-enhancement-admin', 'arabseenAdmin', [
             'nonce' => wp_create_nonce('arabic_search_admin'),
             'i18n' => [
                 'testRunning' => esc_html__('Running Tests...', 'arabic-search-enhancement'),

@@ -1,23 +1,29 @@
 <?php
+
+namespace ArabicSearchEnhancement\Core;
+
 /**
  * Multi-language Support for Arabic-script Languages
  *
  * Extends Arabic search to support Urdu, Persian, and other related languages
  *
+ * @package ArabicSearchEnhancement
+ * @since 1.2.0
  * @copyright 2025 yasircs4
  * @license   GPL v2 or later
  */
+
+use ArabicSearchEnhancement\Interfaces\TextNormalizerInterface;
+use ArabicSearchEnhancement\Interfaces\CacheInterface;
 
 // Exit if accessed directly
 if (!defined('ABSPATH')) {
     exit;
 }
 
-namespace ArabicSearchEnhancement\Core;
-
-use ArabicSearchEnhancement\Interfaces\TextNormalizerInterface;
-use ArabicSearchEnhancement\Interfaces\CacheInterface;
-
+/**
+ * Multi-language normalizer for Arabic-script languages
+ */
 class MultiLanguageNormalizer implements TextNormalizerInterface {
     
     private CacheInterface $cache;

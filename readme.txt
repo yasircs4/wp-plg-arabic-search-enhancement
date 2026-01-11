@@ -65,6 +65,11 @@ Enhances WordPress search for Arabic content by normalizing text variations, dia
 3. Navigate to Settings > Arabic Search to configure the plugin (optional)
 4. Run the self-test to verify everything is working correctly
 
+== External Services ==
+
+* The plugin does not transmit search data or analytics to any external servers; all processing and storage stay inside your WordPress database.
+* The bundled documentation page (docs/index.html) can be opened locally and references the project homepage hosted on GitHub Pages (https://yasircs4.github.io/wp-plg-arabic-search-enhancement/) for optional reading. Loading that page may request static assets from GitHub's CDN; no WordPress site data is sent. GitHub's privacy statement: https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement.
+
 == Frequently Asked Questions ==
 
 = Does this work with all Arabic dialects? =

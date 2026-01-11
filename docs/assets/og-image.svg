@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Arabic Search Enhancement</title>
+  <desc id="desc">Social preview for Arabic Search Enhancement plugin</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <circle cx="200" cy="200" r="180" fill="rgba(99,102,241,0.15)" />
+  <circle cx="1000" cy="480" r="200" fill="rgba(168,85,247,0.12)" />
+  <g fill="#ffffff" font-family="'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="700">
+    <text x="90" y="240" font-size="72">Arabic Search Enhancement</text>
+    <text x="90" y="320" font-size="32" font-weight="500">Improved Arabic search accuracy for WordPress</text>
+  </g>
+  <rect x="90" y="380" width="1020" height="140" rx="18" fill="rgba(15,23,42,0.65)" stroke="#6366f1" stroke-width="2" />
+  <text x="120" y="445" fill="#cbd5e1" font-family="'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="26">
+    Normalizes diacritics, unifies Alef variants, and optimizes queries for RTL content.
+  </text>
+</svg>

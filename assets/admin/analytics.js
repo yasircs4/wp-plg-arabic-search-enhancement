@@ -1,7 +1,7 @@
 (function($) {
     'use strict';
 
-    var settings = window.arabicSearchAnalytics || {};
+    var settings = window.arabseenAnalytics || {};
     var strings = settings.strings || {};
 
     // Cache DOM elements

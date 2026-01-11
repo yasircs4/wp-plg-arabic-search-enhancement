@@ -1,22 +1,28 @@
 <?php
+
+namespace ArabicSearchEnhancement\Core;
+
 /**
  * Advanced Arabic Search Features
  *
  * Provides fuzzy matching, stemming, and relevance scoring for Arabic text
  *
+ * @package ArabicSearchEnhancement
+ * @since 1.2.0
  * @copyright 2025 yasircs4
  * @license   GPL v2 or later
  */
+
+use ArabicSearchEnhancement\Interfaces\CacheInterface;
 
 // Exit if accessed directly
 if (!defined('ABSPATH')) {
     exit;
 }
 
-namespace ArabicSearchEnhancement\Core;
-
-use ArabicSearchEnhancement\Interfaces\CacheInterface;
-
+/**
+ * Advanced search features for Arabic text
+ */
 class AdvancedSearchFeatures {
     
     private CacheInterface $cache;

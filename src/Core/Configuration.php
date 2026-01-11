@@ -32,9 +32,14 @@ class Configuration implements ConfigurationInterface {
     public const TEXT_DOMAIN = 'arabic-search-enhancement';
     
     /**
-     * Option prefix
+     * Option prefix (at least 4 characters as per WordPress.org guidelines)
      */
-    public const OPTION_PREFIX = 'ase_';
+    public const OPTION_PREFIX = 'arabseen_';
+    
+    /**
+     * Legacy option prefix for backward compatibility
+     */
+    public const LEGACY_OPTION_PREFIX = 'ase_';
     
     /**
      * Supported languages
@@ -104,6 +109,19 @@ class Configuration implements ConfigurationInterface {
         }
         
         $value = get_option($option_key, $default_value);
+        
+        // Check for legacy option if current option doesn't exist
+        if ($value === $default_value) {
+            $legacy_key = self::LEGACY_OPTION_PREFIX . $key;
+            $legacy_value = get_option($legacy_key, null);
+            if ($legacy_value !== null) {
+                // Migrate legacy option to new prefix
+                update_option($option_key, $legacy_value);
+                delete_option($legacy_key);
+                $value = $legacy_value;
+            }
+        }
+        
         $this->config_cache[$option_key] = $value;
         
         return $value;

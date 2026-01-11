@@ -1,7 +1,7 @@
 (function($) {
     'use strict';
 
-    var settings = window.arabicSearchAdmin || {};
+    var settings = window.arabseenAdmin || {};
     var strings = settings.i18n || {};
 
     function t(key, fallback) {
