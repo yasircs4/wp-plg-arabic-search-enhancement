@@ -1,7 +1,7 @@
 const { chromium } = require('@playwright/test');
 
 const baseUrl = process.env.ASE_PAGES_BASE_URL || 'https://yasircs4.github.io/wp-plg-arabic-search-enhancement/';
-const paths = ['/', '/blog/', '/blog/launch-1-4-8.html', '/marketing/'];
+const paths = ['', 'blog/', 'blog/launch-1-4-8.html', 'marketing/'];
 const viewports = [
 	['desktop', { width: 1440, height: 950 }],
 	['mobile', { width: 390, height: 844 }],
@@ -15,7 +15,7 @@ async function main() {
 		const page = await browser.newPage({ viewport });
 
 		for (const path of paths) {
-			const url = new URL(path, baseUrl).toString();
+			const url = new URL(path, baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`).toString();
 			await page.goto(url, { waitUntil: 'networkidle' });
 
 			const title = await page.title();

@@ -58,6 +58,7 @@ tests/coverage/
 .phpunit.result.cache
 test-results/
 playwright-report/
+docs/verification/latest.md
 
 # Composer
 composer.phar
