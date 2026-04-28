@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {
+    "wporg:assets": "playwright test wporg-assets/src/capture-assets.spec.js --project=chromium",
+    "wporg:validate-assets": "php wporg-assets/src/validate-assets.php"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1"
+  }
+}

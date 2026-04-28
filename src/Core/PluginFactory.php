@@ -24,7 +24,6 @@ use ArabicSearchEnhancement\Interfaces\SearchQueryModifierInterface;
 use ArabicSearchEnhancement\Admin\SettingsPage;
 use ArabicSearchEnhancement\Admin\SearchAnalyticsDashboard;
 use ArabicSearchEnhancement\API\RestApiController;
-use ArabicSearchEnhancement\Utils\RepositorySubmissionHelper;
 
 class PluginFactory {
     
@@ -230,27 +229,6 @@ class PluginFactory {
         }
         
         return self::$instances['rest_api_controller'];
-    }
-    
-    /**
-     * Create repository submission helper instance
-     *
-     * @param ConfigurationInterface|null $config Configuration instance
-     * @param string|null $plugin_dir Plugin directory path
-     * @return RepositorySubmissionHelper
-     */
-    public static function create_submission_helper(
-        ?ConfigurationInterface $config = null,
-        ?string $plugin_dir = null
-    ): RepositorySubmissionHelper {
-        if (!isset(self::$instances['submission_helper'])) {
-            $config = $config ?? self::create_configuration();
-            $plugin_dir = $plugin_dir ?? ARABIC_SEARCH_ENHANCEMENT_PLUGIN_DIR;
-            
-            self::$instances['submission_helper'] = new RepositorySubmissionHelper($config, $plugin_dir);
-        }
-        
-        return self::$instances['submission_helper'];
     }
     
     /**

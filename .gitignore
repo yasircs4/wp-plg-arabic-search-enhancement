@@ -50,10 +50,14 @@ wp-content/wp-cache-config.php
 .cache/
 build/
 dist/
+!wporg-assets/dist/
+!wporg-assets/dist/**
 
 # Testing
 tests/coverage/
 .phpunit.result.cache
+test-results/
+playwright-report/
 
 # Composer
 composer.phar
@@ -69,6 +73,7 @@ composer.lock
 .env.development.local
 .env.test.local
 .env.production.local
+SVN credentials.txt
 
 # Python virtual environment
 .venv/

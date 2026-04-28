@@ -68,7 +68,6 @@ Enhances WordPress search for Arabic content by normalizing text variations, dia
 == External Services ==
 
 * The plugin does not transmit search data or analytics to any external servers; all processing and storage stay inside your WordPress database.
-* The bundled documentation page (docs/index.html) can be opened locally and references the project homepage hosted on GitHub Pages (https://yasircs4.github.io/wp-plg-arabic-search-enhancement/) for optional reading. Loading that page may request static assets from GitHub's CDN; no WordPress site data is sent. GitHub's privacy statement: https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement.
 
 == Frequently Asked Questions ==
 
@@ -106,7 +105,7 @@ Yes! The plugin includes complete Arabic translations and RTL interface support.
 *   **Fix:** Corrected placement of `namespace` declarations in PHP files.
 *   **Fix:** Updated option names to use strict prefixing (`arabseen_`).
 *   **Update:** Excluded documentation folder to prevent external link flags.
-*   **Update:** Explicitly documented use of external services (GitHub Pages) in `readme.txt`.
+*   **Update:** Cleaned release metadata and removed development-only submission tooling from the runtime package.
 
 = 1.4.7 =
 *   **Fix:** Critical issue where search terms were being discarded in query generation.
@@ -175,6 +174,9 @@ Yes! The plugin includes complete Arabic translations and RTL interface support.
 * Simple search query modification
 
 == Upgrade Notice ==
+
+= 1.4.8 =
+First WordPress.org release with finalized compliance metadata and runtime cleanup.
 
 = 1.4.7 =
 Critical search logic fix and compliance updates.

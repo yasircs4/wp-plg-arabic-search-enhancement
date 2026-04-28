@@ -1,30 +1,32 @@
-# Arabic Search Enhancement - Landing Page
+# GitHub Pages Site
 
-This directory contains the GitHub Pages website for the Arabic Search Enhancement WordPress plugin.
+This directory is published to:
 
-## Files
+https://yasircs4.github.io/wp-plg-arabic-search-enhancement/
 
-- `index.html` - Main landing page with plugin information, features, and installation instructions
+## Pages
 
-## Setup Instructions
+- `index.html` - compact product landing page
+- `blog/launch-1-4-8.html` - public launch blog post
+- `blog/launch-1-4-8.md` - reusable Markdown version of the launch post
+- `marketing/index.html` - marketing kit page
+- `marketing/copy.md` - reusable marketing and social copy
+- `RELEASE-1.4.8.md` - launch report
+- `NEXT_DEV.md` - next-developer handoff
 
-1. Go to your GitHub repository settings
-2. Navigate to "Pages" section
-3. Set source to "GitHub Actions"
-4. The site will be available at: `https://yourusername.github.io/wp-plg-arabic-search-enhancement`
+## Deployment
 
-## Custom Domain (Optional)
+GitHub Pages deploys static content from this directory through:
 
-To use a custom domain like `arabic-search-enhancement.com`:
+```text
+.github/workflows/static.yml
+```
 
-1. Add a `CNAME` file to this directory with your domain
-2. Configure DNS settings to point to GitHub Pages
-3. Enable "Enforce HTTPS" in repository settings
+There is no build step. Keep links and assets static, fast, and easy to review.
 
-## Features
+## Design Notes
 
-- Responsive design
-- RTL support for Arabic content
-- SEO optimized
-- Fast loading with modern CSS
-- Smooth animations and interactions
+- Use compact sections and direct calls to action.
+- Prefer WordPress.org-hosted screenshots and assets for the public product view.
+- Keep canonical and social URLs absolute.
+- Keep long contributor/release details in Markdown docs rather than crowding the landing page.

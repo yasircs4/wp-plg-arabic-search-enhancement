@@ -1,0 +1,53 @@
+services:
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: wordpress
+      MARIADB_ROOT_PASSWORD: wordpress
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - wporg-db:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:6.9.4-php8.3-apache
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DEBUG: "1"
+    ports:
+      - "${ASE_WPORG_PORT:-8098}:80"
+    volumes:
+      - wporg-wordpress:/var/www/html
+      - ${ASE_WPORG_PLUGIN_DIR:-../../}:/var/www/html/wp-content/plugins/arabic-search-enhancement:ro
+
+  cli:
+    image: wordpress:cli-php8.3
+    depends_on:
+      db:
+        condition: service_healthy
+      wordpress:
+        condition: service_started
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+    user: "33:33"
+    volumes:
+      - wporg-wordpress:/var/www/html
+      - ${ASE_WPORG_PLUGIN_DIR:-../../}:/var/www/html/wp-content/plugins/arabic-search-enhancement:ro
+
+volumes:
+  wporg-db:
+  wporg-wordpress:
