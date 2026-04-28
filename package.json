@@ -1,6 +1,8 @@
 {
   "private": true,
   "scripts": {
+    "pages:smoke": "node scripts/verify-pages.js",
+    "launch:verify": "bash scripts/verify-launch.sh",
     "wporg:assets": "playwright test wporg-assets/src/capture-assets.spec.js --project=chromium",
     "wporg:validate-assets": "php wporg-assets/src/validate-assets.php"
   },

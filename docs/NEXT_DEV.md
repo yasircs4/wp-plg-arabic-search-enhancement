@@ -26,6 +26,20 @@ vendor/bin/phpunit
 npm run wporg:validate-assets
 ```
 
+Run the full evidence pass:
+
+```bash
+npm run launch:verify
+```
+
+This regenerates:
+
+```text
+docs/verification/latest.md
+```
+
+The proof report covers public GitHub Pages, WordPress.org page/API/ZIP/SVN/assets, PHP syntax, PHPUnit, asset validation, and local WordPress blog posts.
+
 ## Local WordPress QA
 
 Start the seeded WordPress QA site:
@@ -48,6 +62,24 @@ ASE_WPORG_PLUGIN_DIR="$runtime_dir" ASE_WPORG_PORT=8099 ASE_WPORG_PROJECT=ase-wp
 ```
 
 Do not run `setup-local-wp.sh` against a site that contains content you need to keep. The script deletes local posts/pages and reseeds demo content.
+
+## Blog Publishing Reality
+
+The launch post is committed as static content in:
+
+```text
+docs/blog/launch-1-4-8.html
+docs/blog/launch-1-4-8.md
+```
+
+It is also published to the two local Docker WordPress QA sites:
+
+```text
+http://localhost:8098/arabic-search-enhancement-1-4-8-live/
+http://localhost:8099/arabic-search-enhancement-1-4-8-live/
+```
+
+No safe remote WordPress REST/WP-CLI credential or alias is present in this workspace, so remote WordPress blog publishing is not verified and should not be claimed until credentials and a target site are explicitly available.
 
 ## WordPress.org Asset Workflow
 

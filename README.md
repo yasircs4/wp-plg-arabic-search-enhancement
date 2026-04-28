@@ -10,7 +10,7 @@ It helps visitors find content when they type Arabic without diacritics, with di
 - Download ZIP: https://downloads.wordpress.org/plugin/arabic-search-enhancement.1.4.8.zip
 - GitHub Pages: https://yasircs4.github.io/wp-plg-arabic-search-enhancement/
 - Support forum: https://wordpress.org/support/plugin/arabic-search-enhancement/
-- SVN browser: https://plugins.trac.wordpress.org/browser/arabic-search-enhancement/
+- Public SVN: https://plugins.svn.wordpress.org/arabic-search-enhancement/
 
 ## Current Release
 
@@ -73,6 +73,24 @@ npm run wporg:validate-assets
 ```
 
 See [docs/NEXT_DEV.md](docs/NEXT_DEV.md) for the full next-developer handoff.
+
+## Verification
+
+Run the full evidence pass:
+
+```bash
+npm run launch:verify
+```
+
+The generated report is written to:
+
+```text
+docs/verification/latest.md
+```
+
+This report includes public GitHub Pages checks, WordPress.org page/API/ZIP/SVN/asset checks, PHP syntax checks, PHPUnit, asset validation, and local WordPress blog-post checks.
+
+Remote WordPress blog publishing is not claimed from this workspace because no safe remote WordPress REST/WP-CLI credential or alias is present. The launch post is verified on the local Docker WordPress QA sites and as static GitHub Pages content.
 
 ## Runtime Package
 
