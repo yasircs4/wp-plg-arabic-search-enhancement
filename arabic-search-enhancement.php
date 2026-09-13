@@ -2,12 +2,12 @@
 /**
  * Plugin Name: Arabic Search Enhancement
  * Plugin Name (Arabic): تحسين البحث العربي
- * Plugin URI: https://maisra.net/arabic-search-enhancement
+ * Plugin URI: https://yasirnajeep.com/arabic-search-enhancement
  * Description: Improves WordPress search for Arabic content by normalizing Arabic text variations, diacritics, and letter forms
  * Description (Arabic): يحسن البحث في ووردبريس للمحتوى العربي من خلال توحيد تنويعات النصوص العربية وعلامات التشكيل وأشكال الحروف
  * Version: 1.4.8
  * Author: yasircs4
- * Author URI: https://maisra.net/
+ * Author URI: https://yasirnajeep.com/
  * License: GPL v2 or later
  * Text Domain: arabic-search-enhancement
  * Requires at least: 5.0
